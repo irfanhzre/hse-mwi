@@ -24,6 +24,8 @@ library(shinyBS)
 library(DT)
 # library(formattable)
 library(dplyr)
+#Use data.table for faster CSV reading
+library(data.table)
 
 options(shiny.maxRequestSize=300*1024^2)
 
@@ -205,17 +207,13 @@ colnames(sub_m)[ncol(sub_m)-1] <- "Original Weights"
 colnames(sub_m)[ncol(sub_m)] <- "Updated Weights"
 rownames(sub_m) <- rownames(m_reg)
 
-
-# 1. Use data.table for faster CSV reading
-library(data.table)
-
-# 2. Load index weighting/output with error handling
+# Load index weighting/output with error handling
 tryCatch({
   info_df <- fread(
     file.path(data_folder, "Cleaned", "HSE_MWI_Data_Information.csv"),
     colClasses = list(character = "Numerator")
   )
-  setkey(info_df, Numerator) # More efficient than rownames
+  setkey(info_df, Numerator) # More efficient than rownames (previous)
 }, error = function(e) {
   cat("Error loading info_df: ", e$message, "\n")
   # Fallback to read.csv if fread fails
@@ -226,7 +224,7 @@ tryCatch({
   return(info_df)
 })
 
-# 3. Load mapped measure data with error handling
+# Load mapped measure data with error handling
 tryCatch({
   meas_df <- fread(
     file.path(data_folder, "Cleaned", "HSE_MWI_ZCTA_Converted_Measures.csv"),
