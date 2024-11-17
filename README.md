@@ -1,5 +1,16 @@
 # Mental Wellness Index™ (MWI)
 
+## Translation
+# README in Different Languages
+
+- [English](README.md)
+- [简体中文](README.zh-CN.md)
+- [Française](README.fr.md)
+- [عربى](README.ar.md)
+- [日本語](README.ja.md)
+- [Bahasa Melayu](README.ms.md)
+
+
 # Outline
 
 - [Mental Wellness Index (MWI)](#Mental-Wellness-Index-(MWI))
