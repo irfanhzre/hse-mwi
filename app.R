@@ -1,6 +1,7 @@
 # Mental Wellness Index Tool
 # By HSE Team
 # Originated on: 10/20/2021
+# Updated on: 17/11/2024 
 
 # NOTE: Styling by Sarah Ober of Case Study for using health equity framework
 # in population health team.
@@ -717,7 +718,7 @@ html_color <- function(meas_color, text){
 # UI ----
 
 ui <- fluidPage(
-  
+
   #Use Google Translate function 
   tags$head(
     HTML(
@@ -2850,4 +2851,4 @@ server <- function(input, output, session) {
 
 # RUN ----
 
-shinyApp(ui, server)
+shinyApp(ui, server) 
