@@ -143,14 +143,14 @@ app_preprocess <- function(m_reg, info_df, mwi, app_start = T){
     }
     
     if (app_start &
-         !"HSE_MWI_ZCTA_full_shapefile_US.RData" %in% 
-         list.files(file.path(data_folder, "Cleaned"))){
+        !"HSE_MWI_ZCTA_full_shapefile_US.RData" %in% 
+        list.files(file.path(data_folder, "Cleaned"))){
       save(list = c("geodat", "geopts"), 
            file = file.path(data_folder, 
                             "Cleaned", "HSE_MWI_ZCTA_full_shapefile_US.RData"))
     }
   } else if ("HSE_MWI_ZCTA_full_shapefile_US.RData" %in% 
-              list.files(file.path(data_folder, "Cleaned"))){
+             list.files(file.path(data_folder, "Cleaned"))){
     # this will exist for the pipeline as well -- can only be done if started
     
     # load geodat data (should be much faster)
@@ -494,7 +494,7 @@ plot_map <- function(fill, geodat, idx, ol, is_all = F, is_com = F,
                     #            "20", "40", "60",
                     #            "80", "100 (More Assets)"))
                     # }
-                    ) %>%
+          ) %>%
           fitBounds(
             lng1 = bounds[1],
             lng2 = bounds[3],
@@ -523,7 +523,7 @@ plot_map <- function(fill, geodat, idx, ol, is_all = F, is_com = F,
                     #            "<p align = 'left'>20<p>", "40", "60",
                     #            "80", "100 (More Assets)"))
                     # }
-                    ) %>%
+          ) %>%
           fitBounds(
             lng1 = bounds[1],
             lng2 = bounds[3],
@@ -717,6 +717,34 @@ html_color <- function(meas_color, text){
 # UI ----
 
 ui <- fluidPage(
+  
+  #Use Google Translate function 
+  tags$head(
+    HTML(
+      "
+    <script type=\"text/javascript\">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,fr,de,zh-CN,ja,ar,ru,ms',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_function');
+    }
+    </script>
+    <script type=\"text/javascript\" src=\"//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit\"></script>
+    <style>
+      .title-panel-custom {
+        font-size: 16px; /* Adjust font size */
+        padding: 8px; /* Adjust padding to reduce size */
+      }
+    </style>
+    "
+    )
+  ),
+  
+  div(id = "google_translate_function", style = "float:right; padding:8px;"),
+  div(class = "title-panel-custom", "Language Selection"),
+  
   # Title panel sets text in the browser tab
   # This is necessary because the navbarPage title is html and not straight text
   div(
@@ -864,9 +892,9 @@ ui <- fluidPage(
                 uiOutput("data_info"),
                 HTML(paste0(
                   "<font size = '2'>",
-
+                  
                   "For more information on data and overall methodology, please see the \"MWI Toolkit\" page.",
-
+                  
                   "</font>"
                 ))
               )
@@ -910,25 +938,25 @@ ui <- fluidPage(
             ),
             bsCollapsePanel(
               "Custom MWI Upload",
-                tagList(
-                  HTML("<font size = '2'><p>"),
-                  "To create the necessary custom Mental Wellness Index file, please see the \"Create Your Own MWI\" tab. Note that data uploaded to this application is not kept -- it is deleted once you leave the page. However, if you would like to keep your data on your computer while viewing the MWI, please see the \"Add Local Data to MWI on Your Computer\" section.",
-                  HTML("<i>NOTE: file upload is currently experiencing issues on the website. In the meantime, you can explore your custom MWI on your local computer by following steps 1 - 7 on the \"Add Local Data to Mental Wellness Index (MWI) On Your Computer\" page under \"Create Your Own MWI\".</i>"),
-                  HTML("</p></font>"),
-                  fileInput(
-                    "custom_data_com",
-                    label = "Upload Custom Mental Wellness Index (.RData)",
-                    accept = ".RData"
-                  ),
-                  actionButton(
-                    "custom_data_load_com",
-                    "Run Custom MWI"
-                  ),
-                  actionButton(
-                    "custom_data_reset_com",
-                    "Reset"
-                  )
+              tagList(
+                HTML("<font size = '2'><p>"),
+                "To create the necessary custom Mental Wellness Index file, please see the \"Create Your Own MWI\" tab. Note that data uploaded to this application is not kept -- it is deleted once you leave the page. However, if you would like to keep your data on your computer while viewing the MWI, please see the \"Add Local Data to MWI on Your Computer\" section.",
+                HTML("<i>NOTE: file upload is currently experiencing issues on the website. In the meantime, you can explore your custom MWI on your local computer by following steps 1 - 7 on the \"Add Local Data to Mental Wellness Index (MWI) On Your Computer\" page under \"Create Your Own MWI\".</i>"),
+                HTML("</p></font>"),
+                fileInput(
+                  "custom_data_com",
+                  label = "Upload Custom Mental Wellness Index (.RData)",
+                  accept = ".RData"
+                ),
+                actionButton(
+                  "custom_data_load_com",
+                  "Run Custom MWI"
+                ),
+                actionButton(
+                  "custom_data_reset_com",
+                  "Reset"
                 )
+              )
             ),
             bsCollapsePanel(
               "About the Mental Wellness Index",
@@ -1220,7 +1248,7 @@ ui <- fluidPage(
       )
     ),
     
-
+    
     # mwi toolkit ----
     
     # add toolkit pages dynamically since there are a lot of them
@@ -1249,13 +1277,13 @@ ui <- fluidPage(
   
   # Copyright footer
   if (show_mitre){
-  HTML(paste0(
-    "<span class = 'copyright-footer'>&copy; ",
-    format(Sys.Date(), "%Y"),
-    
-    ", The MITRE Corporation",
-    "</span>"
-  ))
+    HTML(paste0(
+      "<span class = 'copyright-footer'>&copy; ",
+      format(Sys.Date(), "%Y"),
+      
+      ", The MITRE Corporation",
+      "</span>"
+    ))
   }
 )
 
@@ -1336,11 +1364,11 @@ server <- function(input, output, session) {
              HTML("<br>"),
              HTML("<center>"),
              HTML("To learn more and view MWI videos, click <b>MWI Toolkit</b> in the blue bar at the top of the page."),
-            
+             
              HTML("</center>"),
              HTML("<center><font size = '2'><i>Notes: This application is best viewed on a tablet or computer in full screen mode. Data updated as of January 2023.</i></font></center>"),
       )),
-     
+    
     footer = tagList(
       HTML("<center>"),
       modalButton("Start Exploring!"),
@@ -1351,7 +1379,7 @@ server <- function(input, output, session) {
   
   showModal(welcome_modal)
   
-
+  
   observeEvent(input$learn_button, {
     updateNavbarPage(session = session, 
                      inputId = "toolkit", 
@@ -1879,7 +1907,7 @@ server <- function(input, output, session) {
       # get within coordinates
       com_sub$geodat <- ol$geodat[[idx]][zcta_log,]
       com_sub$mwi <- ol$mwi[[idx]][ol$mwi[[idx]]$ZCTA %in% 
-                                  ol$geodat[[idx]]$GEOID[zcta_log],]
+                                     ol$geodat[[idx]]$GEOID[zcta_log],]
       
       com_sub$com_map_fill <- 
         if (com_sub$idx == "pop" & grepl("*_black$", input$com_map_fill)){
@@ -2123,11 +2151,11 @@ server <- function(input, output, session) {
         
         # get scores
         dir_df <-
-        if (st_sub$us_map_fill == "Mental_Wellness_Index"){
-          st_sub$mwi
-        } else {
-          ol$no_dir_perc_meas_df[st_sub$mwi$ZCTA,]
-        }
+          if (st_sub$us_map_fill == "Mental_Wellness_Index"){
+            st_sub$mwi
+          } else {
+            ol$no_dir_perc_meas_df[st_sub$mwi$ZCTA,]
+          }
         overall_df <- 
           if (st_sub$us_map_fill == "Mental_Wellness_Index"){
             ol$mwi[[st_sub$idx]]
@@ -2458,7 +2486,7 @@ server <- function(input, output, session) {
       mutate(Directionality = ifelse(Directionality == -1, "Obstacle", "Asset"),
              Rank = as.numeric(round(Rank)),
              Value = as.numeric(format(as.numeric(round(Value, 2)), scientific = F)),
-             )  %>%
+      )  %>%
       select(Measure, Rank, Value, `Measure Description`, Category, Directionality)
     
     rownames(reportcard) <- NULL
@@ -2484,11 +2512,11 @@ server <- function(input, output, session) {
     
     datatable(
       # formattable(
-        reportcard, 
-                  # list(Measure = measure_formatter,
-                  #      Category = category_formatter
-                  # ),
-                  # table.attr = 'style="font-size: 16px;";\"'), 
+      reportcard, 
+      # list(Measure = measure_formatter,
+      #      Category = category_formatter
+      # ),
+      # table.attr = 'style="font-size: 16px;";\"'), 
       rownames = F,
       options = list(
         "pageLength" = nrow(reportcard), # show all
@@ -2496,7 +2524,7 @@ server <- function(input, output, session) {
       )
     )
   })
-
+  
   # put a "report card" for the community
   output$com_map_report_card <- renderUI({
     mwi_zcta <- com_sub$mwi[com_sub$mwi$ZCTA == com_sub$ZCTA, , drop = F]
