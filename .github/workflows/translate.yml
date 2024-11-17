@@ -1,3 +1,5 @@
+name: Translate README
+
 on:
   push:
     branches:
@@ -37,4 +39,4 @@ jobs:
       - name: Adding README - Japanese
         uses: dephraiim/translate-readme@main
         with:
-          LANG: ja 
+          LANG: ja
