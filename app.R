@@ -25,10 +25,11 @@ library(DT)
 # library(formattable)
 library(dplyr)
 
-options(shiny.maxRequestSize=300*1024^2)
+options(shiny.maxRequestSize=config$get("app.max_request_size"))
 
 source("app_config.R")
-
+# Load configuration
+source("config/config.R")
 # styling/resources ----
 
 # Applies css to rShiny app
@@ -187,11 +188,10 @@ app_preprocess <- function(m_reg, info_df, mwi, app_start = T){
 # load data ----
 
 # what indices are available?
-index_types <- c("Population" = "pop",
-                 "Black" = "black")
+index_types <- config$get("data.index_types")
 
 # folder where all the data and information for the pipeline is
-data_folder <- file.path("Data")
+data_folder <- file.path(config$get("data.data_folder"))
 
 # load measure registry -- first sheet
 m_reg <- as.data.frame(
@@ -481,12 +481,12 @@ plot_map <- function(fill, geodat, idx, ol, is_all = F, is_com = F,
                       highlight = highlightOptions(weight = 2,
                                                    color = "#666",
                                                    dashArray = "",
-                                                   fillOpacity = 0.7,
+                                                   fillOpacity = config$get("map.map_opacity"),
                                                    bringToFront = !is_com),
                       label = labels) %>%
           addLegend(pal = pal_wo_na,
                     values = ~c(0, Fill, 100), 
-                    opacity = 0.7, 
+                    opacity = config$get("map.map_opacity"), 
                     position = "bottomright",
                     title = unname(full_name)#,
                     # labFormat = function(type, cuts, p){
@@ -515,7 +515,7 @@ plot_map <- function(fill, geodat, idx, ol, is_all = F, is_com = F,
                            radius = 5) %>%
           addLegend(pal = pal_wo_na,
                     values = ~c(0, Fill, 100), 
-                    opacity = 0.7, 
+                    opacity = config$get("map.map_opacity"), 
                     position = "bottomright",
                     title = unname(full_name)#,
                     # labFormat = function(type, cuts, p){
@@ -548,7 +548,7 @@ plot_map <- function(fill, geodat, idx, ol, is_all = F, is_com = F,
           highlight = highlightOptions(weight = 4,
                                        color = "#000",
                                        dashArray = "",
-                                       fillOpacity = 0.7,
+                                       fillOpacity = config$get("map.map_opacity"),
                                        bringToFront = T),
           label = labels[gd_map$GEOID == zcta_choose]
         )
@@ -571,7 +571,7 @@ plot_map <- function(fill, geodat, idx, ol, is_all = F, is_com = F,
             highlight = highlightOptions(weight = 4,
                                          color = "#000",
                                          dashArray = "",
-                                         fillOpacity = 0.7,
+                                         fillOpacity = config$get("map.map_opacity"),
                                          bringToFront = T),
             label = labels[gd_map$GEOID == zcta_choose]
           )
@@ -722,7 +722,7 @@ ui <- fluidPage(
   div(
     titlePanel(
       title="", 
-      windowTitle=HTML(paste0("Mental Wellness Index™ Tool"))
+      windowTitle=HTML(paste0(config$get("app.title")))
     ),
     style="display:none"
   ),
@@ -737,11 +737,11 @@ ui <- fluidPage(
             img(src="media/MITRE_logo.png", height="30"),
             target="blank",
           ),
-          HTML(paste0("Mental Wellness Index™ Tool"))
+          HTML(paste0(config$get("app.title")))
         )
       } else {
         div(
-          HTML(paste0("Mental Wellness Index™ Tool")),
+          HTML(paste0(config$get("app.title"))),
           "style" = "padding-top:5px"
         )
       },
@@ -773,7 +773,7 @@ ui <- fluidPage(
                 "st_focus",
                 "Which state would you like to focus on?",
                 choices = c(unname(f_st), "All"),
-                selected = "Virginia"
+                selected = config$get("map.default_state")
               ),
               selectInput(
                 "us_map_fill",
@@ -834,7 +834,7 @@ ui <- fluidPage(
             width = 8,
             uiOutput("us_map_legend"),
             HTML("<br>"),
-            withSpinner(leafletOutput("us_map", height = 850),
+            withSpinner(leafletOutput("us_map", height = config$get("map.map_height")),
                         type = 8, color = "#005B94", hide.ui = F)
           ),
           column(
@@ -957,7 +957,7 @@ ui <- fluidPage(
                 width = 8,
                 uiOutput("com_map_legend"),
                 HTML("<br>"),
-                withSpinner(leafletOutput("com_map", height = 850),
+                withSpinner(leafletOutput("com_map", height = config$get("map.map_height")),
                             type = 8, color = "#005B94", hide.ui = F)
               ),
               column(
@@ -1276,9 +1276,9 @@ server <- function(input, output, session) {
   
   st_sub <- reactiveValues(
     "idx" = "pop",
-    "st" = "Virginia",
-    "geodat" = overall$geodat[["pop"]][overall$geodat[["pop"]]$STATE_NAME == "Virginia",],
-    "mwi" = overall$mwi[["pop"]][overall$mwi[["pop"]]$STATE_NAME == "Virginia",],
+    "st" = config$get("map.default_state"),
+    "geodat" = overall$geodat[["pop"]][overall$geodat[["pop"]]$STATE_NAME == config$get("map.default_state"),],
+    "mwi" = overall$mwi[["pop"]][overall$mwi[["pop"]]$STATE_NAME == config$get("map.default_state"),],
     "us_map_fill" = "Mental_Wellness_Index",
     "is_all" = F
   )
@@ -1289,28 +1289,28 @@ server <- function(input, output, session) {
   
   com_sub <- reactiveValues(
     "idx" = "pop",
-    "ZCTA" = "23936", 
+    "ZCTA" = config$get("map.default_zcta"), 
     "geodat" = overall$geodat[["pop"]][ # community -- within +/- .5
       st_coordinates(overall$geopts$pop)[,1] >=
-        st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == "23936",])[1] - 1 &
+        st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == config$get("map.default_zcta"),])[1] - 1 &
         st_coordinates(overall$geopts$pop)[,1] <=
-        st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == "23936",])[1] + 1 &
+        st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == config$get("map.default_zcta"),])[1] + 1 &
         st_coordinates(overall$geopts$pop)[,2] >=
-        st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == "23936",])[2] - 1 &
+        st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == config$get("map.default_zcta"),])[2] - 1 &
         st_coordinates(overall$geopts$pop)[,2] <=
-        st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == "23936",])[2] + 1 
+        st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == config$get("map.default_zcta"),])[2] + 1 
       ,],
     "mwi" = overall$mwi[["pop"]][# community -- within +/- .5
       overall$mwi[["pop"]]$ZCTA %in% 
         overall$geodat[["pop"]]$GEOID[
           st_coordinates(overall$geopts$pop)[,1] >=
-            st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == "23936",])[1] - 1 &
+            st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == config$get("map.default_zcta"),])[1] - 1 &
             st_coordinates(overall$geopts$pop)[,1] <=
-            st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == "23936",])[1] + 1 &
+            st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == config$get("map.default_zcta"),])[1] + 1 &
             st_coordinates(overall$geopts$pop)[,2] >=
-            st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == "23936",])[2] - 1 &
+            st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == config$get("map.default_zcta"),])[2] - 1 &
             st_coordinates(overall$geopts$pop)[,2] <=
-            st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == "23936",])[2] + 1 
+            st_coordinates(overall$geopts$pop[overall$geopts$pop$GEOID == config$get("map.default_zcta"),])[2] + 1 
         ]
       ,],
     "com_map_fill" = "Mental_Wellness_Index"
@@ -1608,7 +1608,7 @@ server <- function(input, output, session) {
       )
       
       # update selected defaults for community view
-      com_sub$ZCTA <- "23936"
+      com_sub$ZCTA <- config$get("map.default_zcta")
       com_sub$geodat <- ol$geodat[["pop"]][ # community -- within +/- .5
         st_coordinates(ol$geopts$pop)[,1] >=
           st_coordinates(ol$geopts$pop[ol$geopts$pop$GEOID == com_sub$ZCTA,])[1] - 1 &
