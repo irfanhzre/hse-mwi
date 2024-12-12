@@ -30,6 +30,7 @@ options(shiny.maxRequestSize=config$get("app.max_request_size"))
 source("app_config.R")
 # Load configuration
 source("config/config.R")
+source("modules/cache_module.R")
 # styling/resources ----
 
 # Applies css to rShiny app
@@ -193,10 +194,10 @@ index_types <- config$get("data.index_types")
 # folder where all the data and information for the pipeline is
 data_folder <- file.path(config$get("data.data_folder"))
 
-# load measure registry -- first sheet
-m_reg <- as.data.frame(
-  read_excel(file.path(data_folder, "Metadata.xlsx"), sheet = 1)
-)
+# Load measure registry with caching
+m_reg <- cached_load("measure_registry", function() {
+  as.data.frame(read_excel(file.path(data_folder, "Metadata.xlsx"), sheet = 1))
+})
 # remove everything that doesn't have a numerator
 m_reg <- m_reg[!is.na(m_reg$Numerator),]
 rownames(m_reg) <- m_reg$Numerator
@@ -206,19 +207,22 @@ colnames(sub_m)[ncol(sub_m)-1] <- "Original Weights"
 colnames(sub_m)[ncol(sub_m)] <- "Updated Weights"
 rownames(sub_m) <- rownames(m_reg)
 
-# load index weighting/output
-info_df <- read.csv(
-  file.path(data_folder, "Cleaned", "HSE_MWI_Data_Information.csv"),
-)
+# Load index weighting/output with caching
+info_df <- cached_load("info_df", function() {
+  read.csv(file.path(data_folder, "Cleaned", "HSE_MWI_Data_Information.csv"))
+})
 rownames(info_df) <- info_df$Numerator
 
-# load mapped measure data excat values
-meas_df <- read.csv(
-  file.path(data_folder, "Cleaned", "HSE_MWI_ZCTA_Converted_Measures.csv"),
-  colClasses = c("GEOID" = "character")
-)
-meas_df <- meas_df[meas_df$GEOID != "",]
-rownames(meas_df) <- meas_df$GEOID
+# Load mapped measure data with caching
+meas_df <- cached_load("meas_df", function() {
+  df <- read.csv(
+    file.path(data_folder, "Cleaned", "HSE_MWI_ZCTA_Converted_Measures.csv"),
+    colClasses = c("GEOID" = "character")
+  )
+  df <- df[df$GEOID != "",]
+  rownames(df) <- df$GEOID
+  return(df)
+})
 
 # load zip codes to zcta
 zip_cw <- read.csv(
@@ -305,21 +309,29 @@ rownames(no_dir_perc_meas_df) <- no_dir_perc_meas_df$ZCTA
 
 # MWI scores
 # NOTE: may also save as RData for faster reading
+# Load MWI scores with caching
 mwi <- list()
-mwi[["pop"]] <- read.csv(
-  file.path(data_folder, "Cleaned", 
-            "HSE_MWI_ZCTA_Mental_Wellness_Index_Population.csv"),
-  colClasses = c("ZCTA" = "character")
-)
+mwi[["pop"]] <- cached_load("mwi_pop", function() {
+  df <- read.csv(
+    file.path(data_folder, "Cleaned",
+              "HSE_MWI_ZCTA_Mental_Wellness_Index_Population.csv"),
+    colClasses = c("ZCTA" = "character")
+  )
+  df <- df[df$ZCTA != "",]
+  return(df)
+})
 # remove any empty zcta rows (miswriting?) -- TODO: fix in pipeline
-mwi[["pop"]] <- mwi[["pop"]][mwi[["pop"]]$ZCTA != "",]
-mwi[["black"]] <- read.csv(
-  file.path(data_folder, "Cleaned", 
-            "HSE_MWI_ZCTA_Mental_Wellness_Index_Black.csv"),
-  colClasses = c("ZCTA" = "character")
-)
+mwi[["black"]] <- cached_load("mwi_black", function() {
+  df <- read.csv(
+    file.path(data_folder, "Cleaned",
+              "HSE_MWI_ZCTA_Mental_Wellness_Index_Black.csv"),
+    colClasses = c("ZCTA" = "character")
+  )
+  df <- df[df$ZCTA != "",]
+  return(df)
+})
+
 # remove any empty zcta rows (miswriting?) -- TODO: fix in pipeline
-mwi[["black"]] <- mwi[["black"]][mwi[["black"]]$ZCTA != "",]
 
 # create a pretty set of names for later
 st_abbrev_to_full <- c(state.name, "District of Columbia", "All States")
