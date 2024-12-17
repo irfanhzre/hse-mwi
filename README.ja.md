@@ -16,7 +16,7 @@
 -   [メンタルウェルネス指数 (MWI)](#Mental-Wellness-Index-(MWI))
 -   [MWI をセットアップし、独自の MWI を作成する](#Set-Up-MWI-and-Create-Your-Own-MWI)
 -   [MWI データの使用](#Using-MWI-Data)
--   [技術的なセットアップ](#Technical-Set-Up)(寄稿者のみに役立ちます)
+-   [技術的なセットアップ](#Technical-Set-Up)(貢献者のみに役立ちます)
 -   [連絡先と帰属](#Contact-and-Attribution)
 
 # メンタルウェルネス指数 (MWI)
@@ -67,8 +67,63 @@ Mental Wellness Index Tool をセットアップして簡単に実行するに�
 
 4.  解凍したフォルダー内の「app.R」をRStudioで開きます。これにより、RStudio が開き、アプリケーションの左上隅に「app.R」スクリプトが開きます。
 
+#### ステップ 1 ～ 4 の代替案
+
+コマンドラインの使用手順
+
+##### 1. R と RStudio をインストールする
+
+まだインストールされていない場合は、以下のリンクから R および RStudio の最新バージョンをダウンロードしてインストールします。
+R:<https://www.r-project.org/>RSスタジオ:<https://www.rstudio.com/products/rstudio/download/>あるいは、パッケージ マネージャーを使用して R をインストールします。
+
+Windows の場合: Chocolatey を使用します。
+
+`choco install r.project ``choco install r.studio `
+
+macOS の場合: Homebrew を使用します:
+
+`brew install --cask r ``brew install --cask rstudio`
+
+Linux (Ubuntu/Debian) の場合:
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### ２． Git を使用して Mental Wellness Index リポジトリのクローンを作成する
+
+ターミナルまたはコマンド プロンプトを開き、次のコマンドを実行します。
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+これにより、リポジトリが hse-mwi という名前の新しいフォルダーにダウンロードされます。
+
+git がインストールされていない場合は、インストールします。
+
+-   Windows: Windows 用 Git
+
+-   macOS:`brew install git`
+
+-   Linux:`sudo apt install git `
+
+プロジェクト ディレクトリに移動します
+
+リポジトリのクローンが作成されたディレクトリに移動します。`cd hse-mwi `
+
+コマンドラインを使用して RStudio で app.R を開く
+
+##### ４．次のコマンドを実行して RStudio を起動し、app.R スクリプトを開きます。
+
+macOS/Linux の場合:`open -a RStudio app.R  `
+
+Windowsの場合:
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+例えば：
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
+
 5.  これらのパッケージをインストールするときに、左下隅にあるコンソール ウィンドウに次の行を入力し、コンソールのすべてのプロンプトに「はい」と答えます。
-    -   install.packages('readxl', 'writexl', 'htmltools', 'shiny', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass '、'shinycssloaders'、'shinyBS'、'DT'、 'dplyr')
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets'、'sass'、'shinycssloaders'、 'shinyBS'、'DT'、'dplyr'))
 
 6.  「app.R」で、11 行目に移動します。「app_local &lt;- FALSE」と表示されます。 FALSE を TRUE に変更します。
 
@@ -85,7 +140,7 @@ Mental Wellness Index Tool をセットアップして簡単に実行するに�
     -   郡: 5 桁の郡 FIPS コード (2 桁の州コードと 3 桁の郡コード、例: 01001)
     -   郵便番号: 米国郵便局の郵便番号 (例: 35051)
     -   国勢調査区: 11 桁の国勢調査区 FIPS コード (2 桁の州コード、3 桁の郡コード、6 桁の地区コード、例: 01001020100)
--   分母列が指定されている場合、MWI への最終入力は、分子を分母で割ってスケーリング数を乗算したものになります (メタデータ ファイルで指定されます。次のステップを参照)。
+-   分母列が指定されている場合、MWI への最終入力は、分子を分母で割ってスケーリング数を乗算したものになります (メタデータ ファイルで指定されています。次のステップを参照)。
 -   分子と分母は数値列である必要があります。
 -   データが欠落している場合は、セルを空白のままにしておきます。
 -   人種が階層化されている場合は、2 つの列が必要です。1 つは人口全体の測定値に対応する '\_pop' で終わる列、もう 1 つは黒人人口の測定値に対応する '\_black' で終わる列です。 Metadata.xlsx ファイル編集では、その行の「Preprocessed」列を TRUE に設定する必要があります。
@@ -158,11 +213,11 @@ API から取得した追加データ、または Web サイトから直接ダ�
 
 ### 前処理されたデータ
 
-このファイルには、すべての情報が含まれています**前処理された**前処理データとクリーンアップされたデータの間に発生する必要がある次のような追加の変換を測定し、通知します。
+このファイルには、すべての情報が含まれています**前処理された**前処理データとクリーンなデータの間に発生する必要がある次のような追加の変換を測定し、通知します。
 
 -   あらゆる地理レベル ->ZCTAレベルのみ
 
--   方向性が一致していることを測定します (値が高いほど、必要性が高いことを示します)
+-   方向性が一致していることを測定します (値が高いほどニーズが高いことを示します)
 
 -   調整されたスケーリング (分数からパーセントへ 0.1 ->10(%)、有病率調整値(1000人当たり)など)
 
