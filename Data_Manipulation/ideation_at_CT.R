@@ -28,22 +28,15 @@ unlink(temp)
 # Correct Format of County FIPs 
 raw_county$county <- sprintf("%05d", raw_county$county) 
 
-# Correct County FIPs for Single Digit States
-states <- c(1:2, 4:6, 8:9)
+# Efficiently Correct County FIPs for Single and Double-Digit States
+raw_county <- raw_county %>%
+  mutate(county = ifelse(
+    state %in% c(1:2, 4:6, 8:9), str_replace(county, "00", paste("0", state, sep = "")), county
+  )) %>%
+  mutate(county = ifelse(
+    state %in% c(10:13, 15:42, 44:51, 53:56), str_replace(county, "00", as.character(state)), county
+  ))
 
-for (i in states) {
-  raw_county[raw_county$state == i, ] <- filter(raw_county, state == i) %>%
-    mutate(county = str_replace(county, "00", paste("0", i, sep = "")))
-}
-
-# Correct County FIPs for Double Digit States
-
-states2 <- c(10:13, 15:42, 44:51, 53:56)
-
-for (i in states2) {
-  raw_county[raw_county$state == i, ] <- filter(raw_county, state == i) %>%
-    mutate(county = str_replace(county, "00", paste(i)))
-}
 
 # Add State Names & Align Substate Names across county and ideations datasets
 raw_county <- raw_county %>%
