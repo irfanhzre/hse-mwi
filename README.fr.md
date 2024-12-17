@@ -67,8 +67,63 @@ Pour créer votre propre indice de bien-être mental, vous pouvez suivre le rest
 
 4.  Dans le dossier décompressé, ouvrez « app.R » dans RStudio. Cela devrait ouvrir RStudio et le script "app.R" dans le coin supérieur gauche de l'application.
 
-5.  Dans la fenêtre de la console, située dans le coin inférieur gauche, saisissez la ligne suivante et répondez « oui » à toutes les invites de la console lorsque vous installez ces packages :
-    -   install.packages('readxl', 'writexl', 'htmltools', 'shiny', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass ', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr')
+#### Alternative pour les étapes 1 à 4
+
+Instructions pour l'utilisation de la ligne de commande
+
+##### 1. Installer R et RStudio
+
+Téléchargez et installez les dernières versions de R et RStudio à partir des liens ci-dessous si elles ne sont pas déjà installées :
+R :<https://www.r-project.org/>RStudio :<https://www.rstudio.com/products/rstudio/download/>Vous pouvez également utiliser un gestionnaire de packages pour installer R :
+
+Pour Windows : utilisez Chocolatey :
+
+`choco install r.project ``choco install r.studio `
+
+Pour macOS : utilisez Homebrew :
+
+`brew install --cask r ``brew install --cask rstudio`
+
+Pour Linux (Ubuntu/Debian) :
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### 2 . Cloner le référentiel d'index de bien-être mental à l'aide de Git
+
+Ouvrez votre terminal ou votre invite de commande et exécutez la commande suivante :
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+Cela téléchargera le référentiel dans un nouveau dossier nommé hse-mwi.
+
+Si git n'est pas installé, installez-le :
+
+-   Windows : Git pour Windows
+
+-   macOS :`brew install git`
+
+-   Linux :`sudo apt install git `
+
+Accédez au répertoire du projet
+
+Accédez au répertoire dans lequel le référentiel a été cloné :`cd hse-mwi `
+
+Ouvrez app.R dans RStudio à l'aide de la ligne de commande
+
+##### 4 . Exécutez la commande suivante pour lancer RStudio et ouvrez le script app.R :
+
+Pour macOS/Linux :`open -a RStudio app.R  `
+
+Pour Windows :
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+Par exemple:
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
+
+5.  Dans la fenêtre de la console, située dans le coin inférieur gauche, entrez la ligne suivante et répondez « oui » à toutes les invites de la console lorsque vous installez ces packages :
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
 
 6.  Dans "app.R", accédez à la ligne 11, qui devrait indiquer "app_local &lt;- FALSE". Remplacez FAUX par VRAI.
 
@@ -130,7 +185,7 @@ Synchronisez le dossier Microsoft Teams BHN Score Creation dans votre dossier lo
 
 Document de suivi des mesures situé dans`Teams`>`BHN Score`>`Measure-Tracking.xslx`
 
-Référez-vous à ce document et mettez-le à jour lorsque des mesures supplémentaires seront finalisées.
+Consulter et mettre à jour ce document lorsque des mesures supplémentaires seront finalisées.
 
 ## Extraire des données
 
