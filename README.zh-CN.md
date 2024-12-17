@@ -67,8 +67,63 @@ MWI 的制定考虑到了美国黑人的心理健康状况。我们选择美国�
 
 4.  在解压的文件夹中，在 RStudio 中打开“app.R”。这应该打开 RStudio 和应用程序左上角的“app.R”脚本。
 
+#### 步骤 1-4 的替代方案
+
+命令行使用说明
+
+##### 1.安装 R 和 RStudio
+
+如果尚未安装，请从以下链接下载并安装最新版本的 R 和 RStudio：
+回复：<https://www.r-project.org/>R工作室：<https://www.rstudio.com/products/rstudio/download/>或者，使用包管理器安装 R：
+
+对于 Windows：使用 Chocolatey：
+
+`choco install r.project ``choco install r.studio `
+
+对于 macOS：使用 Homebrew：
+
+`brew install --cask r ``brew install --cask rstudio`
+
+对于 Linux（Ubuntu/Debian）：
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### 2.使用 Git 克隆心理健康指数存储库
+
+打开终端或命令提示符并运行以下命令：
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+这会将存储库下载到名为 hse-mwi 的新文件夹中。
+
+如果没有安装 git，请安装它：
+
+-   Windows：适用于 Windows 的 Git
+
+-   苹果系统：`brew install git`
+
+-   Linux：`sudo apt install git `
+
+导航到项目目录
+
+更改到克隆存储库的目录：`cd hse-mwi `
+
+使用命令行在 RStudio 中打开 app.R
+
+##### 4.运行以下命令启动 RStudio 并打开 app.R 脚本：
+
+对于 macOS/Linux：`open -a RStudio app.R  `
+
+对于 Windows：
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+例如：
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
+
 5.  在安装这些软件包时，在左下角的控制台窗口中，输入以下行并对控制台中的所有提示回答“是”：
-    -   install.packages('readxl', 'writexl', 'htmltools', 'shiny', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass ', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr')
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
 
 6.  在“app.R”中，导航到第 11 行，其中应显示“app_local &lt;- FALSE”。将 FALSE 更改为 TRUE。
 
