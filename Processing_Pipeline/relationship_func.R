@@ -28,6 +28,16 @@ zcta_rel <- zcta_rel[zcta_rel$GEOID_ZCTA5_10 != "" &
 territories <- as.character(c(60, 64, 66, 68, 69, 70, 72, 74, 78))
 ct_rel <- ct_rel[!substr(ct_rel$GEOID_TRACT_20, 1, 2) %in% territories,]
 
+# Precompute weights to optimize calculations ----
+# Added: Precomputed weights for both census tract and ZCTA to avoid redundant calculations
+ct_rel$perc_land <- ct_rel$AREALAND_PART / ct_rel$AREALAND_TRACT_20
+zcta_rel$perc_land <- zcta_rel$AREALAND_PART / zcta_rel$AREALAND_ZCTA5_20
+
+# Precompute the total weighted percentages for each target unit
+ct_weight_sum <- aggregate(perc_land ~ GEOID_TRACT_20, ct_rel, FUN = sum, na.rm = TRUE)
+zcta_weight_sum <- aggregate(perc_land ~ GEOID_ZCTA5_20, zcta_rel, FUN = sum, na.rm = TRUE)
+
+
 # census tracts: 2010 to 2020 ----
 
 ct_10_to_20 <- function(df, geoid_col, meas_col){
@@ -53,34 +63,29 @@ ct_10_to_20 <- function(df, geoid_col, meas_col){
   # index results by the GEOID
   rownames(df) <- df[,geoid_col]
   
-  ct_rel_sub <- ct_rel[ct_rel$GEOID_TRACT_20 %in% 
-                         ct_rel$GEOID_TRACT_20[duplicated(ct_rel$GEOID_TRACT_20)],]
-  ct_rel_sub$perc_land <- ct_rel_sub$AREALAND_PART/ct_rel_sub$AREALAND_TRACT_20
-  
+   # Precompute weights for proportional calculations
+    ct_rel_sub <- ct_rel[ct_rel$GEOID_TRACT_20 %in%
+                           ct_rel$GEOID_TRACT_20[duplicated(ct_rel$GEOID_TRACT_20)],]
+    ct_rel_sub$weight_perc <- ct_rel_sub$perc_land /
+      ct_weight_sum$perc_land[match(ct_rel_sub$GEOID_TRACT_20, ct_weight_sum$GEOID_TRACT_20)]
+
   # now deal with partials using weighted values
   for (v in  meas_col){
     
     # subset to only the ones that appear in the target and are not NA
-    ct_rel_sub <- ct_rel_sub[ct_rel_sub$GEOID_TRACT_10 %in% df[!is.na(df[,v]),
-                                                               geoid_col],]
+     ct_rel_sub_filtered <- ct_rel_sub[ct_rel_sub$GEOID_TRACT_10 %in% df[!is.na(df[,v]), geoid_col],]
+
+     # weight values based on precomputed weight percentages
+     ct_rel_sub_filtered[, v] <- df[ct_rel_sub_filtered$GEOID_TRACT_10, v] * ct_rel_sub_filtered$weight_perc
+
     
-    # find the denominator of weighted sums
-    tmp <- aggregate(perc_land ~ GEOID_TRACT_20, ct_rel_sub, FUN = sum)
-    rownames(tmp) <- tmp$GEOID_TRACT_20
-    ct_rel_sub$weight_sum <- tmp[ct_rel_sub$GEOID_TRACT_20, "perc_land"]
-    
-    # find the multiplier for weighted sums
-    ct_rel_sub$weight_perc <- ct_rel_sub$perc_land/ct_rel_sub$weight_sum
-    
-    ct_rel_sub[, v] <- df[ct_rel_sub$GEOID_TRACT_10, v]*ct_rel_sub$weight_perc
-    
-    # now sum the weighted values
-    tmp <- aggregate(ct_rel_sub[, v], 
-                     by = list(GEOID_TRACT_20 = ct_rel_sub$GEOID_TRACT_20),
-                     FUN = sum, na.rm = T)
-    
-    res_df[tmp$GEOID_TRACT_20, v] <- tmp$x
-  }
+    # aggregate the weighted values
+        tmp <- aggregate(ct_rel_sub_filtered[, v],
+                         by = list(GEOID_TRACT_20 = ct_rel_sub_filtered$GEOID_TRACT_20),
+                         FUN = sum, na.rm = T)
+
+        res_df[tmp$GEOID_TRACT_20, v] <- tmp$x
+      }
   
   # convert column name back
   colnames(res_df)[1] <- geoid_col
@@ -123,32 +128,24 @@ zcta_10_to_20 <- function(df, geoid_col, meas_col){
   
   zcta_rel_sub <- zcta_rel[zcta_rel$GEOID_ZCTA5_20 %in% 
                          zcta_rel$GEOID_ZCTA5_20[duplicated(zcta_rel$GEOID_ZCTA5_20)],]
-  zcta_rel_sub$perc_land <- zcta_rel_sub$AREALAND_PART/zcta_rel_sub$AREALAND_ZCTA5_20
+    # Precompute weights for proportional calculations
+  zcta_rel_sub$weight_perc <- zcta_rel_sub$perc_land /
+    zcta_weight_sum$perc_land[match(zcta_rel_sub$GEOID_ZCTA5_20, zcta_weight_sum$GEOID_ZCTA5_20)]
+
   
   # now deal with partials using weighted values
   for (v in meas_col){
     
-    # subset to only the ones that appear in the target and are not NA
-    zcta_rel_sub <- zcta_rel_sub[zcta_rel_sub$GEOID_ZCTA5_10 %in% df[!is.na(df[,v]),
-                                                               geoid_col],]
-    
-    # find the denominator of weighted sums
-    tmp <- aggregate(perc_land ~ GEOID_ZCTA5_20, zcta_rel_sub, FUN = sum)
-    rownames(tmp) <- tmp$GEOID_ZCTA5_20
-    zcta_rel_sub$weight_sum <- tmp[zcta_rel_sub$GEOID_ZCTA5_20, "perc_land"]
-    
-    # find the multiplier for weighted sums
-    zcta_rel_sub$weight_perc <- zcta_rel_sub$perc_land/zcta_rel_sub$weight_sum
-    
-    zcta_rel_sub[, v] <- df[zcta_rel_sub$GEOID_ZCTA5_10, v]*zcta_rel_sub$weight_perc
-    
-    # now sum the weighted values
-    tmp <- aggregate(zcta_rel_sub[, v], 
-                     by = list(GEOID_ZCTA5_20 = zcta_rel_sub$GEOID_ZCTA5_20),
-                     FUN = sum, na.rm = T)
-    
-    res_df[tmp$GEOID_ZCTA5_20, v] <- tmp$x
-  }
+    zcta_rel_sub_filtered <- zcta_rel_sub[zcta_rel_sub$GEOID_ZCTA5_10 %in% df[!is.na(df[,v]), geoid_col],]
+
+        zcta_rel_sub_filtered[, v] <- df[zcta_rel_sub_filtered$GEOID_ZCTA5_10, v] * zcta_rel_sub_filtered$weight_perc
+
+    tmp <- aggregate(zcta_rel_sub_filtered[, v],
+                         by = list(GEOID_ZCTA5_20 = zcta_rel_sub_filtered$GEOID_ZCTA5_20),
+                         FUN = sum, na.rm = T)
+
+        res_df[tmp$GEOID_ZCTA5_20, v] <- tmp$x
+      }
   
   # convert column name back
   colnames(res_df)[1] <- geoid_col
