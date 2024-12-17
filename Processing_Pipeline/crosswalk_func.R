@@ -7,24 +7,26 @@
 # load libraries and data ----
 
 library(stringr)
+# OPTIMIZATION: Added data.table for faster data operations
+library(data.table)
 
 cw_folder <- file.path("Data", "Resources")
 
-# load crosswalk files
-county_cw <- read.csv(file.path(cw_folder, "zcta_county_rel_20.csv"),
+# load crosswalk files # OPTIMIZATION: Using fread instead of read.csv for faster file reading
+county_cw <- fread(file.path(cw_folder, "zcta_county_rel_20.csv"),
                       colClasses = c(
                         "ZCTA5" = "character",
                         "GEOID" = "character"
                       ))
 county_cw$STATE <- substr(county_cw$GEOID, 1, 2)
 county_cw$COUNTY <- substr(county_cw$GEOID, 3, 5)
-ct_cw <- read.csv(file.path(cw_folder, "zcta_tract_rel_20.csv"),
+ct_cw <- fread(file.path(cw_folder, "zcta_tract_rel_20.csv"),
                   colClasses = c(
                     "ZCTA5" = "character",
                     "GEOID" = "character"
                   ))
 ct_cw$STATE <- substr(ct_cw$GEOID, 1, 2)
-zip_cw <- read.csv(file.path(cw_folder, "Zip_to_zcta_crosswalk_2021.csv"),
+zip_cw <- fread(file.path(cw_folder, "Zip_to_zcta_crosswalk_2021.csv"),
                    colClasses = c(
                      "ZIP_CODE" = "character",
                      "ZCTA" = "character"
@@ -35,6 +37,11 @@ county_cw <- county_cw[!substr(county_cw$GEOID, 1, 2) %in% territories,]
 ct_cw <- ct_cw[!substr(ct_cw$GEOID, 1, 2) %in% territories,]
 territories <- c("AS", "FM", "GU", "MH", "MP", "PW", "PR", "VI")
 zip_cw <- zip_cw[!zip_cw$STATE %in% territories,]
+
+# OPTIMIZATION: Convert to data.table for better performance
+setDT(county_cw)
+setDT(ct_cw)
+setDT(zip_cw)
 
 # also keep all unique zctas to generate a file
 all_zctas <- unique(county_cw$ZCTA5)
@@ -79,7 +86,7 @@ check_geoid <- function(df, geoid_col, type){
 # zcta_df: measures converted for each zcta
 county_to_zcta <- function(df, geoid_col, meas_col){
   cat(paste0("[", Sys.time(), "]: Converting county to ZCTA\n"))
-
+  setDT(df)  # Convert to data.table
   cat(paste0(
     "[", Sys.time(), "]: ",
     signif(sum(!df[,geoid_col] %in% county_cw$GEOID)/nrow(df)*100, 4),
@@ -88,21 +95,24 @@ county_to_zcta <- function(df, geoid_col, meas_col){
     ") of counties not found in master crosswalk\n"
   ))
 
-  # first, preallocate the result
-  zcta_df <- data.frame("ZCTA" = all_zctas)
-  zcta_df[, meas_col] <- NA
-  rownames(zcta_df) <- zcta_df$ZCTA
+  # OPTIMIZATION: Preallocate with data.table
+    zcta_df <- data.table("ZCTA" = all_zctas)
+    for(col in meas_col) zcta_df[, (col) := NA_real_]
+    setkey(zcta_df, ZCTA)
 
-  # first, exactly assign the ones that are fully contained
-  cty_sub <- county_cw[!county_cw$ZCTA5 %in%
-                         county_cw$ZCTA5[duplicated(county_cw$ZCTA5)],]
+  # first, exactly assign the ones that are fully contained   # OPTIMIZATION: Improved subset operations using data.table syntax
+    cty_sub <- county_cw[!ZCTA5 %in% county_cw[duplicated(ZCTA5), ZCTA5]]
+
   # get the corresponding counties
   df_sub <- df[df[,geoid_col] %in% cty_sub$GEOID,]
-  rownames(df_sub) <- df_sub[, geoid_col]
-  # add the var in the df to the county sub
-  cty_sub[, meas_col] <- df_sub[cty_sub$GEOID, meas_col]
-  # add the results to the main dataframe
-  zcta_df[cty_sub$ZCTA5, meas_col] <- cty_sub[, meas_col]
+
+  setkey(df_sub, geoid_col)
+    setkey(cty_sub, GEOID)
+
+    for(col in meas_col) {
+      cty_sub[, (col) := df_sub[cty_sub$GEOID][[col]]]
+      zcta_df[cty_sub$ZCTA5, (col) := cty_sub[[col]]]
+    }
 
   # now subset to census tracts that are in the dataset at all
   cty_sub <- county_cw[county_cw$GEOID %in% df[, geoid_col],]
