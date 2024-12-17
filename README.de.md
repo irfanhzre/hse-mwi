@@ -16,7 +16,7 @@
 -   [Mental Wellness Index (MWI)](#Mental-Wellness-Index-(MWI))
 -   [Richten Sie MWI ein und erstellen Sie Ihr eigenes MWI](#Set-Up-MWI-and-Create-Your-Own-MWI)
 -   [Verwendung von MWI-Daten](#Using-MWI-Data)
--   [Technische Einrichtung](#Technical-Set-Up)(nur nützlich für Mitwirkende)
+-   [Technische Einrichtung](#Technical-Set-Up) (only useful for contributors)
 -   [Kontakt und Namensnennung](#Contact-and-Attribution)
 
 # Mental Wellness Index (MWI)
@@ -47,7 +47,7 @@ Das MWI erstellt für jede Postleitzahl einen Wert zwischen 0 und 100, sodass:
 
 ## Konzentrieren Sie sich auf schwarze Amerikaner
 
-Der MWI wurde unter Berücksichtigung des psychischen Gesundheitszustands schwarzer Amerikaner entwickelt. Wir haben schwarze Amerikaner als vorrangige Bevölkerungsgruppe ausgewählt, um uns auf die Randgruppen zu konzentrieren und die Erstellung eines Index zu vermeiden, der sich auf die „Durchschnittsgemeinschaft“ konzentriert. Wir glauben, dass die Fokussierung auf schwarze Amerikaner auf diese Weise allen Gruppen mit Ungleichheiten zugute kommt, da es keinem von uns gut geht, bis es uns allen gut geht. Wir erkennen auch die Notwendigkeit an, den MWI für zusätzliche vorrangige Bevölkerungsgruppen zu identifizieren, zu erkennen und anzupassen.
+Der MWI wurde unter Berücksichtigung des psychischen Gesundheitszustands schwarzer Amerikaner entwickelt. Wir haben schwarze Amerikaner als vorrangige Bevölkerungsgruppe ausgewählt, um uns auf die Randgruppen zu konzentrieren und zu vermeiden, dass ein Index erstellt wird, der sich auf die „Durchschnittsgemeinschaft“ konzentriert. Wir glauben, dass die Fokussierung auf schwarze Amerikaner auf diese Weise allen Gruppen mit Ungleichheiten zugute kommt, da es keinem von uns gut geht, bis es uns allen gut geht. Wir erkennen auch die Notwendigkeit an, den MWI für zusätzliche vorrangige Bevölkerungsgruppen zu identifizieren, zu erkennen und anzupassen.
 
 ## Datenaktualisierung 2023
 
@@ -65,10 +65,66 @@ Um Ihren eigenen Mental Wellness Index zu erstellen, können Sie den restlichen 
 
 3.  Entpacken Sie „hse-mwi-main.zip“.
 
-4.  Öffnen Sie im entpackten Ordner „app.R“ in RStudio. Dadurch sollten RStudio und das Skript „app.R“ in der oberen linken Ecke der Anwendung geöffnet werden.
+4.  Öffnen Sie im entpackten Ordner „app.R“ in RStudio. Dadurch sollten RStudio und das „app.R“-Skript in der oberen linken Ecke der Anwendung geöffnet werden.
 
-5.  In the console window, which is in the bottom left hand corner, enter the following line and answer "yes" to all prompts in the console as you install these packages:
-    -   install.packages('readxl', 'writexl', 'htmltools', 'shiny', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass ', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr')
+#### Alternative für Schritt 1-4
+
+Anweisungen zur Verwendung der Befehlszeile
+
+##### 1 . Installieren Sie R und RStudio
+
+Laden Sie die neuesten Versionen von R und RStudio über die folgenden Links herunter und installieren Sie sie, sofern sie noch nicht installiert sind:
+R:<https://www.r-project.org/>
+RStudio: <https://www.rstudio.com/products/rstudio/download/>Alternativ können Sie R auch mit einem Paketmanager installieren:
+
+Für Windows: Verwenden Sie Chocolatey:
+
+`choco install r.project ``choco install r.studio `
+
+Für macOS: Homebrew verwenden:
+
+`brew install --cask r ``brew install --cask rstudio`
+
+Für Linux (Ubuntu/Debian):
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### 2 . Klonen Sie das Mental Wellness Index Repository mit Git
+
+Öffnen Sie Ihr Terminal oder Ihre Eingabeaufforderung und führen Sie den folgenden Befehl aus:
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+Dadurch wird das Repository in einen neuen Ordner namens hse-mwi heruntergeladen.
+
+Wenn Git nicht installiert ist, installieren Sie es:
+
+-   Windows: Git for Windows 
+
+-   macOS:`brew install git`
+
+-   Linux:`sudo apt install git `
+
+Navigieren Sie zum Projektverzeichnis
+
+Wechseln Sie in das Verzeichnis, in dem das Repository geklont wurde:`cd hse-mwi `
+
+Öffnen Sie app.R in RStudio über die Befehlszeile
+
+##### 4 . Führen Sie den folgenden Befehl aus, um RStudio zu starten und das app.R-Skript zu öffnen:
+
+Für macOS/Linux:`open -a RStudio app.R  `
+
+Für Windows:
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+Zum Beispiel:
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
+
+5.  Geben Sie im Konsolenfenster in der unteren linken Ecke die folgende Zeile ein und beantworten Sie alle Eingabeaufforderungen in der Konsole mit „Ja“, während Sie diese Pakete installieren:
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
 
 6.  Navigieren Sie in „app.R“ zu Zeile 11, die „app_local &lt;- FALSE“ lauten sollte. Ändern Sie FALSE in TRUE.
 
@@ -100,7 +156,7 @@ Um Ihren eigenen Mental Wellness Index zu erstellen, können Sie den restlichen 
 
 13. Laden Sie Ihre ZIP-Datei hoch und klicken Sie unten auf „Benutzerdefiniertes MWI erstellen“. Dies kann je nach Umfang der Maßnahmen einige Zeit in Anspruch nehmen.
 
-14. Sobald die benutzerdefinierte MWI-Erstellung abgeschlossen ist, klicken Sie auf „Benutzerdefiniertes MWI herunterladen“, um eine .RData-Datei mit allen erforderlichen Informationen herunterzuladen, um Ihre MWI in diesem Tool anzuzeigen. Hinweis: Wenn Sie diese Seite verlassen, gehen alle Verarbeitungen und Daten verloren! In dieser Anwendung wird nichts gespeichert.
+14. Sobald die benutzerdefinierte MWI-Erstellung abgeschlossen ist, klicken Sie auf „Benutzerdefiniertes MWI herunterladen“, um eine .RData-Datei mit allen erforderlichen Informationen herunterzuladen, um Ihre MWI in diesem Tool anzuzeigen. Hinweis: Wenn Sie diese Seite verlassen, gehen sämtliche Verarbeitungen und Daten verloren! In dieser Anwendung wird nichts gespeichert.
 
 15. Um Ihren MWI anzuzeigen, klicken Sie unter „Staaten erkunden“ oder „Postleitzahlen erkunden“ auf das Feld „Benutzerdefinierter MWI-Upload“ und laden Sie die heruntergeladene „.RData“-Datei hoch.
 
@@ -144,21 +200,21 @@ Hinzufügen von Daten, die von einer API abgerufen oder direkt von einer Website
 
 -   `Teams`>`BHN Score`>`Data`>`Preprocessed`
 
-    -   wenn die Daten in ein Format fallen, in dem jede Zeile ein geografischer Container ist (z. B. Volkszählungsbezirk, Landkreis, Postleitzahl usw.)
+    -   wenn die Daten in ein Format fallen, bei dem jede Zeile ein geografischer Container ist (z. B. Volkszählungsgebiet, Landkreis, Postleitzahl usw.)
 
     -   Die Dateierweiterung ist nur .csv
 
-    -   **Notiz:**Führen Sie für alle Daten, die von einer API (Tidycensus usw.) abgerufen werden, alle Vorverarbeitungsaufgaben aus und schreiben Sie Daten direkt darauf`Preprocessed`Ordner.
+    -   **Notiz:**Führen Sie für alle Daten, die von einer API (Tidycensus usw.) abgerufen werden, alle Vorverarbeitungsaufgaben aus und schreiben Sie Daten direkt dorthin`Preprocessed`Ordner.
 
 Achten Sie beim Abrufen von Daten darauf, die relevanten Spalten im auszufüllen`Measure-Tracking.xlsx`und/oder`Metadata.xlsx`Dateien.
 
 ## Maßnahmenregistrierung
 
-Messen Sie das Registrierungsdokument in`Teams`>`BHN Score`>`Data`> `Metadata.xslx`. Dieses Dokument enthält Informationen, die für die Stapelverarbeitung/Batch-Analyse von vorverarbeiteten Daten bis hin zu bereinigten Daten erforderlich sind.
+Messen Sie das Registrierungsdokument in`Teams`>`BHN Score`>`Data`>`Metadata.xslx`. Dieses Dokument enthält Informationen, die für die Stapelverarbeitung/Batch-Analyse von vorverarbeiteten Daten bis hin zu bereinigten Daten erforderlich sind.
 
 ### Vorverarbeitete Daten
 
-Diese Datei enthält Informationen zu allen**vorverarbeitet**misst und informiert über alle zusätzlichen Transformationen, die zwischen Vorverarbeitungs- und bereinigten Daten stattfinden müssen, einschließlich:
+Diese Datei enthält Informationen zu allen**vorverarbeitet**misst und informiert über alle zusätzlichen Transformationen, die zwischen Vorverarbeitung und bereinigten Daten stattfinden müssen, einschließlich:
 
 -   Jede geografische Ebene –>Nur ZCTA-Ebene
 
@@ -170,7 +226,7 @@ Diese Datei enthält Informationen zu allen**vorverarbeitet**misst und informier
 
 Sobald die Daten bereinigt sind, werden sie in der Combined Measures-Datei zusammengeführt. Es wird zwei Versionen geben:
 
--   Ursprüngliche kombinierte Maßnahmendatei:`Teams`>`BHN Score`>`Data`>`Cleaned`>`HSE_ZCTA_Converted_Measures.csv`
+-   Ursprüngliche kombinierte Maßnahmendatei:`Teams`>`BHN Score`>`Data`>`Cleaned` >`HSE_ZCTA_Converted_Measures.csv`
 
 -   Datei mit prozentual skalierten kombinierten Messwerten:`Teams`>`BHN Score`>`Data`>`Cleaned`>`HSE_ZCTA_Percentile_Ranked_Measures.csv`
 
