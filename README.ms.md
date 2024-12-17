@@ -67,8 +67,63 @@ Untuk mencipta Indeks Kesejahteraan Mental anda sendiri, anda boleh mengikuti ar
 
 4.  Dalam folder yang dinyahzip, buka "app.R" dalam RStudio. Ini sepatutnya membuka RStudio dan skrip "app.R" di penjuru kiri sebelah atas aplikasi.
 
+#### Alternatif untuk langkah 1-4
+
+Arahan untuk Penggunaan Baris Perintah
+
+##### 1 . Pasang R dan RStudio
+
+Muat turun dan pasang versi terkini R dan RStudio daripada pautan di bawah jika belum dipasang:
+R:<https://www.r-project.org/>RStudio:<https://www.rstudio.com/products/rstudio/download/>Sebagai alternatif, gunakan pengurus pakej untuk memasang R:
+
+Untuk Windows: Gunakan Chocolatey:
+
+`choco install r.project ``choco install r.studio `
+
+Untuk macOS: Gunakan Homebrew:
+
+`brew install --cask r ``brew install --cask rstudio`
+
+Untuk Linux (Ubuntu/Debian):
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### 2 . Klon Repositori Indeks Kesejahteraan Mental Menggunakan Git
+
+Buka terminal atau command prompt anda dan jalankan arahan berikut:
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+Ini akan memuat turun repositori ke dalam folder baharu bernama hse-mwi.
+
+Jika git tidak dipasang, pasangkannya:
+
+-   Windows: Git untuk Windows
+
+-   macOS:`brew install git`
+
+-   Linux:`sudo apt install git `
+
+Navigasi ke Direktori Projek
+
+Tukar ke direktori tempat repositori diklon:`cd hse-mwi `
+
+Buka app.R dalam RStudio Menggunakan Baris Perintah
+
+##### 4 . Jalankan arahan berikut untuk melancarkan RStudio dan buka skrip app.R:
+
+Untuk macOS/Linux:`open -a RStudio app.R  `
+
+Untuk Windows:
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+Contohnya:
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
+
 5.  Dalam tetingkap konsol, yang berada di sudut kiri bawah, masukkan baris berikut dan jawab "ya" kepada semua gesaan dalam konsol semasa anda memasang pakej ini:
-    -   install.packages('readxl', 'writexl', 'htmltools', 'berkilat', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass ', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr')
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'berkilat', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
 
 6.  Dalam "app.R", navigasi ke baris 11, yang sepatutnya menyatakan "app_local &lt;- FALSE". Tukar FALSE kepada TRUE.
 
@@ -110,7 +165,7 @@ Jika anda ingin menggunakan MWI atau langkah atau datanya yang diproses, lihat f
 
 Folder dalam "Data" adalah seperti berikut:
 
--   Sumber: mengandungi fail untuk memproses data dan merujuk lintasan geografi.
+-   Sumber: mengandungi fail untuk memproses data dan merujuk persimpangan geografi.
 -   Praproses: mengandungi data praproses untuk semua ukuran dalam format yang diperlukan oleh saluran paip MWI: satu lajur untuk menunjukkan pengecam geografi, kemudian satu untuk nilai berangka setiap ukuran.
 -   Dibersihkan: mengandungi keputusan Indeks Kesejahteraan Mental dan memproses keputusan saluran paip.
 
