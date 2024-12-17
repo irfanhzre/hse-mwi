@@ -67,8 +67,70 @@ To create your own Mental Wellness Index, you can follow the rest of the instruc
 
 4. In the unzipped folder, open "app.R" in RStudio. This should open RStudio and the "app.R" script in the top left hand corner of the application.
 
+#### Alternative for step 1-4 
+Instructions for Command Line Usage
+
+##### 1 . Install R and RStudio
+Download and install the latest versions of R and RStudio from the links below if not already installed:
+R: https://www.r-project.org/
+RStudio: https://www.rstudio.com/products/rstudio/download/
+Alternatively, use a package manager to install R:
+
+For Windows: Use Chocolatey:
+
+ ``` choco install r.project  ```
+ ``` choco install r.studio  ```
+
+For macOS: Use Homebrew:
+
+ ``` brew install --cask r  ```
+ ``` brew install --cask rstudio ```
+
+For Linux (Ubuntu/Debian):
+
+ ```sudo apt update  ```
+ ```sudo apt install r-base  ```
+
+##### 2 . Clone the Mental Wellness Index Repository Using Git
+Open your terminal or command prompt and run the following command:
+
+ ``` git clone https://github.com/mitre/hse-mwi.git ```
+
+This will download the repository into a new folder named hse-mwi.
+
+If git is not installed, install it:
+
+* Windows: Git for Windows 
+
+* macOS:
+ ``` brew install git ```
+ 
+* Linux:
+ ``` sudo apt install git  ```
+ 
+Navigate to the Project Directory
+
+Change to the directory where the repository was cloned:
+ ``` cd hse-mwi  ```
+ 
+Open app.R in RStudio Using the Command Line
+
+##### 4 . Run the following command to launch RStudio and open the app.R script:
+
+For macOS/Linux:
+ ```open -a RStudio app.R  ```
+
+For Windows:
+
+ ``` Replace <path-to-rstudio> with the full path to RStudio executable: ```
+ ``` "<path-to-rstudio>\rstudio.exe" app.R ```
+
+For example:
+
+ ``` "C:\Program Files\RStudio\bin\rstudio.exe" app.R  ```
+
 5. In the console window, which is in the bottom left hand corner, enter the following line and answer "yes" to all prompts in the console as you install these packages:
-   * install.packages('readxl', 'writexl', 'htmltools', 'shiny', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr')
+   * install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
 
 6. In "app.R", navigate to line 11, which should say "app_local <- FALSE". Change FALSE to TRUE.
 
