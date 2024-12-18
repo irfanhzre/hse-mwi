@@ -1,6 +1,7 @@
 # Mental Wellness Index Tool
 # By HSE Team
 # Originated on: 10/20/2021
+# Updated on: 17/11/2024 
 
 # NOTE: Styling by Sarah Ober of Case Study for using health equity framework
 # in population health team.
@@ -729,6 +730,34 @@ html_color <- function(meas_color, text){
 # UI ----
 
 ui <- fluidPage(
+
+  #Use Google Translate function 
+  tags$head(
+    HTML(
+      "
+    <script type=\"text/javascript\">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,fr,de,zh-CN,ja,ar,ru,ms',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_function');
+    }
+    </script>
+    <script type=\"text/javascript\" src=\"//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit\"></script>
+    <style>
+      .title-panel-custom {
+        font-size: 16px; /* Adjust font size */
+        padding: 8px; /* Adjust padding to reduce size */
+      }
+    </style>
+    "
+    )
+  ),
+  
+  div(id = "google_translate_function", style = "float:right; padding:8px;"),
+  div(class = "title-panel-custom", "Language Selection"),
+  
   # Title panel sets text in the browser tab
   # This is necessary because the navbarPage title is html and not straight text
   div(
@@ -2834,4 +2863,4 @@ server <- function(input, output, session) {
 
 # RUN ----
 
-shinyApp(ui, server)
+shinyApp(ui, server) 
