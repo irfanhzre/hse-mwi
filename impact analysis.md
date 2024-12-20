@@ -1,4 +1,11 @@
-# Insights Gained from the Call Graph Analysis
+# Addressed Issues
+1. I used config.R to replace the hardcoded parameters as an adaptive maintenance of software properties.
+
+2. I added the cache mechanism to make the app load data faster after the first run, which an enhancive maintenance.
+
+
+# Insights Gained from the Call Graph Analysis 
+
 
 1. Modular Function Organization:
     * The call graph effectively displays the modularity of the codebase by separating functions into logical groups such as config.R, app.R, pipeline_driver.R, and cache_module.R.
