@@ -4,6 +4,26 @@
 
 # Note: using household based weighted averages
 
+# Add cache
+cache_system <- new.env()
+
+improved_county_to_zcta <- function(df, geoid_col, meas_col) {
+  # Generate cache key
+  cache_key <- digest::digest(list(df[,geoid_col], meas_col))
+  
+  # Check cache first
+  if (exists(cache_key, envir = cache_system)) {
+    return(get(cache_key, envir = cache_system))
+  }
+  
+  # Original processing
+  result <- county_to_zcta(df, geoid_col, meas_col)
+  
+  # Cache result
+  assign(cache_key, result, envir = cache_system)
+  return(result)
+}
+
 # load libraries and data ----
 
 library(stringr)
