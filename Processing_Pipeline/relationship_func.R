@@ -161,3 +161,24 @@ zcta_10_to_20 <- function(df, geoid_col, meas_col){
   return(res_df)
 }
 
+# Add error handling
+validate_census_conversion <- function(df, geoid_col, meas_col) {
+  tryCatch({
+    # Input validation
+    if (!all(sapply(df[meas_col], is.numeric))) {
+      stop("Non-numeric values found in measure columns")
+    }
+    
+    # Process with logging
+    log_file <- file.path("logs", format(Sys.time(), "conversion_%Y%m%d_%H%M%S.log"))
+    cat(sprintf("[%s] Starting census conversion\n", Sys.time()), file = log_file)
+    
+    result <- ct_10_to_20(df, geoid_col, meas_col)
+    
+    cat(sprintf("[%s] Conversion completed\n", Sys.time()), file = log_file, append = TRUE)
+    return(result)
+  }, error = function(e) {
+    cat(sprintf("[%s] Error: %s\n", Sys.time(), e$message), file = log_file, append = TRUE)
+    stop(e)
+  })
+}
