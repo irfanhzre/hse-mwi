@@ -781,11 +781,14 @@ ui <- fluidPage(
                 choices = overall$avail_meas_list[["pop"]]
               ),
               textInput(
-                "zip_choose",
-                label = "Which ZIP Code would you like to focus on in the selected state?",
-                placeholder = "e.g. 35004, 00501, 20041, etc."
+                "zip_choose", # The unique ID used to refer to this text input in the Shiny server logic
+                label = "Which ZIP Code would you like to focus on in the selected state?", # The label displayed next to the text input box
+                placeholder = "e.g. 35004, 00501, 20041, etc." # Placeholder text shown inside the text box as a hint to the user
               ),
-              actionButton("reset_zcta_click", "Reset ZIP Code Focus")
+              actionButton(
+                "reset_zcta_click", # The unique ID used to refer to this button in the Shiny server logic
+                "Reset ZIP Code Focus" # The text displayed on the button
+              )
             ),
             bsCollapsePanel(
               "Custom MWI Upload",
@@ -1712,16 +1715,24 @@ server <- function(input, output, session) {
   
   # update the ZCTA
   observeEvent(input$reset_zcta_click, {
-    focus_info$hl <- F
-    focus_info$ZCTA <- ""
-    
-    # remove any previously highlighted polygon
-    if (!st_sub$is_all){
-      us_proxy %>% removeShape("remove_me")
-    } else {
-      us_proxy %>% removeMarker("remove_me")
-    }
-  })
+      # This block of code is executed whenever the "Reset ZIP Code Focus" button is clicked.
+
+      # Clear the value of the ZIP Code input box.
+      updateTextInput(session, "zip_choose", value = "")
+
+      # Update the focus information: reset highlighting to false and clear the ZCTA (ZIP Code Tabulation Area).
+      focus_info$hl <- F
+      focus_info$ZCTA <- ""
+
+      # Remove any previously highlighted polygon or marker on the map.
+      if (!st_sub$is_all) {
+        # If the map is focused on a specific subset, remove the highlighted polygon.
+        us_proxy %>% removeShape("remove_me")
+      } else {
+        # If the map is displaying all data, remove the highlighted marker.
+        us_proxy %>% removeMarker("remove_me")
+      }
+    })
   
   # reset map click focus
   observeEvent(input$us_map_fill, {
