@@ -25,12 +25,14 @@ library(DT)
 # library(formattable)
 library(dplyr)
 
-options(shiny.maxRequestSize=config$get("app.max_request_size"))
-
 source("app_config.R")
 # Load configuration
 source("config/config.R")
 source("modules/cache_module.R")
+
+options(shiny.maxRequestSize=config$get("app.max_request_size"))
+
+
 # styling/resources ----
 
 # Applies css to rShiny app
