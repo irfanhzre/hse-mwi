@@ -24,11 +24,12 @@ library(shinyBS)
 library(DT)
 # library(formattable)
 library(dplyr)
+library(memoise)
+library(cachem)
 
 source("app_config.R")
 # Load configuration
 source("config/config.R")
-source("modules/cache_module.R")
 
 options(shiny.maxRequestSize=config$get("app.max_request_size"))
 
@@ -63,6 +64,40 @@ mwi_toolkit_order <- c(
   "Frequently_Asked_Questions",
   "Contact"
 )
+
+# Cache functionality ----
+
+# Create cache directory if it doesn't exist
+cache_dir <- ".cache"
+if (!dir.exists(cache_dir)) dir.create(cache_dir)
+
+# Initialize cache storage
+cache_storage <- cache_disk(cache_dir)
+
+# Cache the data loading functions
+cached_load <- memoise(function(key, loader_fn) {
+  loader_fn()
+}, cache = cache_storage)
+
+# Cache the app preprocessing function
+cached_app_preprocess <- memoise(function(m_reg, info_df, mwi, app_start = TRUE) {
+  app_preprocess(m_reg, info_df, mwi, app_start)
+}, cache = cache_storage)
+
+# Function to clear cache if needed
+clear_cache <- function() {
+  cache_storage$reset()
+}
+
+# Cache invalidation function - call when data sources are updated
+invalidate_cache <- function(key = NULL) {
+  if (is.null(key)) {
+    forget(cached_load)
+    forget(cached_app_preprocess)
+  } else {
+    forget(cached_load, key)
+  }
+}
 
 # function for app preprocessing ----
 
@@ -404,7 +439,7 @@ meas_max_colors["Mental Wellness Index"] <-
 meas_min_colors["Mental Wellness Index"] <-
   meas_colors_pal[["Mental Wellness Index"]](7)[2]
 
-overall <- app_preprocess(m_reg, info_df, mwi, app_start = T)
+overall <- cached_app_preprocess(m_reg, info_df, mwi, app_start = T)
 # add other specific data
 overall[["m_reg"]] <- m_reg
 overall[["meas_df"]] <- meas_df
