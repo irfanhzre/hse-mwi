@@ -26,6 +26,8 @@ library(DT)
 library(dplyr)
 library(memoise)
 library(cachem)
+library(digest)
+library(jsonlite)
 
 source("app_config.R")
 # Load configuration
@@ -71,34 +73,114 @@ mwi_toolkit_order <- c(
 cache_dir <- ".cache"
 if (!dir.exists(cache_dir)) dir.create(cache_dir)
 
-# Initialize cache storage
-cache_storage <- cache_disk(cache_dir)
+# Cache configuration
+CACHE_CONFIG <- list(
+  default_expiry = as.difftime(7, units="days"),
+  validation_file = file.path(cache_dir, "cache_validation.json")
+)
 
-# Cache the data loading functions
-cached_load <- memoise(function(key, loader_fn) {
-  loader_fn()
+# Initialize cache storage with expiration
+cache_storage <- cache_disk(
+  dir = cache_dir,
+  max_age = as.numeric(CACHE_CONFIG$default_expiry, units="secs")
+)
+
+# Cache validation management
+CacheValidator <- R6::R6Class("CacheValidator",
+                              public = list(
+                                validation_data = NULL,
+
+                                initialize = function() {
+                                  self$load_validation_data()
+                                },
+
+                                load_validation_data = function() {
+                                  if (file.exists(CACHE_CONFIG$validation_file)) {
+                                    self$validation_data <- fromJSON(CACHE_CONFIG$validation_file)
+                                  } else {
+                                    self$validation_data <- list(
+                                      file_hashes = list(),
+                                      last_updated = Sys.time()
+                                    )
+                                  }
+                                },
+
+                                save_validation_data = function() {
+                                  writeLines(
+                                    toJSON(self$validation_data, auto_unbox = TRUE, pretty = TRUE),
+                                    CACHE_CONFIG$validation_file
+                                  )
+                                },
+
+                                update_file_hash = function(filepath) {
+                                  if (file.exists(filepath)) {
+                                    self$validation_data$file_hashes[[filepath]] <- digest::digest(filepath, file = TRUE)
+                                    self$validation_data$last_updated <- format(Sys.time())
+                                    self$save_validation_data()
+                                  }
+                                },
+
+                                is_file_changed = function(filepath) {
+                                  if (!file.exists(filepath)) return(TRUE)
+                                  current_hash <- digest::digest(filepath, file = TRUE)
+                                  stored_hash <- self$validation_data$file_hashes[[filepath]]
+                                  return(is.null(stored_hash) || stored_hash != current_hash)
+                                }
+                              )
+)
+
+# Initialize cache validator
+cache_validator <- CacheValidator$new()
+
+# Enhanced cached load with validation
+cached_load <- memoise(function(key, loader_fn, filepath = NULL, max_age = NULL) {
+  # Check file changes if filepath provided
+  if (!is.null(filepath) && cache_validator$is_file_changed(filepath)) {
+    invalidate_cache(key)
+    cache_validator$update_file_hash(filepath)
+  }
+
+  result <- loader_fn()
+  return(result)
 }, cache = cache_storage)
 
-# Cache the app preprocessing function
+# Enhanced app preprocessing cache
 cached_app_preprocess <- memoise(function(m_reg, info_df, mwi, app_start = TRUE) {
   app_preprocess(m_reg, info_df, mwi, app_start)
 }, cache = cache_storage)
 
-# Function to clear cache if needed
-clear_cache <- function() {
-  cache_storage$reset()
-}
-
-# Cache invalidation function - call when data sources are updated
-invalidate_cache <- function(key = NULL) {
+# Enhanced cache invalidation
+invalidate_cache <- function(key = NULL, clear_validation = FALSE) {
   if (is.null(key)) {
     forget(cached_load)
     forget(cached_app_preprocess)
+    if (clear_validation) {
+      unlink(CACHE_CONFIG$validation_file)
+      cache_validator$load_validation_data()
+    }
   } else {
     forget(cached_load, key)
   }
 }
 
+# Function to set custom expiry time for specific cache entries
+set_cache_expiry <- function(key, expiry_time) {
+  if (!is.null(key) && !is.null(expiry_time)) {
+    cache_storage$set(
+      key = key,
+      value = cache_storage$get(key),
+      expiry = as.numeric(expiry_time, units="secs")
+    )
+  }
+}
+
+# Function to check if cache is valid
+is_cache_valid <- function(key, filepath = NULL) {
+  if (!is.null(filepath) && cache_validator$is_file_changed(filepath)) {
+    return(FALSE)
+  }
+  return(!is.null(cache_storage$get(key)))
+}
 # function for app preprocessing ----
 
 app_preprocess <- function(m_reg, info_df, mwi, app_start = T){
