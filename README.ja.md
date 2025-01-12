@@ -53,7 +53,7 @@ MWI は、黒人アメリカ人の精神的健康状態を念頭に置いて開�
 
 データは、2023 年 1 月 24 日時点で利用可能な最新のものに更新されました。以前にリリースされたバージョンの MWI を使用したい場合は、次を参照してください。[リリース](https://github.com/mitre/hse-mwi/releases).
 
-# Set Up MWI and Create Your Own MWI
+# MWI をセットアップし、独自の MWI を作成する
 
 Mental Wellness Index Tool をセットアップして簡単に実行するには、手順 1 ～ 8 に従ってください。
 
@@ -209,7 +209,7 @@ API から取得した追加データ、または Web サイトから直接ダ�
 
 ## 測定登録
 
-登録書類を測定します`Teams`>`BHN Score`>`Data`>`Metadata.xslx` . This document provides information required for batch processing / batch analysis from Pre-Processed data to Clean data.
+登録書類を測定します`Teams`>`BHN Score`>`Data`>`Metadata.xslx`。このドキュメントでは、前処理データからクリーンデータまでのバッチ処理/バッチ分析に必要な情報を提供します。
 
 ### 前処理されたデータ
 
