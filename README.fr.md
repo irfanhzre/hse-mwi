@@ -137,7 +137,7 @@ Par exemple:
 
 -   Les types d’identifiants géographiques acceptés sont toujours numériques et incluent les éléments suivants :
     -   ZCTA : ZCTA à 5 chiffres (exemple : 35406)
-    -   Comté : code FIPS du comté à 5 chiffres (code d'État à 2 chiffres et code du comté à 3 chiffres, exemple : 01001)
+    -   Comté : code FIPS du comté à 5 chiffres (code d'État à 2 chiffres et code du comté à 3 chiffres, exemple : 01001)
     -   Code postal : Code postal du service postal américain (exemple : 35051)
     -   Secteur de recensement : code FIPS du secteur de recensement à 11 chiffres (code d'État à 2 chiffres, code de comté à 3 chiffres et code de secteur à 6 chiffres, exemple : 01001020100)
 -   Si une colonne de dénominateur est fournie, l'entrée finale du MWI sera le numérateur divisé par le dénominateur, multiplié par le nombre de mise à l'échelle (spécifié dans le fichier de métadonnées, voir l'étape suivante).
@@ -183,7 +183,7 @@ Synchronisez le dossier Microsoft Teams BHN Score Creation dans votre dossier lo
 
 ## Finaliser les mesures
 
-Document de suivi des mesures situé dans`Teams`> `BHN Score`>`Measure-Tracking.xslx`
+Document de suivi des mesures situé dans`Teams`>`BHN Score`>`Measure-Tracking.xslx`
 
 Consulter et mettre à jour ce document lorsque des mesures supplémentaires seront finalisées.
 
@@ -191,7 +191,7 @@ Consulter et mettre à jour ce document lorsque des mesures supplémentaires ser
 
 Ajouter des données extraites d'une API ou directement téléchargées depuis un site Web tombera dans l'un des deux dossiers :
 
--   `Teams`>`BHN Score` >`Data` >`Raw`
+-   `Teams`>`BHN Score`>`Data`>`Raw`
 
     -   si un calcul de mesure doit être effectué (c'est-à-dire la géographie du point vers la géographie du conteneur, les calculs de prévalence, etc.)
 
