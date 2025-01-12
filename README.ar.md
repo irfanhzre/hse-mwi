@@ -5,7 +5,7 @@
 # README بلغات مختلفة
 
 -   [إنجليزي](README.md)
--   [简体中文](README.zh-CN.md)
+-   [الصينية المبسطة](README.zh-CN.md)
 -   [فرنسي](README.fr.md)
 -   [عربى](README.ar.md)
 -   [اليابانية](README.ja.md)
@@ -110,7 +110,7 @@
 
 افتح app.R في RStudio باستخدام سطر الأوامر
 
-##### 4 . قم بتشغيل الأمر التالي لتشغيل RStudio وفتح البرنامج النصي app.R:
+##### 4 . Run the following command to launch RStudio and open the app.R script:
 
 لنظام التشغيل ماك/لينكس:`open -a RStudio app.R  `
 
@@ -223,7 +223,7 @@
 
 ### البيانات النظيفة
 
-Once data is cleaned, they will be merged into the Combined Measures file. There will be two versions:
+بمجرد تنظيف البيانات، سيتم دمجها في ملف التدابير المجمعة. سيكون هناك نسختين:
 
 -   ملف التدابير المجمعة الأصلي:`Teams`>`BHN Score`>`Data`>`Cleaned`>`HSE_ZCTA_Converted_Measures.csv`
 
