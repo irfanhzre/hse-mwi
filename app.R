@@ -889,6 +889,129 @@ html_color <- function(meas_color, text){
 # UI ----
 
 ui <- fluidPage(
+  tags$head(
+    tags$meta(charset = "UTF-8"),
+    tags$meta(name = "viewport", content = "width=device-width, initial-scale=1.0"),
+    
+    # Custom CSS for modern styling
+    tags$style(HTML("
+      .header-bar {
+        background: linear-gradient(to right, #f8f9fa, #ffffff);
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+        padding: 12px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        backdrop-filter: blur(8px);
+      }
+
+      .language-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .language-label {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 14px;
+        color: #4b5563;
+        font-weight: 500;
+      }
+
+      #google_translate_function {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        transition: all 0.2s ease;
+      }
+
+      #google_translate_function:hover {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1);
+        transform: translateY(-1px);
+      }
+
+      .goog-te-gadget {
+        font-family: system-ui, -apple-system, sans-serif !important;
+      }
+
+      .goog-te-gadget-simple {
+        background-color: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        border-radius: 8px !important;
+        padding: 8px 12px !important;
+        font-size: 14px !important;
+        line-height: 20px !important;
+        color: #374151 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        transition: all 0.2s ease !important;
+      }
+
+      .goog-te-gadget-simple:hover {
+        border-color: #d1d5db !important;
+        background-color: #f9fafb !important;
+      }
+
+      .goog-te-gadget-simple:focus-within {
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+        outline: none !important;
+      }
+
+      .goog-te-menu-value {
+        color: #374151 !important;
+        font-weight: 450 !important;
+      }
+
+      .goog-te-menu-value:hover {
+        text-decoration: none !important;
+      }
+
+      .goog-te-menu-value span {
+        color: #6b7280 !important;
+        margin-right: 4px !important;
+      }
+
+      @media (max-width: 640px) {
+        .header-bar {
+          padding: 8px 16px;
+        }
+        
+        .language-label {
+          display: none;
+        }
+      }
+    ")),
+    
+    # Google Translate initialization script
+    tags$script(HTML("
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,es,fr,de,zh-CN,ja,ar,ru,ms',
+          layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+          autoDisplay: false,
+          gaTrack: true
+        }, 'google_translate_function');
+      }
+    ")),
+    
+    # Load Google Translate script
+    tags$script(src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit")
+  ),
+  
+  # Modern header with language selector
+  div(class = "header-bar",
+      div(class = "language-container",
+          span(class = "language-label", "Select Language"),
+          div(id = "google_translate_function")
+      )
+  ),
+  
   # Title panel sets text in the browser tab
   # This is necessary because the navbarPage title is html and not straight text
   div(
