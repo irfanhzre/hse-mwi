@@ -1,11 +1,22 @@
 # メンタルウェルネスインデックス™ (MWI)
 
+## 翻訳
+
+# さまざまな言語の README
+
+-   [英語](README.md)
+-   [簡体字中国語](README.zh-CN.md)
+-   [フランス語](README.fr.md)
+-   [アラブ](README.ar.md)
+-   [日本語](README.ja.md)
+-   [マレー語](README.ms.md)
+
 # 概要
 
 -   [メンタルウェルネス指数 (MWI)](#Mental-Wellness-Index-(MWI))
 -   [MWI をセットアップし、独自の MWI を作成する](#Set-Up-MWI-and-Create-Your-Own-MWI)
 -   [MWI データの使用](#Using-MWI-Data)
--   [技術的なセットアップ](#Technical-Set-Up)(寄稿者のみに役立ちます)
+-   [技術的なセットアップ](#Technical-Set-Up)(貢献者のみに役立ちます)
 -   [連絡先と帰属](#Contact-and-Attribution)
 
 # メンタルウェルネス指数 (MWI)
@@ -18,7 +29,7 @@
 <img src="https://github.com/mitre/hse-mwi/blob/main/www/media/MWI%20Framework%20(Transparent%20Background).png" width="400" />
 </p>
 
-メンタル ウェルネス インデックスの目的は、コミュニティのメンタル ウェルネスのスナップショットを提供することで、コミュニティのリーダー、公衆衛生当局、資金提供団体が、特定のコミュニティの資産を基盤としてメンタルヘルス サポートを最適に誘導する方法を理解できるようにすることです。ギャップ。
+メンタル ウェルネス インデックスの目的は、コミュニティのメンタル ウェルネスのスナップショットを提供し、コミュニティのリーダー、公衆衛生当局、資金提供団体が、特定のコミュニティの資産に基づいてメンタルヘルス サポートを構築し、その成果を埋めるためにメンタルヘルス サポートを最適に導く方法を理解できるようにすることです。ギャップ。
 
 \*郵便番号集計エリア (ZCTA)
 
@@ -44,9 +55,9 @@ MWI は、黒人アメリカ人の精神的健康状態を念頭に置いて開�
 
 # MWI をセットアップし、独自の MWI を作成する
 
-Mental Wellness Index ツールをセットアップして簡単に実行するには、手順 1 ～ 8 に従ってください。
+Mental Wellness Index Tool をセットアップして簡単に実行するには、手順 1 ～ 8 に従ってください。
 
-独自のメンタル ウェルネス インデックスを作成するには、残りの手順に従ってローカル コンピューターでメンタル ウェルネス インデックス ツールを実行します。以下の 8 以降の手順に従って、重みを調整したり、独自のデータやメタデータを追加したりして、以下のコミュニティ用に独自の MWI を作成します。
+独自のメンタル ウェルネス インデックスを作成するには、残りの手順に従って、ローカル コンピューターでメンタル ウェルネス インデックス ツールを実行します。以下の 8 以降の手順に従って、重みを調整したり、独自のデータやメタデータを追加したりして、以下のコミュニティ用に独自の MWI を作成します。
 
 1.  の無料バージョンをダウンロード[R](https://www.r-project.org/)そして[RSスタジオ](https://www.rstudio.com/products/rstudio/download/)。最新のブラウザ (Firefox、Chrome、Edge など) をダウンロードし、まだダウンロードしていない場合は、それをデフォルトのブラウザにします。
 
@@ -56,8 +67,63 @@ Mental Wellness Index ツールをセットアップして簡単に実行する�
 
 4.  解凍したフォルダー内の「app.R」をRStudioで開きます。これにより、RStudio が開き、アプリケーションの左上隅に「app.R」スクリプトが開きます。
 
+#### ステップ 1 ～ 4 の代替案
+
+コマンドラインの使用手順
+
+##### 1. R と RStudio をインストールする
+
+まだインストールされていない場合は、以下のリンクから R および RStudio の最新バージョンをダウンロードしてインストールします。
+R:<https://www.r-project.org/>RSスタジオ:<https://www.rstudio.com/products/rstudio/download/>あるいは、パッケージ マネージャーを使用して R をインストールします。
+
+Windows の場合: Chocolatey を使用します。
+
+`choco install r.project ``choco install r.studio `
+
+macOS の場合: Homebrew を使用します:
+
+`brew install --cask r ``brew install --cask rstudio`
+
+Linux (Ubuntu/Debian) の場合:
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### ２． Git を使用してメンタル ウェルネス インデックス リポジトリのクローンを作成する
+
+ターミナルまたはコマンド プロンプトを開き、次のコマンドを実行します。
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+これにより、リポジトリが hse-mwi という名前の新しいフォルダーにダウンロードされます。
+
+git がインストールされていない場合は、インストールします。
+
+-   Windows: Windows 用 Git
+
+-   macOS:`brew install git`
+
+-   Linux:`sudo apt install git `
+
+プロジェクト ディレクトリに移動します
+
+リポジトリのクローンが作成されたディレクトリに移動します。`cd hse-mwi `
+
+コマンドラインを使用して RStudio で app.R を開く
+
+##### ４．次のコマンドを実行して RStudio を起動し、app.R スクリプトを開きます。
+
+macOS/Linux の場合:`open -a RStudio app.R  `
+
+Windowsの場合:
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+例えば：
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
+
 5.  これらのパッケージをインストールするときに、左下隅にあるコンソール ウィンドウに次の行を入力し、コンソールのすべてのプロンプトに「はい」と答えます。
-    -   install.packages('readxl', 'writexl', 'htmltools', 'shiny', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass '、'shinycssloaders'、'shinyBS'、'DT'、 'dplyr')
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets'、'sass'、'shinycssloaders'、 'shinyBS'、'DT'、'dplyr'))
 
 6.  「app.R」で、11 行目に移動します。「app_local &lt;- FALSE」と表示されます。 FALSE を TRUE に変更します。
 
@@ -65,7 +131,7 @@ Mental Wellness Index ツールをセットアップして簡単に実行する�
 
 8.  遅れて (最初は遅くなりますが、その後は速くなります)、ブラウザーでメンタル ウェルネス インデックス ツールが開きます。 \[Create Your Own MWI] タブをクリックし、残りの手順に従って独自の MWI を作成します。
 
-9.  重みを調整するだけ、または含まれるデータの特定の郵便番号にサブセット化するだけの場合は、次の手順をスキップしてください。これはウェブサイトでも行うことができます[ここ](https://sjp.mitre.org/mwi).
+9.  含まれるデータの重みを調整するか、特定の郵便番号にサブセット化するだけの場合は、次の手順をスキップしてください。これはウェブサイトでも行うことができます[ここ](https://sjp.mitre.org/mwi).
 
 10. 各データセットを CSV (カンマ区切り値) 形式で配置します。1 つの列はデータの地理 ID に対応し、1 つの列はデータの分子に対応し、もう 1 つの列は分母に対応します (必要な場合)。
 
@@ -77,13 +143,13 @@ Mental Wellness Index ツールをセットアップして簡単に実行する�
 -   分母列が指定されている場合、MWI への最終入力は、分子を分母で割ってスケーリング数を乗算したものになります (メタデータ ファイルで指定されます。次のステップを参照)。
 -   分子と分母は数値列である必要があります。
 -   データが欠落している場合は、セルを空白のままにしておきます。
--   人種が階層化されている場合は、2 つの列が必要です。1 つは人口全体の測定に対応する '\_pop' で終わる列、もう 1 つは黒人人口の測定に対応する '\_black' で終わる列です。 Metadata.xlsx ファイル編集では、その行の「Preprocessed」列を TRUE に設定する必要があります。
+-   人種が階層化されている場合は、2 つの列が必要です。1 つは人口全体の測定値に対応する '\_pop' で終わる列、もう 1 つは黒人人口の測定値に対応する '\_black' で終わる列です。 Metadata.xlsx ファイル編集では、その行の「Preprocessed」列を TRUE に設定する必要があります。
 
 11. 下のボタンで Metadata.xlsx をダウンロードします。カスタム データを追加する場合は、行を追加し、メンタル ウェルネス インデックスに追加する各測定値の情報を入力します。各列の説明は、Metadata.xlsx の「列の説明」シートにあります。 「分母」を除くすべての列名を入力する必要があることに注意してください。
 
 -   1 つのファイルに複数のメジャーがある場合は、メジャーとその品質ごとに行を追加しますが、同じファイル名を指定します。
 -   MWI 内のメジャーを削除したい場合は、メジャー行を削除するか、その重みを 0 に設定します。
--   重みだけを調整したい場合は、重みの列のみを希望の値に変更します。人種階層化と地理的細分性に対するペナルティは引き続き適用され、合計の重みは合計が 100 になるように調整されることに注意してください。
+-   重みだけを調整したい場合は、重みの列のみを希望の値に変更します。人種階層化と地理的粒度に対するペナルティは引き続き適用され、合計の重みは合計が 100 になるように調整されることに注意してください。
 
 12. データ (使用している場合) と更新された Metadata.xlsx ファイルを ZIP ファイル (.zip) に入れます。
 
@@ -113,7 +179,7 @@ MWI またはその処理された測定値またはデータを使用したい�
 
 ## データ同期
 
-Microsoft Teams BHN Score Creation フォルダーをローカルの MITRE Corporation (One-Drive) フォルダーに同期します
+Microsoft Teams BHN Score Creation フォルダーをローカルの The MITRE Corporation (One-Drive) フォルダーに同期します
 
 ## 対策の最終決定
 
@@ -127,7 +193,7 @@ API から取得した追加データ、または Web サイトから直接ダ�
 
 -   `Teams`>`BHN Score`>`Data`>`Raw`
 
-    -   メジャーの計算を完了する必要がある場合 (つまり、ポイント地理からコンテナ地理への変換、蔓延計算など)
+    -   メジャーの計算を完了する必要がある場合 (つまり、ポイント地理からコンテナ地理への変換、普及率計算など)
 
     -   ファイル拡張子は、.xlsx、.csv、.dta などにすることもできます。
 
@@ -143,11 +209,11 @@ API から取得した追加データ、または Web サイトから直接ダ�
 
 ## 測定登録
 
-登録書類を測定します`Teams`>`BHN Score`>`Data`>`Metadata.xslx`。このドキュメントでは、前処理データからクリーンデータまでのバッチ処理/バッチ分析に必要な情報を提供します。
+登録書類を測定します`Teams`>`BHN Score`>`Data`>`Metadata.xslx` . This document provides information required for batch processing / batch analysis from Pre-Processed data to Clean data.
 
 ### 前処理されたデータ
 
-このファイルには、すべての情報が含まれています**前処理された**前処理データとクリーンアップされたデータの間に発生する必要がある次のような追加の変換を測定し、通知します。
+このファイルには、すべての情報が含まれています**前処理された**前処理データとクリーンなデータの間に発生する必要がある次のような追加の変換を測定し、通知します。
 
 -   あらゆる地理レベル ->ZCTAレベルのみ
 
