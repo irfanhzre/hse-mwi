@@ -24,27 +24,22 @@ library(shinyBS)
 library(DT)
 # library(formattable)
 library(dplyr)
-
-options(shiny.maxRequestSize=config$get("app.max_request_size"))
+# Use data.table for faster CSV reading
+library(data.table)
 
 source("app_config.R")
 # Load configuration
 source("config/config.R")
 source("modules/cache_module.R")
+options(shiny.maxRequestSize=config$get("app.max_request_size"))
 # styling/resources ----
 
 # Applies css to rShiny app
-sass(
-  sass_file("www/stylesheets/app.scss"),
-  output = "www/stylesheets/app.css"
-)
-
 # Generates css used on the about page
 # See app.scss file for manual steps needed here
-sass(
-  sass_file("www/stylesheets/app.scss"),
-  output = "about/app.css"
-)
+sass(sass_file("www/stylesheets/app.scss"), output = "www/stylesheets/app.css")
+file.copy("www/stylesheets/app.css", "about/app.css")
+
 
 addResourcePath("mwi-toolkit", "mwi-toolkit")
 
@@ -195,8 +190,15 @@ index_types <- config$get("data.index_types")
 data_folder <- file.path(config$get("data.data_folder"))
 
 # Load measure registry with caching
-m_reg <- cached_load("measure_registry", function() {
-  as.data.frame(read_excel(file.path(data_folder, "Metadata.xlsx"), sheet = 1))
+tryCatch({
+  m_reg <- cached_load("measure_registry", function() {
+    as.data.frame(read_excel(file.path(data_folder, "Metadata.xlsx"), sheet = 1))
+  })
+  m_reg <- m_reg[!is.na(m_reg$Numerator),]
+  rownames(m_reg) <- m_reg$Numerator
+}, error = function(e) {
+  cat("Error loading measure registry: ", e$message, "\n")
+  stop("Failed to load measure registry from 'Metadata.xlsx'. Ensure the file exists and is properly formatted.")
 })
 # remove everything that doesn't have a numerator
 m_reg <- m_reg[!is.na(m_reg$Numerator),]
@@ -207,22 +209,58 @@ colnames(sub_m)[ncol(sub_m)-1] <- "Original Weights"
 colnames(sub_m)[ncol(sub_m)] <- "Updated Weights"
 rownames(sub_m) <- rownames(m_reg)
 
-# Load index weighting/output with caching
-info_df <- cached_load("info_df", function() {
-  read.csv(file.path(data_folder, "Cleaned", "HSE_MWI_Data_Information.csv"))
-})
-rownames(info_df) <- info_df$Numerator
+# Load index weighting/output with caching + error handling
 
-# Load mapped measure data with caching
-meas_df <- cached_load("meas_df", function() {
-  df <- read.csv(
-    file.path(data_folder, "Cleaned", "HSE_MWI_ZCTA_Converted_Measures.csv"),
-    colClasses = c("GEOID" = "character")
-  )
-  df <- df[df$GEOID != "",]
-  rownames(df) <- df$GEOID
-  return(df)
+tryCatch({
+  info_df <- cached_load("info_df", function() {
+    fread(
+      file.path(data_folder, "Cleaned", "HSE_MWI_Data_Information.csv"),
+      colClasses = list(character = "Numerator")
+    )
+  })
+  if (!is.data.table(info_df)) {
+    info_df <- as.data.table(info_df)
+  }
+  setkey(info_df, Numerator) # More efficient than rownames
+}, error = function(e) {
+  cat("Error loading info_df: ", e$message, "\n")
+  # Fallback to read.csv if fread fails
+  info_df <- cached_load("info_df", function() {
+    read.csv(
+      file.path(data_folder, "Cleaned", "HSE_MWI_Data_Information.csv")
+    )
+  })
+  rownames(info_df) <- info_df$Numerator
+  return(info_df)
 })
+
+# Load mapped measure data with caching + error handling
+
+meas_df <- cached_load("meas_df", function() {
+  tryCatch({
+    # Attempt to load data using fread
+    meas_df <- fread(
+      file.path(data_folder, "Cleaned", "HSE_MWI_ZCTA_Converted_Measures.csv"),
+      colClasses = c("GEOID" = "character") # Ensure GEOID is treated as a character
+    )
+    # Filter and set key in one step
+    meas_df <- meas_df[GEOID != ""]
+    setkey(meas_df, GEOID)
+    return(meas_df)
+  }, error = function(e) {
+    cat("Error loading meas_df with fread: ", e$message, "\n")
+    # Fallback to read.csv if fread fails
+    meas_df <- read.csv(
+      file.path(data_folder, "Cleaned", "HSE_MWI_ZCTA_Converted_Measures.csv"),
+      colClasses = c("GEOID" = "character") # Same column specification
+    )
+    # Filter rows and set row names manually
+    meas_df <- meas_df[meas_df$GEOID != "", ]
+    rownames(meas_df) <- meas_df$GEOID
+    return(meas_df)
+  })
+})
+
 
 # load zip codes to zcta
 zip_cw <- read.csv(
