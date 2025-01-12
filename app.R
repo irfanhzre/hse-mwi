@@ -995,7 +995,7 @@ ui <- fluidPage(
                 open = c("ZCTA Measure Results"),
                 bsCollapsePanel(
                   "ZCTA Measure Results",
-                  HTML("<p><i>Measures have ranks from 0 to 100. Measures with a higher rank (closer to 100) indicate more community-level <b>assets</b> or <b>obstacles</b> to mental wellness, based on their respective directionality. Measure value corrsponds to the exact value in the data, corresponding to the measure description. For more information, please see `MWI Measures and Data` in the MWI Toolkit.</i></p>"),
+                  HTML("<p><i>Measures have ranks from 0 to 100. Measures with a higher rank (closer to 100) indicate more community-level <b>assets</b> or <b>obstacles</b> to mental wellness, based on their respective directionality. Measure value corrsponds to the exact value in the data, corresponding to the measure description. For more information, please see <a href='mwi-toolkit/MWI_Measures_and_Data.html' target='_blank'>MWI Measures and Data </a> in the MWI Toolkit.</i></p>"),
                   uiOutput("com_report_card_table_mwi"),
                   HTML("<p></p>"),
                   DTOutput("com_report_card_table")
