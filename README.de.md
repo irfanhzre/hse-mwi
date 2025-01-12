@@ -1,5 +1,16 @@
 # Mental Wellness Index™ (MWI)
 
+## Übersetzung
+
+# README in verschiedenen Sprachen
+
+-   [Englisch](README.md)
+-   [Vereinfachtes Chinesisch](README.zh-CN.md)
+-   [Französisch](README.fr.md)
+-   [Araber](README.ar.md)
+-   [japanisch](README.ja.md)
+-   [Malaiische Sprache](README.ms.md)
+
 # Gliederung
 
 -   [Mental Wellness Index (MWI)](#Mental-Wellness-Index-(MWI))
@@ -54,10 +65,65 @@ Um Ihren eigenen Mental Wellness Index zu erstellen, können Sie den restlichen 
 
 3.  Entpacken Sie „hse-mwi-main.zip“.
 
-4.  Öffnen Sie im entpackten Ordner „app.R“ in RStudio. Dadurch sollten RStudio und das Skript „app.R“ in der oberen linken Ecke der Anwendung geöffnet werden.
+4.  Öffnen Sie im entpackten Ordner „app.R“ in RStudio. Dadurch sollten RStudio und das „app.R“-Skript in der oberen linken Ecke der Anwendung geöffnet werden.
+
+#### Alternative für Schritt 1-4
+
+Anweisungen zur Verwendung der Befehlszeile
+
+##### 1 . Installieren Sie R und RStudio
+
+Laden Sie die neuesten Versionen von R und RStudio über die folgenden Links herunter und installieren Sie sie, sofern sie noch nicht installiert sind:
+R:<https://www.r-project.org/>RStudio:<https://www.rstudio.com/products/rstudio/download/>Alternativ können Sie einen Paketmanager verwenden, um R zu installieren:
+
+Für Windows: Verwenden Sie Chocolatey:
+
+`choco install r.project ``choco install r.studio `
+
+Für macOS: Homebrew verwenden:
+
+`brew install --cask r ``brew install --cask rstudio`
+
+Für Linux (Ubuntu/Debian):
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### 2 . Klonen Sie das Mental Wellness Index Repository mit Git
+
+Öffnen Sie Ihr Terminal oder Ihre Eingabeaufforderung und führen Sie den folgenden Befehl aus:
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+Dadurch wird das Repository in einen neuen Ordner namens hse-mwi heruntergeladen.
+
+Wenn Git nicht installiert ist, installieren Sie es:
+
+-   Windows: Git für Windows
+
+-   macOS:`brew install git`
+
+-   Linux:`sudo apt install git `
+
+Navigieren Sie zum Projektverzeichnis
+
+Wechseln Sie in das Verzeichnis, in dem das Repository geklont wurde:`cd hse-mwi `
+
+Öffnen Sie app.R in RStudio über die Befehlszeile
+
+##### 4 . Führen Sie den folgenden Befehl aus, um RStudio zu starten und das app.R-Skript zu öffnen:
+
+Für macOS/Linux:`open -a RStudio app.R  `
+
+Für Windows:
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+Zum Beispiel:
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
 
 5.  Geben Sie im Konsolenfenster in der unteren linken Ecke die folgende Zeile ein und beantworten Sie alle Eingabeaufforderungen in der Konsole mit „Ja“, während Sie diese Pakete installieren:
-    -   install.packages('readxl', 'writexl', 'htmltools', 'shiny', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass ', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr')
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
 
 6.  Navigieren Sie in „app.R“ zu Zeile 11, die „app_local &lt;- FALSE“ lauten sollte. Ändern Sie FALSE in TRUE.
 
@@ -77,13 +143,13 @@ Um Ihren eigenen Mental Wellness Index zu erstellen, können Sie den restlichen 
 -   Wenn eine Nennerspalte bereitgestellt wird, ist die endgültige Eingabe in die MWI der Zähler dividiert durch den Nenner, multipliziert mit der Skalierungszahl (in der Metadatendatei angegeben, siehe nächster Schritt).
 -   Zähler und Nenner müssen numerische Spalten sein.
 -   Bei fehlenden Daten sollten die Zellen leer bleiben.
--   Wenn die Rasse geschichtet ist, sollte es zwei Spalten geben: eine mit der Endung „\_pop“, die dem Gesamtbevölkerungsmaß entspricht, und eine mit dem Ende „\_black“, die dem Maß für die schwarze Bevölkerung entspricht. Bei der Bearbeitung der Datei „Metadata.xlsx“ sollte die Spalte „Vorverarbeitet“ dieser Zeile auf TRUE gesetzt werden.
+-   Wenn die Rasse geschichtet ist, sollte es zwei Spalten geben: eine mit der Endung „\_pop“, die dem Gesamtbevölkerungsmaß entspricht, und eine mit dem Ende „\_black“, die dem Maß für die schwarze Bevölkerungszahl entspricht. Bei der Bearbeitung der Datei „Metadata.xlsx“ sollte die Spalte „Vorverarbeitet“ dieser Zeile auf TRUE gesetzt werden.
 
 11. Laden Sie Metadata.xlsx mit der Schaltfläche unten herunter. Wenn Sie benutzerdefinierte Daten hinzufügen, fügen Sie eine Zeile hinzu und geben Sie Informationen für jede Kennzahl ein, die Sie dem Mental Wellness Index hinzufügen möchten. Beschreibungen für jede Spalte finden Sie im Blatt „Spaltenbeschreibungen“ der Metadata.xlsx. Beachten Sie, dass alle Spaltennamen mit Ausnahme von „Nenner“ ausgefüllt werden müssen.
 
 -   Wenn Sie mehrere Kennzahlen in einer Datei haben, fügen Sie für jede Kennzahl und ihre Qualitäten eine Zeile hinzu, geben Sie jedoch denselben Dateinamen an.
 -   Wenn Sie eine Kennzahl in Ihrem MWI entfernen möchten, löschen Sie entweder die Kennzahlzeile oder setzen Sie deren Gewichtung auf 0.
--   Wenn Sie nur Gewichte anpassen möchten, ändern Sie nur die Gewichtsspalte auf die gewünschten Werte. Beachten Sie, dass Strafen für Rassenschichtungen und geografische Granularität weiterhin angewendet werden und die Gesamtgewichte so skaliert werden, dass sie sich auf 100 summieren.
+-   Wenn Sie nur Gewichtungen anpassen möchten, ändern Sie nur die Gewichtsspalte auf die gewünschten Werte. Beachten Sie, dass Strafen für Rassenschichtungen und geografische Granularität weiterhin angewendet werden und die Gesamtgewichte so skaliert werden, dass sie sich auf 100 summieren.
 
 12. Legen Sie Ihre Daten (falls verwendet) und die aktualisierte Metadata.xlsx-Datei in einer ZIP-Datei (.zip) ab.
 
@@ -133,7 +199,7 @@ Hinzufügen von Daten, die von einer API abgerufen oder direkt von einer Website
 
 -   `Teams`>`BHN Score`>`Data`>`Preprocessed`
 
-    -   wenn die Daten in ein Format fallen, in dem jede Zeile ein geografischer Container ist (z. B. Volkszählungsgebiet, Landkreis, Postleitzahl usw.)
+    -   wenn die Daten in ein Format fallen, in dem jede Zeile ein geografischer Container ist (z. B. Volkszählungsbezirk, Landkreis, Postleitzahl usw.)
 
     -   Die Dateierweiterung ist nur .csv
 

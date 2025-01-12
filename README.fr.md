@@ -1,5 +1,16 @@
 # Indice de bien-être mental™ (MWI)
 
+## Traduction
+
+# README dans différentes langues
+
+-   [Anglais](README.md)
+-   [Chinois simplifié](README.zh-CN.md)
+-   [Française](README.fr.md)
+-   [arabe](README.ar.md)
+-   [japonais](README.ja.md)
+-   [langue malaise](README.ms.md)
+
 # Contour
 
 -   [Indice de bien-être mental (MWI)](#Mental-Wellness-Index-(MWI))
@@ -56,8 +67,63 @@ Pour créer votre propre indice de bien-être mental, vous pouvez suivre le rest
 
 4.  Dans le dossier décompressé, ouvrez « app.R » dans RStudio. Cela devrait ouvrir RStudio et le script "app.R" dans le coin supérieur gauche de l'application.
 
-5.  Dans la fenêtre de la console, située dans le coin inférieur gauche, entrez la ligne suivante et répondez « oui » à toutes les invites de la console lorsque vous installez ces packages :
-    -   install.packages('readxl', 'writexl', 'htmltools', 'shiny', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass ', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr')
+#### Alternative pour les étapes 1 à 4
+
+Instructions pour l'utilisation de la ligne de commande
+
+##### 1. Installer R et RStudio
+
+Téléchargez et installez les dernières versions de R et RStudio à partir des liens ci-dessous si elles ne sont pas déjà installées :
+R :<https://www.r-project.org/>RStudio :<https://www.rstudio.com/products/rstudio/download/>Vous pouvez également utiliser un gestionnaire de packages pour installer R :
+
+Pour Windows : utilisez Chocolatey :
+
+`choco install r.project ``choco install r.studio `
+
+Pour macOS : utilisez Homebrew :
+
+`brew install --cask r ``brew install --cask rstudio`
+
+Pour Linux (Ubuntu/Debian) :
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### 2 . Cloner le référentiel d'index de bien-être mental à l'aide de Git
+
+Ouvrez votre terminal ou votre invite de commande et exécutez la commande suivante :
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+Cela téléchargera le référentiel dans un nouveau dossier nommé hse-mwi.
+
+Si git n'est pas installé, installez-le :
+
+-   Windows : Git pour Windows
+
+-   macOS :`brew install git`
+
+-   Linux :`sudo apt install git `
+
+Accédez au répertoire du projet
+
+Accédez au répertoire dans lequel le référentiel a été cloné :`cd hse-mwi `
+
+Ouvrez app.R dans RStudio à l'aide de la ligne de commande
+
+##### 4 . Exécutez la commande suivante pour lancer RStudio et ouvrez le script app.R :
+
+Pour macOS/Linux :`open -a RStudio app.R  `
+
+Pour Windows :
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+Par exemple:
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
+
+5.  Dans la fenêtre de la console, située dans le coin inférieur gauche, saisissez la ligne suivante et répondez « oui » à toutes les invites de la console lorsque vous installez ces packages :
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
 
 6.  Dans "app.R", accédez à la ligne 11, qui devrait indiquer "app_local &lt;- FALSE". Remplacez FAUX par VRAI.
 
@@ -67,11 +133,11 @@ Pour créer votre propre indice de bien-être mental, vous pouvez suivre le rest
 
 9.  Si vous ajustez uniquement les pondérations ou les sous-ensembles à des codes postaux spécifiques pour les données incluses, ignorez l'étape suivante. Cela peut également être fait sur le site Web[ici](https://sjp.mitre.org/mwi).
 
-10. Mettez chacun de vos jeux de données au format CSV (valeurs séparées par des virgules), avec une colonne correspondant à l'identifiant géographique des données, une colonne correspondant au numérateur des données et une autre colonne correspondant au dénominateur (si nécessaire).
+10. Mettez chacun de vos ensembles de données au format CSV (valeurs séparées par des virgules), avec une colonne correspondant à l'identifiant géographique des données, une colonne correspondant au numérateur des données et une autre colonne correspondant au dénominateur (si nécessaire).
 
 -   Les types d’identifiants géographiques acceptés sont toujours numériques et incluent les éléments suivants :
     -   ZCTA : ZCTA à 5 chiffres (exemple : 35406)
-    -   Comté : code FIPS du comté à 5 chiffres (code d'État à 2 chiffres et code du comté à 3 chiffres, exemple : 01001)
+    -   Comté : code FIPS du comté à 5 chiffres (code d'État à 2 chiffres et code du comté à 3 chiffres, exemple : 01001)
     -   Code postal : Code postal du service postal américain (exemple : 35051)
     -   Secteur de recensement : code FIPS du secteur de recensement à 11 chiffres (code d'État à 2 chiffres, code de comté à 3 chiffres et code de secteur à 6 chiffres, exemple : 01001020100)
 -   Si une colonne de dénominateur est fournie, l'entrée finale du MWI sera le numérateur divisé par le dénominateur, multiplié par le nombre de mise à l'échelle (spécifié dans le fichier de métadonnées, voir l'étape suivante).
@@ -185,7 +251,7 @@ Nous allons créer 3 ensembles de fichiers de poids :
 
 -   Pondération parcimonieuse (tous poids égaux)
 
--   Méthode de détermination de la pondération du Child Opportunity Index
+-   Méthode de détermination de la pondération de l'indice d'opportunité pour les enfants
 
 -   Pondération du classement de santé du comté
 

@@ -1,5 +1,16 @@
 # Indeks Kesejahteraan Mental™ (MWI)
 
+## Terjemahan
+
+# README dalam Bahasa Berbeza
+
+-   [Inggeris](README.md)
+-   [Cina ringkas](README.zh-CN.md)
+-   [Perancis](README.fr.md)
+-   [Arab](README.ar.md)
+-   [Jepun](README.ja.md)
+-   [Bahasa Melayu](README.ms.md)
+
 # Garis besar
 
 -   [Indeks Kesejahteraan Mental (MWI)](#Mental-Wellness-Index-(MWI))
@@ -56,8 +67,63 @@ Untuk mencipta Indeks Kesejahteraan Mental anda sendiri, anda boleh mengikuti ar
 
 4.  Dalam folder yang dinyahzip, buka "app.R" dalam RStudio. Ini sepatutnya membuka RStudio dan skrip "app.R" di penjuru kiri sebelah atas aplikasi.
 
+#### Alternatif untuk langkah 1-4
+
+Arahan untuk Penggunaan Baris Perintah
+
+##### 1 . Pasang R dan RStudio
+
+Muat turun dan pasang versi terkini R dan RStudio daripada pautan di bawah jika belum dipasang:
+R:<https://www.r-project.org/>RStudio:<https://www.rstudio.com/products/rstudio/download/>Sebagai alternatif, gunakan pengurus pakej untuk memasang R:
+
+Untuk Windows: Gunakan Chocolatey:
+
+`choco install r.project ``choco install r.studio `
+
+Untuk macOS: Gunakan Homebrew:
+
+`brew install --cask r ``brew install --cask rstudio`
+
+Untuk Linux (Ubuntu/Debian):
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### 2 . Klon Repositori Indeks Kesejahteraan Mental Menggunakan Git
+
+Buka terminal atau command prompt anda dan jalankan arahan berikut:
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+Ini akan memuat turun repositori ke dalam folder baharu bernama hse-mwi.
+
+Jika git tidak dipasang, pasangkannya:
+
+-   Windows: Git untuk Windows
+
+-   macOS:`brew install git`
+
+-   Linux:`sudo apt install git `
+
+Navigasi ke Direktori Projek
+
+Tukar ke direktori tempat repositori diklon:`cd hse-mwi `
+
+Buka app.R dalam RStudio Menggunakan Baris Perintah
+
+##### 4 . Jalankan arahan berikut untuk melancarkan RStudio dan buka skrip app.R:
+
+Untuk macOS/Linux:`open -a RStudio app.R  `
+
+Untuk Windows:
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+Contohnya:
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
+
 5.  Dalam tetingkap konsol, yang berada di sudut kiri bawah, masukkan baris berikut dan jawab "ya" kepada semua gesaan dalam konsol semasa anda memasang pakej ini:
-    -   install.packages('readxl', 'writexl', 'htmltools', 'berkilat', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass ', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr')
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'berkilat', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
 
 6.  Dalam "app.R", navigasi ke baris 11, yang sepatutnya menyatakan "app_local &lt;- FALSE". Tukar FALSE kepada TRUE.
 
@@ -95,11 +161,11 @@ Untuk mencipta Indeks Kesejahteraan Mental anda sendiri, anda boleh mengikuti ar
 
 # Menggunakan Data MWI
 
-Jika anda ingin menggunakan MWI atau langkah atau datanya yang diproses, lihat folder "Data" dan "Dokumentasi" untuk mendapatkan maklumat lanjut. Setiap folder dalam "Data" mempunyai README yang memperincikan fail yang disertakan. Semua data, kecuali fail Metadata, adalah dalam format CSV.
+Jika anda ingin menggunakan MWI atau ukuran atau datanya yang diproses, lihat folder "Data" dan "Dokumentasi" untuk mendapatkan maklumat lanjut. Setiap folder dalam "Data" mempunyai README yang memperincikan fail yang disertakan. Semua data, kecuali fail Metadata, adalah dalam format CSV.
 
 Folder dalam "Data" adalah seperti berikut:
 
--   Sumber: mengandungi fail untuk memproses data dan merujuk lintasan geografi.
+-   Sumber: mengandungi fail untuk memproses data dan merujuk persimpangan geografi.
 -   Praproses: mengandungi data praproses untuk semua ukuran dalam format yang diperlukan oleh saluran paip MWI: satu lajur untuk menunjukkan pengecam geografi, kemudian satu untuk nilai berangka setiap ukuran.
 -   Dibersihkan: mengandungi keputusan Indeks Kesejahteraan Mental dan memproses keputusan saluran paip.
 
@@ -127,7 +193,7 @@ Menambah data yang ditarik daripada API atau dimuat turun terus daripada tapak w
 
 -   `Teams`>`BHN Score`>`Data`>`Raw`
 
-    -   jika sebarang pengiraan ukuran perlu dilengkapkan (iaitu titik geografi ke geografi bekas, pengiraan kelaziman, dsb.)
+    -   jika sebarang pengiraan ukuran perlu diselesaikan (iaitu titik geografi ke geografi bekas, pengiraan kelaziman, dsb.)
 
     -   sambungan fail juga boleh menjadi .xlsx, .csv, .dta, dsb
 
@@ -151,7 +217,7 @@ Fail ini mengandungi maklumat tentang semua**pra-diproses**mengukur dan memaklum
 
 -   Mana-mana peringkat geografi ->Tahap ZCTA sahaja
 
--   Ukur arah sejajar (nilai yang lebih tinggi menunjukkan keperluan yang lebih tinggi)
+-   Ukur hala tuju diselaraskan (nilai yang lebih tinggi menunjukkan keperluan yang lebih tinggi)
 
 -   Penskalaan diselaraskan (pecahan kepada peratus 0.1 ->10(%), pelarasan kelaziman (setiap 1000 orang), dsb.)
 
@@ -171,7 +237,7 @@ Dengan fail Pengukuran Gabungan, kami akan melaksanakan analisis berikut:
 
 -   Analisis kovarians (membenderakan dan mengurus set pembolehubah dengan multi-kolineariti yang tinggi)
 
--   Analisis ketiadaan (mengenal pasti langkah dengan nilai yang hilang berbilang tinggi, mengenal pasti ZCTA dengan berbilang langkah yang hilang)
+-   Analisis ketiadaan (mengenal pasti langkah dengan nilai yang hilang berbilang tinggi, mengenal pasti ZCTA dengan beberapa langkah yang hilang)
 
 -   Pengesahan silang dengan langkah komposit lain (COI, UNS, CHR, SVI, dll.)
 
@@ -191,7 +257,7 @@ Kami akan membuat 3 set fail pemberat:
 
 ## Penciptaan Skor
 
-Markah akhir untuk setiap ZCTA akan dibuat dengan menggabungkan pemberat dan fail ukuran gabungan. Sukatan dan sukatan didarab bersama, dijumlahkan untuk setiap ZCTA, dan kemudian diskalakan semula daripada 0 hingga 100. Markah muncul (dengan ukuran kedudukan persentil) dalam`Teams`>`BHN Score`>`Data`>`Cleaned`:
+Markah akhir untuk setiap ZCTA akan dibuat dengan menggabungkan pemberat dan fail ukuran gabungan. Ukuran dan sukatan didarab bersama, dijumlahkan untuk setiap ZCTA, dan kemudian diskalakan semula daripada 0 hingga 100. Markah muncul (dengan ukuran kedudukan persentil) dalam`Teams`>`BHN Score`>`Data`>`Cleaned`:
 
 -   Jumlah Skor Penduduk:`HSE_BHN_ZCTA_Score_Black.csv`
 
@@ -199,6 +265,6 @@ Markah akhir untuk setiap ZCTA akan dibuat dengan menggabungkan pemberat dan fai
 
 # Kenalan dan Atribusi
 
-Untuk sebarang pertanyaan atau kemusykilan, sila hubungi[socialjustice@mitre.org](mailto:socialjustice@mitre.org).
+Untuk sebarang pertanyaan atau kebimbangan, sila hubungi[socialjustice@mitre.org](mailto:socialjustice@mitre.org).
 
 Diluluskan untuk Siaran Umum; Pengedaran Tanpa Had. Nombor Kes Siaran Awam 21-3708. ©2021 The MITER Corporation. SEMUA HAK TERPELIHARA.

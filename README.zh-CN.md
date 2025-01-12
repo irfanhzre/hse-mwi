@@ -1,5 +1,16 @@
 # 心理健康指数™ (MWI)
 
+## 翻译
+
+# 不同语言的自述文件
+
+-   [英语](README.md)
+-   [简体中文](README.zh-CN.md)
+-   [法语](README.fr.md)
+-   [阿拉伯](README.ar.md)
+-   [日本人](README.ja.md)
+-   [马来语](README.ms.md)
+
 # 大纲
 
 -   [心理健康指数 (MWI)](#Mental-Wellness-Index-(MWI))
@@ -48,7 +59,7 @@ MWI 的制定考虑到了美国黑人的心理健康状况。我们选择美国�
 
 要创建您自己的心理健康指数，您可以按照其余说明在本地计算机上运行心理健康指数工具。按照下面的说明 8+，通过调整权重和/或添加您自己的数据和元数据，为您的社区创建您自己的 MWI。
 
-1.  下载免费版本[右](https://www.r-project.org/)和[RStudio](https://www.rstudio.com/products/rstudio/download/)。下载现代浏览器（Firefox、Chrome、Edge 等）并将其设为您的默认浏览器（如果您还没有这样做）。
+1.  下载免费版本[右](https://www.r-project.org/)和[RStudio](https://www.rstudio.com/products/rstudio/download/)。下载现代浏览器（Firefox、Chrome、Edge 等），如果您还没有将其设为您的默认浏览器。
 
 2.  前往[心理健康指数 GitHub 页面](https://github.com/mitre/hse-mwi)单击右上角的“代码”，然后从下拉菜单中单击“下载 ZIP”来下载存储库。这应该将 MWI 存储库的 ZIP 文件下载到您的下载文件夹中，名为“hse-mwi-main.zip”。
 
@@ -56,8 +67,63 @@ MWI 的制定考虑到了美国黑人的心理健康状况。我们选择美国�
 
 4.  在解压的文件夹中，在 RStudio 中打开“app.R”。这应该打开 RStudio 和应用程序左上角的“app.R”脚本。
 
+#### 步骤 1-4 的替代方案
+
+命令行使用说明
+
+##### 1.安装 R 和 RStudio
+
+如果尚未安装，请从以下链接下载并安装最新版本的 R 和 RStudio：
+回复：<https://www.r-project.org/>R工作室：<https://www.rstudio.com/products/rstudio/download/>或者，使用包管理器安装 R：
+
+对于 Windows：使用 Chocolatey：
+
+`choco install r.project ``choco install r.studio `
+
+对于 macOS：使用 Homebrew：
+
+`brew install --cask r ``brew install --cask rstudio`
+
+对于 Linux（Ubuntu/Debian）：
+
+`sudo apt update  ``sudo apt install r-base  `
+
+##### 2.使用 Git 克隆心理健康指数存储库
+
+打开终端或命令提示符并运行以下命令：
+
+`git clone https://github.com/mitre/hse-mwi.git`
+
+这会将存储库下载到名为 hse-mwi 的新文件夹中。
+
+如果没有安装 git，请安装它：
+
+-   Windows：适用于 Windows 的 Git
+
+-   苹果系统：`brew install git`
+
+-   Linux：`sudo apt install git `
+
+导航到项目目录
+
+更改到克隆存储库的目录：`cd hse-mwi `
+
+使用命令行在 RStudio 中打开 app.R
+
+##### 4.运行以下命令启动 RStudio 并打开 app.R 脚本：
+
+对于 macOS/Linux：`open -a RStudio app.R  `
+
+对于 Windows：
+
+`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
+
+例如：
+
+`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
+
 5.  在安装这些软件包时，在左下角的控制台窗口中，输入以下行并对控制台中的所有提示回答“是”：
-    -   install.packages('readxl', 'writexl', 'htmltools', 'shiny', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass ', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr')
+    -   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
 
 6.  在“app.R”中，导航到第 11 行，其中应显示“app_local &lt;- FALSE”。将 FALSE 更改为 TRUE。
 
@@ -65,11 +131,11 @@ MWI 的制定考虑到了美国黑人的心理健康状况。我们选择美国�
 
 8.  延迟一段时间后（第一次会很慢，之后会更快），心理健康指数工具应该在您的浏览器中打开。单击“创建您自己的 MWI”选项卡，然后按照其余步骤创建您自己的 MWI。
 
-9.  如果您只是调整权重或子集到包含的数据的特定邮政编码，请跳过下一步。这也可以在网站上完成[这里](https://sjp.mitre.org/mwi).
+9.  如果您仅调整所包含数据的权重或子集到特定邮政编码，请跳过下一步。这也可以在网站上完成[这里](https://sjp.mitre.org/mwi).
 
 10. 将每个数据集采用 CSV（逗号分隔值）格式，其中一列对应于数据的地理 ID，一列对应于数据的分子，另一列对应于分母（如果需要）。
 
--   接受的地理 ID 类型始终是数字，并包括以下内容：
+-   接受的地理 ID 类型始终为数字，并包括以下内容：
     -   ZCTA：5 位 ZCTA（示例：35406）
     -   县：5 位县 FIPS 代码（2 位州代码和 3 位县代码，例如：01001）
     -   邮政编码：美国邮政服务邮政编码（例如：35051）
@@ -191,7 +257,7 @@ MWI 的制定考虑到了美国黑人的心理健康状况。我们选择美国�
 
 ## 乐谱创建
 
-每个 ZCTA 的最终分数将通过结合权重和组合测量文件来创建。度量和度量权重相乘，对每个 ZCTA 求和，然后从 0 重新缩放到 100。分数出现在（带有百分位排名度量）`Teams`>`BHN Score`>`Data`>`Cleaned`:
+每个 ZCTA 的最终分数将通过结合权重和组合测量文件来创建。度量和度量权重相乘，对每个 ZCTA 求和，然后从 0 重新调整到 100。分数出现（带有百分位数排名度量）`Teams`>`BHN Score`>`Data`>`Cleaned`:
 
 -   人口总分：`HSE_BHN_ZCTA_Score_Black.csv`
 
