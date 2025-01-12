@@ -117,7 +117,7 @@ Synchronisez le dossier Microsoft Teams BHN Score Creation dans votre dossier lo
 
 ## Finaliser les mesures
 
-Document de suivi des mesures situé dans`Teams`>`BHN Score`>`Measure-Tracking.xslx`
+Document de suivi des mesures situé dans`Teams`> `BHN Score`>`Measure-Tracking.xslx`
 
 Consulter et mettre à jour ce document lorsque des mesures supplémentaires seront finalisées.
 
@@ -125,7 +125,7 @@ Consulter et mettre à jour ce document lorsque des mesures supplémentaires ser
 
 Ajouter des données extraites d'une API ou directement téléchargées depuis un site Web tombera dans l'un des deux dossiers :
 
--   `Teams`>`BHN Score`>`Data`>`Raw`
+-   `Teams`>`BHN Score` >`Data` >`Raw`
 
     -   si un calcul de mesure doit être effectué (c'est-à-dire la géographie du point vers la géographie du conteneur, les calculs de prévalence, etc.)
 
