@@ -42,7 +42,7 @@ MWI は、黒人アメリカ人の精神的健康状態を念頭に置いて開�
 
 データは、2023 年 1 月 24 日時点で利用可能な最新のものに更新されました。以前にリリースされたバージョンの MWI を使用したい場合は、次を参照してください。[リリース](https://github.com/mitre/hse-mwi/releases).
 
-# MWI をセットアップし、独自の MWI を作成する
+# Set Up MWI and Create Your Own MWI
 
 Mental Wellness Index ツールをセットアップして簡単に実行するには、手順 1 ～ 8 に従ってください。
 
