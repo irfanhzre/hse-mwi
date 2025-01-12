@@ -37,7 +37,7 @@ Hasrat Indeks Kesejahteraan Mental adalah untuk memberikan gambaran kesihatan me
 
 MWI mencipta skor untuk setiap poskod antara 0 dan 100, supaya:
 
--   higher values indicate more **aset**itu**sokongan**kesejahteraan mental masyarakat
+-   nilai yang lebih tinggi menunjukkan lebih banyak**aset**itu**sokongan**kesejahteraan mental masyarakat
 
 -   nilai yang lebih rendah menunjukkan lebih banyak**halangan**itu**cabaran**kesejahteraan mental masyarakat
 
@@ -80,7 +80,7 @@ Untuk Windows: Gunakan Chocolatey:
 
 `choco install r.project ``choco install r.studio `
 
-Untuk macOS: Gunakan Homebrew:
+For macOS: Use Homebrew:
 
 `brew install --cask r ``brew install --cask rstudio`
 
@@ -183,7 +183,7 @@ Segerakkan folder Microsoft Teams BHN Score Creation ke dalam folder The MITER C
 
 ## Memuktamadkan Langkah
 
-Dokumen Penjejakan Ukur terletak di`Teams`>`BHN Score` >`Measure-Tracking.xslx`
+Dokumen Penjejakan Ukur terletak di`Teams`>`BHN Score`>`Measure-Tracking.xslx`
 
 Rujuk dan kemas kini dokumen ini apabila langkah tambahan dimuktamadkan.
 
@@ -227,7 +227,7 @@ Setelah data dibersihkan, data tersebut akan digabungkan ke dalam fail Gabungan 
 
 -   Fail langkah gabungan asal:`Teams`>`BHN Score`>`Data`>`Cleaned`>`HSE_ZCTA_Converted_Measures.csv`
 
--   Fail ukuran gabungan Berskala Persentil:`Teams`> `BHN Score`>`Data`>`Cleaned`>`HSE_ZCTA_Percentile_Ranked_Measures.csv`
+-   Fail ukuran gabungan Berskala Persentil:`Teams`>`BHN Score`>`Data`>`Cleaned`>`HSE_ZCTA_Percentile_Ranked_Measures.csv`
 
 Selain itu, maklumat tentang data (jumlah yang hilang, bilangan baris yang tidak hilang, dll.) dijana dan muncul dalam:`Teams`>`BHN Score`>`Data`>`Cleaned`>`HSE_BHN_Data_Information.csv`.
 
@@ -243,7 +243,7 @@ Dengan fail Pengukuran Gabungan, kami akan melaksanakan analisis berikut:
 
 ### Dokumentasi
 
-Dokumentasi ukuran boleh didapati di`Teams`> `BHN Score`>`Documentation`folder.
+Dokumentasi ukuran boleh didapati di`Teams`>`BHN Score`>`Documentation`folder.
 
 ## Timbang
 
