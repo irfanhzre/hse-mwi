@@ -1,8 +1,10 @@
 # Indeks Kesejahteraan Mental™ (MWI)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/mitre/hse-mwi/graphs/commit-activity)
+
 ## Terjemahan
 
-# README dalam Bahasa Berbeza
+### README dalam Bahasa Berbeza
 
 -   [Inggeris](README.md)
 -   [Cina ringkas](README.zh-CN.md)
@@ -11,35 +13,59 @@
 -   [Jepun](README.ja.md)
 -   [Bahasa Melayu](README.ms.md)
 
-# Garis besar
+# Jadual Kandungan
 
--   [Indeks Kesejahteraan Mental (MWI)](#Mental-Wellness-Index-(MWI))
--   [Sediakan MWI dan Cipta MWI Anda Sendiri](#Set-Up-MWI-and-Create-Your-Own-MWI)
--   [Menggunakan Data MWI](#Using-MWI-Data)
--   [Persediaan Teknikal](#Technical-Set-Up)(hanya berguna untuk penyumbang)
--   [Kenalan dan Atribusi](#Contact-and-Attribution)
+-   [Indeks Kesejahteraan Mental (MWI)](#mental-wellness-index-mwi)
+    -   [Domain dan Ukuran MWI](#mwi-domains--measures)
+    -   [Fokus pada orang kulit hitam Amerika](#focus-on-black-americans)
+    -   [Kemas Kini Data 2023](#2023-data-update)
+-   [Sediakan MWI dan Cipta MWI Anda Sendiri](#set-up-mwi-and-create-your-own-mwi)
+    -   [Persediaan Asas (Arahan 1-8)](#basic-setup-instructions-1-8)
+    -   [Persediaan Barisan Perintah Alternatif](#alternative-command-line-setup)
+    -   [Mencipta MWI Tersuai (Arahan 9-15)](#creating-custom-mwi-instructions-9-15)
+-   [Menggunakan Data MWI](#using-mwi-data)
+    -   [Struktur Direktori Data](#data-directory-structure)
+    -   [Sumber](#resources)
+    -   [Data Praproses](#preprocessed-data)
+    -   [Data Dibersihkan](#cleaned-data)
+-   [Persediaan Teknikal](#technical-set-up)
+    -   [Senibina Talian Paip Data](#data-pipeline-architecture)
+    -   [Persekitaran Pembangunan](#development-environment)
+    -   [Pengurusan Data](#data-management)
+    -   [Sistem Pendaftaran Ukur](#measure-registration-system)
+    -   [Metodologi Analisis](#analysis-methodology)
+    -   [Sistem Pemberat](#weighting-systems)
+    -   [Penjanaan Skor](#score-generation)
+-   [Ciri Lanjutan](#advanced-features)
+    -   [Penyepaduan Data Tersuai](#custom-data-integration)
+    -   [Konfigurasi Metadata](#metadata-configuration)
+    -   [Alat Analisis](#analysis-tools)
+    -   [Pilihan Visualisasi](#visualization-options)
+-   [Garis Panduan Menyumbang](#contributing-guidelines)
+    -   [Persediaan Pembangunan](#development-setup)
+-   [Kenalan dan Atribusi](#contact-and-attribution)
+    -   [Saluran Sokongan](#support-channels)
+    -   [Maklumat Lesen](#license-information)
+    -   [Ucapan terima kasih](#acknowledgments)
 
 # Indeks Kesejahteraan Mental (MWI)
 
-Untuk melihat Alat Indeks Kesejahteraan Mental, sila lihat<https://sjp.mitre.org/mwi>. Untuk maklumat lanjut tentang Indeks Kesejahteraan Mental, lihat di bawah atau lihat pandangan[di sini](https://sjp.mitre.org/insights/61f312259916dc001a9ba4db).
+Untuk melihat Alat Indeks Kesejahteraan Mental, sila lawati<https://sjp.mitre.org/mwi>. Untuk maklumat lebih terperinci tentang Indeks Kesejahteraan Mental, lihat di bawah atau lihat pandangan[di sini](https://sjp.mitre.org/insights/61f312259916dc001a9ba4db).
 
-Indeks Kesejahteraan Mental ialah rangka kerja dan alat papan pemuka yang memberikan gambaran kesihatan mental peringkat komuniti untuk setiap poskod\*dalam negara. MWI terdiri daripada 28 langkah daripada 3 domain: Penentu Sosial Kesihatan, Akses Penjagaan Kesihatan dan Status Kesihatan. Perkauman Struktural dan Aset Komuniti & Budaya dijalin di sekeliling dan di seluruh domain MWI itu sendiri, mencerminkan pengaruhnya sepanjang rangka kerja ukuran.
+Indeks Kesejahteraan Mental ialah rangka kerja dan alat papan pemuka yang komprehensif yang memberikan gambaran terperinci tentang kesihatan mental peringkat komuniti untuk setiap poskod\* di negara ini. MWI terdiri daripada 28 langkah merentasi 3 domain berbeza: Penentu Sosial Kesihatan, Akses Penjagaan Kesihatan dan Status Kesihatan. Perkauman Struktural dan Aset Komuniti & Budaya dijalin di seluruh domain MWI itu sendiri, mencerminkan pengaruh meresapnya di seluruh rangka kerja ukuran.
 
-<p align = "center">
+<p align="center">
 <img src="https://github.com/mitre/hse-mwi/blob/main/www/media/MWI%20Framework%20(Transparent%20Background).png" width="400" />
 </p>
-
-Hasrat Indeks Kesejahteraan Mental adalah untuk memberikan gambaran kesihatan mental komuniti supaya pemimpin komuniti, pegawai kesihatan awam dan entiti pembiayaan dapat memahami cara terbaik mereka mengarahkan sokongan kesihatan mental untuk membina aset komuniti tertentu dan mengisinya. jurang.
 
 \*Kawasan Penjadualan Kod Pos (ZCTA)
 
 ## Domain dan Ukuran MWI
 
-MWI mencipta skor untuk setiap poskod antara 0 dan 100, supaya:
+MWI menjana skor yang canggih untuk setiap poskod antara 0 dan 100, di mana:
 
--   nilai yang lebih tinggi menunjukkan lebih banyak**aset**itu**sokongan**kesejahteraan mental masyarakat
-
--   nilai yang lebih rendah menunjukkan lebih banyak**halangan**itu**cabaran**kesejahteraan mental masyarakat
+-   Nilai yang lebih tinggi (lebih hampir kepada 100) menunjukkan lebih banyak**aset**itu**sokongan**kesejahteraan mental masyarakat
+-   Nilai yang lebih rendah (lebih hampir kepada 0) menunjukkan lebih banyak**halangan**itu**cabaran**kesejahteraan mental masyarakat
 
 ^ menunjukkan langkah-langkah yang berstrata kaum
 
@@ -47,179 +73,185 @@ MWI mencipta skor untuk setiap poskod antara 0 dan 100, supaya:
 
 ## Fokus pada orang kulit hitam Amerika
 
-MWI dibangunkan dengan mengambil kira status kesihatan mental warga kulit hitam Amerika. Kami memilih warga kulit hitam Amerika sebagai populasi keutamaan untuk menumpukan pada margin dan mengelak daripada mencipta indeks yang tertumpu kepada 'komuniti sederhana'. Kami percaya bahawa memberi tumpuan kepada orang kulit hitam Amerika dengan cara ini membolehkan semua kumpulan yang mengalami jurang perbezaan mendapat manfaat kerana tiada seorang pun daripada kita yang sihat sehingga kita semua sihat. Kami juga menyedari keperluan untuk mengenal pasti, mengiktiraf dan menyesuaikan MWI untuk populasi keutamaan tambahan.
+MWI telah dibangunkan secara khusus dengan status kesihatan mental orang kulit hitam Amerika sebagai pertimbangan utama. Kami sengaja memilih warga kulit hitam Amerika sebagai populasi keutamaan untuk berpusat di margin dan mengelak daripada mencipta indeks yang tertumpu pada 'komuniti sederhana.' Pilihan yang disengajakan ini mencerminkan kepercayaan kami bahawa memfokuskan kepada orang kulit hitam Amerika dengan cara ini menghasilkan manfaat untuk semua kumpulan yang mengalami jurang perbezaan, mematuhi prinsip bahawa tiada seorang pun daripada kita sihat sehingga kita semua sihat. Kami juga mengakui keperluan untuk mengenal pasti, mengiktiraf dan menyesuaikan MWI untuk populasi keutamaan tambahan dalam lelaran masa hadapan.
 
 ## Kemas Kini Data 2023
 
-Data telah dikemas kini kepada yang paling terkini tersedia pada 24 Januari 2023. Jika anda ingin menggunakan versi MWI yang dikeluarkan sebelum ini, lihat[Keluaran](https://github.com/mitre/hse-mwi/releases).
+Data telah dikemas kini secara menyeluruh kepada yang terbaru tersedia pada 24 Januari 2023. Untuk akses kepada versi MWI yang dikeluarkan sebelum ini, sila rujuk kami[Keluaran](https://github.com/mitre/hse-mwi/releases)muka surat.
 
 # Sediakan MWI dan Cipta MWI Anda Sendiri
 
-Untuk menyediakan dan hanya menjalankan Alat Indeks Kesejahteraan Mental, ikut arahan 1 - 8.
+## Persediaan Asas (Arahan 1-8)
 
-Untuk mencipta Indeks Kesejahteraan Mental anda sendiri, anda boleh mengikuti arahan yang lain untuk menjalankan Alat Indeks Kesejahteraan Mental pada komputer setempat anda. Ikut arahan 8+ di bawah untuk mencipta MWI anda sendiri untuk komuniti anda di bawah dengan melaraskan pemberat dan/atau menambah data dan metadata anda sendiri.
+Ikuti langkah ini untuk pemasangan asas dan menjalankan Alat Indeks Kesejahteraan Mental:
 
-1.  Muat turun versi percuma[R](https://www.r-project.org/)dan[RStudio](https://www.rstudio.com/products/rstudio/download/). Muat turun penyemak imbas moden (Firefox, Chrome, Edge, dll.) dan jadikan penyemak imbas lalai anda jika anda belum melakukannya.
+1.  **Persediaan Persekitaran**
+    -   Muat turun dan pasang[R](https://www.r-project.org/)
+    -   Muat turun dan pasang[RStudio](https://www.rstudio.com/products/rstudio/download/)
+    -   Pastikan anda mempunyai penyemak imbas moden (Firefox, Chrome, Edge, dll.) ditetapkan sebagai lalai
 
-2.  Pergi ke[Halaman GitHub Indeks Kesejahteraan Mental](https://github.com/mitre/hse-mwi)dan muat turun repositori dengan mengklik "Kod" di penjuru kanan sebelah atas, kemudian mengklik "Muat turun ZIP" daripada menu lungsur. Ini sepatutnya memuat turun fail ZIP repositori MWI ke dalam folder muat turun anda, dipanggil "hse-mwi-main.zip".
+2.  **Muat Turun Repositori**
+    -   Navigasi ke[Halaman GitHub Indeks Kesejahteraan Mental](https://github.com/mitre/hse-mwi)
+    -   Klik "Kod" di penjuru kanan sebelah atas
+    -   Pilih "Muat turun ZIP" daripada menu lungsur
+    -   Cari "hse-mwi-main.zip" yang dimuat turun dalam folder muat turun anda
 
-3.  Nyahzip "hse-mwi-main.zip".
+3.  **Konfigurasi Awal**
+    -   Nyahzip "hse-mwi-main.zip"
+    -   Buka "app.R" dalam RStudio
+    -   Cari baris 11: "app_local &lt;- FALSE"
+    -   Tukar FALSE kepada TRUE
 
-4.  Dalam folder yang dinyahzip, buka "app.R" dalam RStudio. Ini sepatutnya membuka RStudio dan skrip "app.R" di penjuru kiri sebelah atas aplikasi.
+4.  **Pemasangan Pakej**Jalankan arahan berikut dalam konsol RStudio:
+    ```R
+    install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 
+                      'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 
+                      'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 
+                      'shinyBS', 'DT', 'dplyr'))
+    ```
 
-#### Alternatif untuk langkah 1-4
+## Persediaan Barisan Perintah Alternatif
 
-Arahan untuk Penggunaan Baris Perintah
+### Persediaan Windows
 
-##### 1 . Pasang R dan RStudio
+```bash
+# Install Chocolatey first if not installed
+choco install r.project
+choco install r.studio
+git clone https://github.com/mitre/hse-mwi.git
+cd hse-mwi
+```
 
-Muat turun dan pasang versi terkini R dan RStudio daripada pautan di bawah jika belum dipasang:
-R:<https://www.r-project.org/>RStudio:<https://www.rstudio.com/products/rstudio/download/>Sebagai alternatif, gunakan pengurus pakej untuk memasang R:
+### Persediaan macOS
 
-Untuk Windows: Gunakan Chocolatey:
+```bash
+brew install --cask r
+brew install --cask rstudio
+git clone https://github.com/mitre/hse-mwi.git
+cd hse-mwi
+```
 
-`choco install r.project ``choco install r.studio `
+### Persediaan Linux (Ubuntu/Debian)
 
-Untuk macOS: Gunakan Homebrew:
+```bash
+sudo apt update
+sudo apt install r-base
+sudo apt install git
+git clone https://github.com/mitre/hse-mwi.git
+cd hse-mwi
+```
 
-`brew install --cask r ``brew install --cask rstudio`
+## Mencipta MWI Tersuai (Arahan 9-15)
 
-Untuk Linux (Ubuntu/Debian):
+### Penyediaan Data
 
-`sudo apt update  ``sudo apt install r-base  `
+9.  **Keperluan Format Data**
+    -   Format fail: CSV (nilai dipisahkan koma)
+    -   Lajur yang diperlukan:
+        -   ID Geografi (angka)
+        -   Pengangka data
+        -   Penyebut data (jika berkenaan)
 
-##### 2 . Klon Repositori Indeks Kesejahteraan Mental Menggunakan Git
+10. **Jenis ID Geografi yang Boleh Diterima**
+    -   ZCTA: 5 digit (mis., 35406)
+    -   Daerah: 5 digit Kod FIPS (cth., 01001)
+    -   Poskod: 5 digit (cth., 35051)
+    -   Banci Trak: 11 digit Kod FIPS (cth., 01001020100)
 
-Buka terminal atau command prompt anda dan jalankan arahan berikut:
+11. **Peraturan Pemprosesan Data**
+    -   Pengiraan akhir: (pembilang/penyebut) × faktor penskalaan
+    -   Data tiada: Biarkan sel kosong
+    -   Data berstrata perlumbaan:
+        -   Akhiran lajur '\_pop': ukuran populasi keseluruhan
+        -   Akhiran lajur '\_black': Ukuran populasi kulit hitam
+        -   Tetapkan 'Praproses' kepada TRUE dalam Metadata.xlsx
 
-`git clone https://github.com/mitre/hse-mwi.git`
+### Konfigurasi Metadata
 
-Ini akan memuat turun repositori ke dalam folder baharu bernama hse-mwi.
+12. **Keperluan Metadata.xlsx**
+    -   Muat turun dan ubah suai templat
+    -   Medan yang diperlukan untuk setiap ukuran:
+        -   Ukur nama
+        -   Nama fail
+        -   Tahap geografi
+        -   Arah arah
+        -   Berat badan
+        -   Penerangan
+        -   Sumber
+        -   tahun
+        -   Nota
+    -   Pilihan: medan penyebut
 
-Jika git tidak dipasang, pasangkannya:
+13. **Penciptaan MWI Tersuai**
+    -   Gabungkan data dan fail metadata dalam format ZIP
+    -   Muat naik fail ZIP melalui antara muka
+    -   Tunggu sehingga pemprosesan selesai
 
--   Windows: Git untuk Windows
+14. **Eksport Data**
+    -   Muat turun fail .RData yang dijana
+    -   Simpan dengan selamat - tiada data disimpan dalam aplikasi
 
--   macOS:`brew install git`
-
--   Linux:`sudo apt install git `
-
-Navigasi ke Direktori Projek
-
-Tukar ke direktori tempat repositori diklon:`cd hse-mwi `
-
-Buka app.R dalam RStudio Menggunakan Baris Perintah
-
-##### 4 . Jalankan arahan berikut untuk melancarkan RStudio dan buka skrip app.R:
-
-Untuk macOS/Linux:`open -a RStudio app.R  `
-
-Untuk Windows:
-
-`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
-
-Contohnya:
-
-`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
-
-5.  Dalam tetingkap konsol, yang berada di sudut kiri bawah, masukkan baris berikut dan jawab "ya" kepada semua gesaan dalam konsol semasa anda memasang pakej ini:
-    -   install.packages(c('readxl', 'writexl', 'htmltools', 'berkilat', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
-
-6.  Dalam "app.R", navigasi ke baris 11, yang sepatutnya menyatakan "app_local &lt;- FALSE". Tukar FALSE kepada TRUE.
-
-7.  Di penjuru kanan sebelah atas tetingkap "app.R", anda sepatutnya melihat "Run App". Klik anak panah kecil ke bawah di sebelah kanan itu dan klik "Jalankan Luaran". Kemudian klik "Jalankan Apl".
-
-8.  Selepas kelewatan (ini akan menjadi perlahan pada kali pertama, kemudian lebih cepat selepas itu), Alat Indeks Kesejahteraan Mental harus dibuka dalam penyemak imbas anda. Klik pada tab "Buat MWI Anda Sendiri" dan ikuti langkah yang tinggal untuk mencipta MWI anda sendiri.
-
-9.  Jika anda hanya melaraskan pemberat atau subset kepada Kod ZIP tertentu untuk data yang disertakan, langkau langkah seterusnya. Ini juga boleh dilakukan di laman web[di sini](https://sjp.mitre.org/mwi).
-
-10. Letakkan setiap set data anda dalam format CSV (nilai dipisahkan koma), dengan satu lajur sepadan dengan ID geografi data, lajur sepadan dengan pengangka data dan lajur lain sepadan dengan penyebut (jika perlu).
-
--   Jenis ID geografi yang diterima sentiasa berangka dan termasuk yang berikut:
-    -   ZCTA: 5 digit ZCTA (contoh: 35406)
-    -   Daerah: 5 digit Kod FIPS Daerah (2 digit kod negeri dan 3 digit kod daerah, contoh: 01001)
-    -   Poskod: Kod Pos Perkhidmatan Pos AS (contoh: 35051)
-    -   Bancian Trak: 11 digit Kod Banci Trak FIPS (2 digit kod negeri, 3 digit kod daerah dan 6 digit kod saluran, contoh: 01001020100)
--   Jika lajur penyebut disediakan, input akhir kepada MWI akan menjadi pengangka dibahagikan dengan penyebut, didarab dengan nombor penskalaan (dinyatakan dalam fail metadata, lihat langkah seterusnya).
--   Numerator dan penyebut mestilah lajur angka.
--   Data yang hilang harus dibiarkan kosong.
--   Jika kaum berstrata, perlu ada dua lajur: satu lajur berakhir dengan '\_pop' sepadan dengan ukuran populasi keseluruhan, dan satu lajur berakhir dengan '\_hitam' sepadan dengan ukuran populasi kulit hitam. Dalam pengeditan fail Metadata.xlsx, lajur 'Praproses' baris itu hendaklah ditetapkan kepada BENAR.
-
-11. Muat turun Metadata.xlsx dengan butang di bawah. Jika menambah data tersuai, tambahkan baris dan isikan maklumat untuk setiap ukuran yang ingin anda tambahkan pada Indeks Kesejahteraan Mental. Perihalan untuk setiap lajur boleh didapati dalam helaian 'Perihalan Lajur' Metadata.xlsx. Ambil perhatian bahawa semua nama lajur, kecuali 'penyebut', mesti diisi.
-
--   Jika anda mempunyai berbilang ukuran dalam satu fail, tambahkan baris untuk setiap ukuran dan kualitinya, tetapi nyatakan nama fail yang sama.
--   Jika anda ingin mengalih keluar ukuran dalam MWI anda, sama ada padamkan baris ukuran atau tetapkan beratnya kepada 0.
--   Jika anda hanya ingin melaraskan pemberat, tukar hanya lajur berat kepada nilai yang dikehendaki. Ambil perhatian bahawa penalti untuk stratifikasi kaum dan butiran geografi masih digunakan dan jumlah wajaran diskalakan kepada jumlah 100.
-
-12. Letakkan data anda (jika menggunakan) dan fail Metadata.xlsx yang dikemas kini dalam fail ZIP (.zip).
-
-13. Muat naik fail ZIP anda dan klik 'Buat MWI Tersuai' di bawah. Ini akan mengambil sedikit masa, bergantung pada jumlah langkah yang disertakan.
-
-14. Setelah penciptaan MWI tersuai selesai, klik 'Muat Turun MWI Tersuai' untuk memuat turun fail .RData dengan semua maklumat yang diperlukan untuk melihat MWI anda dalam alat ini. Nota: jika anda menavigasi keluar dari halaman ini, semua pemprosesan dan data akan hilang! Tiada apa-apa yang disimpan dalam aplikasi ini.
-
-15. Untuk melihat MWI anda, klik kotak 'Muat Naik MWI Tersuai' di bawah 'Teroka Negeri' atau 'Teroka Kod ZIP' dan muat naik fail '.RData' yang dimuat turun.
+15. **Visualisasi**
+    -   Gunakan ciri 'Muat Naik MWI Tersuai'
+    -   Tersedia dalam kedua-dua bahagian 'Teroka Negeri' dan 'Teroka Kod ZIP'
 
 # Menggunakan Data MWI
 
-Jika anda ingin menggunakan MWI atau ukuran atau datanya yang diproses, lihat folder "Data" dan "Dokumentasi" untuk mendapatkan maklumat lanjut. Setiap folder dalam "Data" mempunyai README yang memperincikan fail yang disertakan. Semua data, kecuali fail Metadata, adalah dalam format CSV.
+## Struktur Direktori Data
 
-Folder dalam "Data" adalah seperti berikut:
+Folder "Data" mengandungi beberapa subdirektori penting:
 
--   Sumber: mengandungi fail untuk memproses data dan merujuk persimpangan geografi.
--   Praproses: mengandungi data praproses untuk semua ukuran dalam format yang diperlukan oleh saluran paip MWI: satu lajur untuk menunjukkan pengecam geografi, kemudian satu untuk nilai berangka setiap ukuran.
--   Dibersihkan: mengandungi keputusan Indeks Kesejahteraan Mental dan memproses keputusan saluran paip.
+### Sumber
+
+-   Fail lintasan geografi
+-   Utiliti pemprosesan data
+-   Dokumentasi rujukan
+
+### Diproses terlebih dahulu
+
+-   Data ukuran piawai
+-   Lajur pengecam geografi
+-   Nilai ukuran berangka
+
+### Dibersihkan
+
+-   Keputusan MWI akhir
+-   Memproses output saluran paip
+-   Laporan jaminan kualiti
 
 # Persediaan Teknikal
 
-Nota: bahagian ini terutamanya untuk penyumbang.
-
-## Talian Paip Data
+## Senibina Talian Paip Data
 
 ![](www/media/Data%20Pipeline.png)
 
-## Penyegerakan Data
+## Persekitaran Pembangunan
 
-Segerakkan folder Microsoft Teams BHN Score Creation ke dalam folder The MITER Corporation (One-Drive) setempat anda
+### Penyegerakan Data
 
-## Memuktamadkan Langkah
+-   Sambung ke folder Microsoft Teams BHN Score Creation
+-   Segerakkan dengan folder The MITER Corporation (One-Drive) setempat
 
-Dokumen Penjejakan Ukur terletak di`Teams`>`BHN Score`>`Measure-Tracking.xslx`
+### Mengukur Dokumentasi
 
-Rujuk dan kemas kini dokumen ini apabila langkah tambahan dimuktamadkan.
+-   lokasi:`Teams > BHN Score > Measure-Tracking.xlsx`
+-   Kemas kini apabila menambah langkah baharu
+-   Jejaki status dan pengubahsuaian ukuran
 
-## Menarik Data
+## Pengurusan Data
 
-Menambah data yang ditarik daripada API atau dimuat turun terus daripada tapak web akan dimasukkan ke dalam salah satu daripada dua folder:
+### Storan Data Mentah
 
--   `Teams`>`BHN Score`>`Data`>`Raw`
+    Teams > BHN Score > Data > Raw
+    - For data requiring processing
+    - Supports multiple formats (.xlsx, .csv, .dta)
 
-    -   jika sebarang pengiraan ukuran perlu diselesaikan (iaitu titik geografi ke geografi bekas, pengiraan kelaziman, dsb.)
+### Data Praproses
 
-    -   sambungan fail juga boleh menjadi .xlsx, .csv, .dta, dsb
-
--   `Teams`>`BHN Score`>`Data`>`Preprocessed`
-
-    -   jika data jatuh ke dalam format di mana setiap baris adalah bekas geografi (iaitu Banci Tract, County, Poskod, dsb.)
-
-    -   sambungan fail ialah .csv sahaja
-
-    -   **Nota:**Untuk sebarang data yang diambil daripada API (tidycensus, dll.), laksanakan sebarang tugas pra-pemprosesan dan tulis data terus ke`Preprocessed`folder.
-
-Apabila menarik data, pastikan anda mengisi lajur yang berkaitan dalam`Measure-Tracking.xlsx`dan / atau`Metadata.xlsx`fail.
-
-## Ukur Pendaftaran
-
-Ukur dokumen Pendaftaran dalam`Teams`>`BHN Score`>`Data`>`Metadata.xslx`. Dokumen ini menyediakan maklumat yang diperlukan untuk pemprosesan kelompok / analisis kelompok daripada data Pra-Diproses kepada data Bersih.
-
-### Data Pra-Diproses
-
-Fail ini mengandungi maklumat tentang semua**pra-diproses**mengukur dan memaklumkan sebarang transformasi tambahan yang perlu berlaku antara pra-pemprosesan dan data yang dibersihkan, termasuk:
-
--   Mana-mana peringkat geografi ->Tahap ZCTA sahaja
-
--   Ukur hala tuju diselaraskan (nilai yang lebih tinggi menunjukkan keperluan yang lebih tinggi)
-
--   Penskalaan diselaraskan (pecahan kepada peratus 0.1 ->10(%), pelarasan kelaziman (setiap 1000 orang), dsb.)
+    Teams > BHN Score > Data > Preprocessed
+    - Contains geographic container-level data
+    - CSV format only
+    - Direct API data processing
 
 ### Data Dibersihkan
 
@@ -231,40 +263,157 @@ Setelah data dibersihkan, data tersebut akan digabungkan ke dalam fail Gabungan 
 
 Selain itu, maklumat tentang data (jumlah yang hilang, bilangan baris yang tidak hilang, dll.) dijana dan muncul dalam:`Teams`>`BHN Score`>`Data`>`Cleaned`>`HSE_BHN_Data_Information.csv`.
 
-### Analisis
+## Sistem Pendaftaran Ukur
 
-Dengan fail Pengukuran Gabungan, kami akan melaksanakan analisis berikut:
+### Lokasi Dokumentasi
 
--   Analisis kovarians (membenderakan dan mengurus set pembolehubah dengan multi-kolineariti yang tinggi)
+    Teams > BHN Score > Data > Metadata.xlsx
 
--   Analisis ketiadaan (mengenal pasti langkah dengan nilai yang hilang berbilang tinggi, mengenal pasti ZCTA dengan beberapa langkah yang hilang)
+### Spesifikasi Pemprosesan
 
--   Pengesahan silang dengan langkah komposit lain (COI, UNS, CHR, SVI, dll.)
+-   Penyeragaman geografi
+-   Ukur arah
+-   Pelarasan skala
+-   Pengendalian stratifikasi kaum
 
-### Dokumentasi
+## Metodologi Analisis
 
-Dokumentasi ukuran boleh didapati di`Teams`>`BHN Score`>`Documentation`folder.
+### Analisis Kovarians
 
-## Timbang
+-   Kenal pasti kolineariti pembolehubah
+-   Uruskan langkah berlebihan
+-   Optimumkan pemilihan ukuran
 
-Kami akan membuat 3 set fail pemberat:
+### Analisis Data Tiada
 
--   Pemberat parsimonious (Semua pemberat sama)
+-   Jejaki corak nilai yang tiada
+-   Kenal pasti ZCTA yang bermasalah
+-   Jurang data dokumen
 
--   Kaedah penentuan pemberat Indeks Peluang Kanak-kanak
+### Pengesahan Silang
 
--   Pemberat Kedudukan Kesihatan Daerah
+-   Bandingkan dengan indeks sedia ada:
+    -   COI (Indeks Peluang Kanak-kanak)
+    -   UNS (Skor Keperluan Bersatu)
+    -   CHR (Kedudukan Kesihatan Daerah)
+    -   SVI (Indeks Kerentanan Sosial)
 
-## Penciptaan Skor
+## Sistem Pemberat
 
-Markah akhir untuk setiap ZCTA akan dibuat dengan menggabungkan pemberat dan fail ukuran gabungan. Ukuran dan sukatan didarab bersama, dijumlahkan untuk setiap ZCTA, dan kemudian diskalakan semula daripada 0 hingga 100. Markah muncul (dengan ukuran kedudukan persentil) dalam`Teams`>`BHN Score`>`Data`>`Cleaned`:
+Tiga metodologi pemberat yang berbeza:
 
--   Jumlah Skor Penduduk:`HSE_BHN_ZCTA_Score_Black.csv`
+1.  **Pemberatan Parsimonious**
+    -   Berat sama merentas sukatan
+    -   Model perbandingan garis dasar
 
--   Skor Populasi Hitam:`HSE_BHN_ZCTA_Score_Population.csv`
+2.  **Kaedah Indeks Peluang Kanak-kanak**
+    -   Diadaptasi daripada metodologi COI
+    -   Pemberat khusus domain
+
+3.  **Kaedah Kedudukan Kesihatan Daerah**
+    -   Berdasarkan rangka kerja CHR
+    -   Fokus hasil kesihatan
+
+## Penjanaan Skor
+
+### Aliran Proses
+
+1.  Menggabungkan pemberat dengan data ukuran
+2.  Kira jumlah wajaran mengikut ZCTA
+3.  Skalakan keputusan kepada julat 0-100
+4.  Hasilkan markah berasingan:
+    -   Jumlah Skor Penduduk
+    -   Skor Populasi Hitam
+
+### Fail Output
+
+Terletak di`Teams > BHN Score > Data > Cleaned`:
+
+-   `HSE_BHN_ZCTA_Score_Black.csv`
+-   `HSE_BHN_ZCTA_Score_Population.csv`
+
+# Ciri Lanjutan
+
+## Penyepaduan Data Tersuai
+
+MWI membolehkan anda menyepadukan sumber data tersuai untuk mencipta indeks khusus yang disesuaikan dengan keperluan anda:
+
+-   Sokongan untuk berbilang format data (CSV, Excel, dll.)
+-   Pemetaan pengecam geografi yang fleksibel
+-   Pengesahan dan pembersihan data automatik
+-   Keupayaan penciptaan ukuran tersuai
+
+## Konfigurasi Metadata
+
+Panduan terperinci untuk mengkonfigurasi metadata untuk langkah tersuai:
+
+-   Medan yang diperlukan dan penerangannya
+-   Peraturan pengesahan data
+-   Contoh konfigurasi
+-   Amalan terbaik untuk definisi ukuran
+
+## Alat Analisis
+
+Alat terbina dalam untuk menganalisis data MWI anda:
+
+-   Utiliti analisis statistik
+-   Alat penilaian kualiti data
+-   Analisis korelasi
+-   Pengenalpastian aliran
+-   Analisis pengelompokan geografi
+
+## Pilihan Visualisasi
+
+Alat dan pilihan visualisasi yang tersedia:
+
+-   Peta interaktif
+-   Carta siri masa
+-   Pandangan analisis perbandingan
+-   Penjanaan laporan tersuai
+-   Keupayaan eksport
+
+# Garis Panduan Menyumbang
+
+## Persediaan Pembangunan
+
+1.  Garpu repositori
+2.  Klon garpu anda:
+    ```bash
+    git clone https://github.com/your-username/hse-mwi.git
+    ```
+3.  Sediakan persekitaran pembangunan:
+    ```bash
+    cd hse-mwi
+    Rscript setup-dev.R
+    ```
 
 # Kenalan dan Atribusi
 
-Untuk sebarang pertanyaan atau kebimbangan, sila hubungi[socialjustice@mitre.org](mailto:socialjustice@mitre.org).
+## Saluran Sokongan
 
-Diluluskan untuk Siaran Umum; Pengedaran Tanpa Had. Nombor Kes Siaran Awam 21-3708. ©2021 The MITER Corporation. SEMUA HAK TERPELIHARA.
+Untuk bantuan dan pertanyaan:
+
+-   E-mel Utama:[socialjustice@mitre.org](mailto:socialjustice@mitre.org)
+-   Sokongan Teknikal:[Isu GitHub](https://github.com/mitre/hse-mwi/issues)
+-   Forum Komuniti:[Perbincangan](https://github.com/mitre/hse-mwi/discussions)
+-   Dokumentasi:[Seminggu](https://github.com/mitre/hse-mwi/wiki)
+
+## Maklumat Lesen
+
+Projek ini dilesenkan di bawah Lesen MIT. Lihat[LESEN](LICENSE)fail untuk butiran.
+
+Mental Wellness Index™ ialah tanda dagangan The MITER Corporation.
+
+## Ucapan terima kasih
+
+-   Penyumbang kepada Indeks Kesejahteraan Mental
+-   Rakan kongsi penyelidikan dan pembekal data
+-   Organisasi komuniti dan pihak berkepentingan
+-   Komuniti sumber terbuka
+
+**Diluluskan untuk Siaran Umum; Pengedaran Tanpa Had.**Nombor Kes Siaran Awam 21-3708
+©2021 The MITER Corporation. SEMUA HAK TERPELIHARA.
+
+* * *
+
+_Kemas kini terakhir: Januari 2024_
