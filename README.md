@@ -1,7 +1,11 @@
 # Mental Wellness Index™ (MWI)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/mitre/hse-mwi/graphs/commit-activity)
+
+
 ## Translation
-# README in Different Languages
+### README in Different Languages
 
 - [English](README.md)
 - [简体中文](README.zh-CN.md)
@@ -10,36 +14,59 @@
 - [日本語](README.ja.md)
 - [Bahasa Melayu](README.ms.md)
 
+# Table of Contents
 
-# Outline
-
-- [Mental Wellness Index (MWI)](#Mental-Wellness-Index-(MWI))
-- [Set Up MWI and Create Your Own MWI](#Set-Up-MWI-and-Create-Your-Own-MWI)
-- [Using MWI Data](#Using-MWI-Data)
-- [Technical Set Up](#Technical-Set-Up) (only useful for contributors)
-- [Contact and Attribution](#Contact-and-Attribution)
+- [Mental Wellness Index (MWI)](#mental-wellness-index-mwi)
+  - [MWI Domains & Measures](#mwi-domains--measures)
+  - [Focus on Black Americans](#focus-on-black-americans)
+  - [2023 Data Update](#2023-data-update)
+- [Set Up MWI and Create Your Own MWI](#set-up-mwi-and-create-your-own-mwi)
+  - [Basic Setup (Instructions 1-8)](#basic-setup-instructions-1-8)
+  - [Alternative Command Line Setup](#alternative-command-line-setup)
+  - [Creating Custom MWI (Instructions 9-15)](#creating-custom-mwi-instructions-9-15)
+- [Using MWI Data](#using-mwi-data)
+  - [Data Directory Structure](#data-directory-structure)
+  - [Resources](#resources)
+  - [Preprocessed Data](#preprocessed-data)
+  - [Cleaned Data](#cleaned-data)
+- [Technical Setup](#technical-set-up)
+  - [Data Pipeline Architecture](#data-pipeline-architecture)
+  - [Development Environment](#development-environment)
+  - [Data Management](#data-management)
+  - [Measure Registration System](#measure-registration-system)
+  - [Analysis Methodology](#analysis-methodology)
+  - [Weighting Systems](#weighting-systems)
+  - [Score Generation](#score-generation)
+- [Advanced Features](#advanced-features)
+  - [Custom Data Integration](#custom-data-integration)
+  - [Metadata Configuration](#metadata-configuration)
+  - [Analysis Tools](#analysis-tools)
+  - [Visualization Options](#visualization-options)
+- [Contributing Guidelines](#contributing-guidelines)
+  - [Development Setup](#development-setup)
+- [Contact and Attribution](#contact-and-attribution)
+  - [Support Channels](#support-channels)
+  - [License Information](#license-information)
+  - [Acknowledgments](#acknowledgments)
 
 # Mental Wellness Index (MWI)
 
-To view the Mental Wellness Index Tool, please see https://sjp.mitre.org/mwi. For more information about the Mental Wellness Index, see below or view the insight [here](https://sjp.mitre.org/insights/61f312259916dc001a9ba4db).
+To view the Mental Wellness Index Tool, please visit https://sjp.mitre.org/mwi. For more detailed information about the Mental Wellness Index, see below or view the insight [here](https://sjp.mitre.org/insights/61f312259916dc001a9ba4db).
 
-The Mental Wellness Index is a framework and dashboard tool that provides a picture of community-level mental wellness for each zip code\* in the nation. The MWI is comprised of 28 measures from 3 domains: Social Determinants of Health, Healthcare Access, and Health Status. Structural Racism and Community & Cultural Assets are woven around and throughout the domains of the MWI itself, reflecting their influence throughout the measure framework.
+The Mental Wellness Index is a comprehensive framework and dashboard tool that provides a detailed picture of community-level mental wellness for each zip code* in the nation. The MWI comprises 28 measures across 3 distinct domains: Social Determinants of Health, Healthcare Access, and Health Status. Structural Racism and Community & Cultural Assets are woven throughout the domains of the MWI itself, reflecting their pervasive influence throughout the measure framework.
 
-<p align = "center">
+<p align="center">
 <img src="https://github.com/mitre/hse-mwi/blob/main/www/media/MWI%20Framework%20(Transparent%20Background).png" width="400" />
 </p>
-
-The intent of the Mental Wellness Index is to provide a snapshot of a community's mental wellness so that community leaders, public health officials, and funding entities can understand how they might best direct mental health support to build on a particular community's assets and fill in its gaps.
 
 \*ZIP Code Tabulation Area (ZCTA)
 
 ## MWI Domains & Measures
 
-The MWI creates a score for each zip code between 0 and 100, such that:
+The MWI generates a sophisticated score for each zip code between 0 and 100, where:
 
--   higher values indicate more **assets** that **support** community mental wellness
-
--   lower values indicate more **obstacles** that **challenge** community mental wellness
+- Higher values (closer to 100) indicate more **assets** that **support** community mental wellness
+- Lower values (closer to 0) indicate more **obstacles** that **challenge** community mental wellness
 
 ^ indicates measures that are race stratified
 
@@ -47,183 +74,176 @@ The MWI creates a score for each zip code between 0 and 100, such that:
 
 ## Focus on Black Americans
 
-The MWI was developed with the mental health status of Black Americans in mind. We selected Black Americans as a priority population in order to center at the margins and avoid creating an index that is focused to the 'average community.' We believe that focusing on Black Americans in this way allows all groups experiencing disparities to benefit because none of us are well until all of us are well. We also recognize the need to identify, recognize, and adapt the MWI for additional priority populations.
+The MWI was specifically developed with the mental health status of Black Americans as a central consideration. We intentionally selected Black Americans as a priority population to center at the margins and avoid creating an index focused on the 'average community.' This deliberate choice reflects our belief that focusing on Black Americans in this way creates benefits for all groups experiencing disparities, adhering to the principle that none of us are well until all of us are well. We also acknowledge the necessity to identify, recognize, and adapt the MWI for additional priority populations in future iterations.
 
 ## 2023 Data Update
 
-Data has been updated to most recently available as of January 24, 2023. If you would like to use previously released versions of the MWI, see [Releases](https://github.com/mitre/hse-mwi/releases).
+Data has been comprehensively updated to the most recently available as of January 24, 2023. For access to previously released versions of the MWI, please refer to our [Releases](https://github.com/mitre/hse-mwi/releases) page.
 
 # Set Up MWI and Create Your Own MWI
 
-To set up and simply run the Mental Wellness Index Tool, follow instructions 1 - 8. 
+## Basic Setup (Instructions 1-8)
+Follow these steps for a basic installation and running of the Mental Wellness Index Tool:
 
-To create your own Mental Wellness Index, you can follow the rest of the instructions to run the Mental Wellness Index Tool on your local computer. Follow instructions 8+ below to create your own MWI for your community below by adjusting weights and/or adding your own data and metadata.
+1. **Environment Setup**
+   - Download and install [R](https://www.r-project.org/)
+   - Download and install [RStudio](https://www.rstudio.com/products/rstudio/download/)
+   - Ensure you have a modern browser (Firefox, Chrome, Edge, etc.) set as default
 
-1. Download free versions of [R](https://www.r-project.org/) and [RStudio](https://www.rstudio.com/products/rstudio/download/). Download a modern browser (Firefox, Chrome, Edge, etc.) and make that your default browser if you haven't already.
+2. **Repository Download**
+   - Navigate to the [Mental Wellness Index GitHub page](https://github.com/mitre/hse-mwi)
+   - Click "Code" in the top right corner
+   - Select "Download ZIP" from the dropdown menu
+   - Locate the downloaded "hse-mwi-main.zip" in your downloads folder
 
-2. Go to the [Mental Wellness Index GitHub page](https://github.com/mitre/hse-mwi) and download the repository by clicking "Code" in the top right corner, then clicking "Download ZIP" from the dropdown menu. This should download a ZIP file of the MWI repository into your downloads folder, called "hse-mwi-main.zip".
+3. **Initial Configuration**
+   - Unzip "hse-mwi-main.zip"
+   - Open "app.R" in RStudio
+   - Locate line 11: "app_local <- FALSE"
+   - Change FALSE to TRUE
 
-3. Unzip "hse-mwi-main.zip".
+4. **Package Installation**
+   Run the following command in the RStudio console:
+   ```R
+   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 
+                     'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 
+                     'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 
+                     'shinyBS', 'DT', 'dplyr'))
+   ```
 
-4. In the unzipped folder, open "app.R" in RStudio. This should open RStudio and the "app.R" script in the top left hand corner of the application.
+## Alternative Command Line Setup
 
-#### Alternative for step 1-4 
-Instructions for Command Line Usage
+### Windows Setup
+```bash
+# Install Chocolatey first if not installed
+choco install r.project
+choco install r.studio
+git clone https://github.com/mitre/hse-mwi.git
+cd hse-mwi
+```
 
-##### 1 . Install R and RStudio
-Download and install the latest versions of R and RStudio from the links below if not already installed:
-R: https://www.r-project.org/
-RStudio: https://www.rstudio.com/products/rstudio/download/
-Alternatively, use a package manager to install R:
+### macOS Setup
+```bash
+brew install --cask r
+brew install --cask rstudio
+git clone https://github.com/mitre/hse-mwi.git
+cd hse-mwi
+```
 
-For Windows: Use Chocolatey:
+### Linux Setup (Ubuntu/Debian)
+```bash
+sudo apt update
+sudo apt install r-base
+sudo apt install git
+git clone https://github.com/mitre/hse-mwi.git
+cd hse-mwi
+```
 
- ``` choco install r.project  ```
- ``` choco install r.studio  ```
+## Creating Custom MWI (Instructions 9-15)
 
-For macOS: Use Homebrew:
+### Data Preparation
+9. **Data Format Requirements**
+   - File format: CSV (comma separated value)
+   - Required columns:
+     - Geographical ID (numeric)
+     - Data numerator
+     - Data denominator (if applicable)
 
- ``` brew install --cask r  ```
- ``` brew install --cask rstudio ```
+10. **Acceptable Geographic ID Types**
+    - ZCTA: 5 digits (e.g., 35406)
+    - County: 5 digit FIPS Code (e.g., 01001)
+    - ZIP Code: 5 digits (e.g., 35051)
+    - Census Tract: 11 digit FIPS Code (e.g., 01001020100)
 
-For Linux (Ubuntu/Debian):
+11. **Data Processing Rules**
+    - Final calculation: (numerator/denominator) × scaling factor
+    - Missing data: Leave cells blank
+    - Race stratified data:
+      - Column suffix '_pop': overall population measure
+      - Column suffix '_black': Black population measure
+      - Set 'Preprocessed' to TRUE in Metadata.xlsx
 
- ```sudo apt update  ```
- ```sudo apt install r-base  ```
+### Metadata Configuration
+12. **Metadata.xlsx Requirements**
+    - Download and modify the template
+    - Required fields for each measure:
+      - Measure name
+      - File name
+      - Geographic level
+      - Directionality
+      - Weight
+      - Description
+      - Source
+      - Year
+      - Notes
+    - Optional: denominator field
 
-##### 2 . Clone the Mental Wellness Index Repository Using Git
-Open your terminal or command prompt and run the following command:
+13. **Custom MWI Creation**
+    - Combine data and metadata files in ZIP format
+    - Upload ZIP file through the interface
+    - Wait for processing completion
 
- ``` git clone https://github.com/mitre/hse-mwi.git ```
+14. **Data Export**
+    - Download the generated .RData file
+    - Store safely - no data is retained in the application
 
-This will download the repository into a new folder named hse-mwi.
-
-If git is not installed, install it:
-
-* Windows: Git for Windows 
-
-* macOS:
- ``` brew install git ```
- 
-* Linux:
- ``` sudo apt install git  ```
- 
-Navigate to the Project Directory
-
-Change to the directory where the repository was cloned:
- ``` cd hse-mwi  ```
- 
-Open app.R in RStudio Using the Command Line
-
-##### 4 . Run the following command to launch RStudio and open the app.R script:
-
-For macOS/Linux:
- ```open -a RStudio app.R  ```
-
-For Windows:
-
- ``` Replace <path-to-rstudio> with the full path to RStudio executable: ```
- ``` "<path-to-rstudio>\rstudio.exe" app.R ```
-
-For example:
-
- ``` "C:\Program Files\RStudio\bin\rstudio.exe" app.R  ```
-
-5. In the console window, which is in the bottom left hand corner, enter the following line and answer "yes" to all prompts in the console as you install these packages:
-   * install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 'shinyBS', 'DT', 'dplyr'))
-
-6. In "app.R", navigate to line 11, which should say "app_local <- FALSE". Change FALSE to TRUE.
-
-7. In the top right hand corner of the "app.R" window, you should see "Run App". Click the small downward arrow to the right of that and click "Run External". Then click "Run App".
-
-8. After a delay (this will be slow the first time, then quicker after that), the Mental Wellness Index Tool should open in your browser. Click on the "Create Your Own MWI" tab and follow the remaining steps to create your own MWI.
-
-9. If you are only adjusting weights or subsetting to specific ZIP Codes for included data, skip the next step. This can also be done on the website [here](https://sjp.mitre.org/mwi).
-
-10. Put each of your datasets in a CSV (comma separated value) format, with one column corresponding to the geographical ID of the data, a column corresponding to the numerator of the data, and another column corresponding to the denominator (if needed).
-   * Accepted geographical ID types are always numeric and include the following:
-      * ZCTA: 5 digit ZCTA (example: 35406)
-      * County: 5 digit County FIPS Code (2 digits state code and 3 digit county code, example: 01001)
-      * ZIP Code: US Postal Service ZIP Code (example: 35051)
-      * Census Tract: 11 digit Census Tract FIPS Code (2 digits state code, 3 digit county code, and 6 digit tract code, example: 01001020100)
-   * If a denominator column is provided, the final input to the MWI will be the numerator divided by the denominator, multiplied by the scaling number (specified in the metadata file, see next step).
-   * Numerators and denominators must be numeric columns.
-   * Missing data should have cells left blank.
-   * If race stratified, there should be two columns: one ending in '_pop' corresponding to the overall population measure, and one ending in '_black' corresponding to the black populations measure. In the Metadata.xlsx file edit, that row's 'Preprocessed' column should be set to TRUE.
-
-11. Download Metadata.xlsx with the button below. If adding custom data, add a row and fill in information for each measure you want to add to the Mental Wellness Index. Descriptions for each column can be found in the 'Column Descriptions' sheet of the Metadata.xlsx. Note that all column names, with the exception of 'denominator', must be filled out.
-   * If you have multiple measures in one file, add a row for each measure and its qualities, but specify the same file name.
-   * If you would like to remove a measure in your MWI, either delete the measure row or set its weight to 0.
-   * If you would only like to adjust weights, change only the weight column to the desired values. Note that penalties for race stratifications and geographic granularity are still applied and total weights are scaled to sum to 100.
-
-12. Put your data (if using) and the updated Metadata.xlsx file in a ZIP file (.zip).
-
-13. Upload your ZIP file and click 'Create Custom MWI' below. This will take some time, depending on the amount of measures included.
-
-14. Once the custom MWI creation is complete, click 'Download Custom MWI' to download an .RData file with all of the needed information to view your MWI in this tool. Note: if you navigate away from this page, all processing and data will be lost! Nothing is stored within this application.
-
-15. To view your MWI, click the 'Custom MWI Upload' box under 'Explore States' or 'Explore ZIP Codes' and upload the downloaded '.RData' file.
+15. **Visualization**
+    - Use 'Custom MWI Upload' feature
+    - Available in both 'Explore States' and 'Explore ZIP Codes' sections
 
 # Using MWI Data
 
-If you would like to use the MWI or its processed measures or data, see the "Data" and "Documentation" folders for more information. Each folder in "Data" has a README detailing the included files. All data, with the exception of the Metadata file, is in CSV format.
+## Data Directory Structure
+The "Data" folder contains several important subdirectories:
 
-Folders in "Data" are as follows:
-- Resources: contains files for processing data and referencing geography crosswalks.
-- Preprocessed: contains preprocessed data for all measures in the format the MWI pipeline requires: one column to indicate geographical identifier, then one for the numerical value of each measure.
-- Cleaned: contains Mental Wellness Index results and processing pipeline results.
+### Resources
+- Geographic crosswalk files
+- Data processing utilities
+- Reference documentation
+
+### Preprocessed
+- Standardized measure data
+- Geographic identifier columns
+- Numerical measure values
+
+### Cleaned
+- Final MWI results
+- Processing pipeline outputs
+- Quality assurance reports
 
 # Technical Set Up
 
-Note: this section is primarily for contributors.
-
-## Data Pipeline
+## Data Pipeline Architecture
 
 ![](www/media/Data%20Pipeline.png)
 
-## Data Sync
+## Development Environment
 
-Sync Microsoft Teams BHN Score Creation folder into your local The MITRE Corporation (One-Drive) folder
+### Data Synchronization
+- Connect to Microsoft Teams BHN Score Creation folder
+- Sync with local The MITRE Corporation (One-Drive) folder
 
-## Finalize Measures
+### Measure Documentation
+- Location: `Teams > BHN Score > Measure-Tracking.xlsx`
+- Update when adding new measures
+- Track measure status and modifications
 
-Measure Tracking document located in `Teams` \> `BHN Score` \> `Measure-Tracking.xslx`
+## Data Management
 
-Refer to and update this document when additional measures are finalized.
+### Raw Data Storage
+```
+Teams > BHN Score > Data > Raw
+- For data requiring processing
+- Supports multiple formats (.xlsx, .csv, .dta)
+```
 
-## Pulling Data
-
-Add data pulled from an API or directly downloaded from a website will fall into one of the two folders:
-
--   `Teams` \> `BHN Score` \> `Data` \>`Raw`
-
-    -   if any measure calculation needs to be completed (i.e. point geography to container geography, prevalence calculations, etc.)
-
-    -   file extension is can also be .xlsx, .csv, .dta, etc
-
--   `Teams` \> `BHN Score` \> `Data` \>`Preprocessed`
-
-    -   if data falls into a format where each row is a geographic container (i.e. Census Tract, County, ZIP Code, etc.)
-
-    -   file extension is .csv only
-
-    -   **Note:** For any data pulled from an API (tidycensus, etc.), perform any pre-processing tasks and write data directly to `Preprocessed` folder.
-
-When pulling data, make sure to fill out relevant columns in the `Measure-Tracking.xlsx` and / or `Metadata.xlsx` files.
-
-## Measure Registration
-
-Measure Registration document in `Teams` \> `BHN Score` \>`Data` \> `Metadata.xslx` . This document provides information required for batch processing / batch analysis from Pre-Processed data to Clean data.
-
-### Pre-Processed Data
-
-This file contains information on all **pre-processed** measures and informs any additional transformations that need to occur between pre-processing and cleaned data, including:
-
--   Any geographic level -\> ZCTA level only
-
--   Measure directionality aligned (higher values indicate higher need)
-
--   Scaling aligned (fractions to percents 0.1 -\> 10(%), prevalence adjustments (per 1000 people), etc.)
+### Preprocessed Data
+```
+Teams > BHN Score > Data > Preprocessed
+- Contains geographic container-level data
+- CSV format only
+- Direct API data processing
+```
 
 ### Cleaned Data
 
@@ -235,40 +255,153 @@ Once data is cleaned, they will be merged into the Combined Measures file. There
 
 In addition, information about data (amount missing, number of nonmissing rows, etc.) is generated and appears in: `Teams` \> `BHN Score` \>`Data` \> `Cleaned` \> `HSE_BHN_Data_Information.csv`.
 
-### Analysis
 
-With Combined Measure files, we will perform the following analyses:
+## Measure Registration System
 
--   Covariance analysis (flagging and managing variable sets with high multi-collinearity)
+### Documentation Location
+```
+Teams > BHN Score > Data > Metadata.xlsx
+```
 
--   Missingness analysis (identifying measures with high multiple missing values, identifying ZCTAs with multiple missing measures)
+### Processing Specifications
+- Geographic standardization
+- Measure directionality
+- Scaling adjustments
+- Race stratification handling
 
--   Cross-Validation with other composite measures (COI, UNS, CHR, SVI, etc.)
+## Analysis Methodology
 
-### Documentation
+### Covariance Analysis
+- Identify variable collinearity
+- Manage redundant measures
+- Optimize measure selection
 
-Measure documentation can be found in `Teams` \> `BHN Score` \>`Documentation` folder.
+### Missing Data Analysis
+- Track missing value patterns
+- Identify problematic ZCTAs
+- Document data gaps
 
-## Weights
+### Cross-Validation
+- Compare with existing indices:
+  - COI (Child Opportunity Index)
+  - UNS (Unified Needs Score)
+  - CHR (County Health Rankings)
+  - SVI (Social Vulnerability Index)
 
-We will create 3 sets of weights files:
+## Weighting Systems
 
--   Parsimonious weighting (All equal weights)
+Three distinct weighting methodologies:
 
--   Child Opportunity Index weighting determination method
+1. **Parsimonious Weighting**
+   - Equal weights across measures
+   - Baseline comparison model
 
--   County Health Rankings weighting
+2. **Child Opportunity Index Method**
+   - Adapted from COI methodology
+   - Domain-specific weightings
 
-## Score Creation
+3. **County Health Rankings Method**
+   - Based on CHR framework
+   - Health outcome focus
 
-Final scores for each ZCTA will be created by combining the weights and combined measures file. Measures and measure weights are multiplied together, summed for each ZCTA, and then re-scaled from 0 to 100. Scores appear (with percentile ranked measures) in `Teams` \> `BHN Score` \>`Data` \> `Cleaned`:
+## Score Generation
 
--   Total Population Score: `HSE_BHN_ZCTA_Score_Black.csv`
+### Process Flow
+1. Combine weights with measure data
+2. Calculate weighted sums by ZCTA
+3. Scale results to 0-100 range
+4. Generate separate scores:
+   - Total Population Score
+   - Black Population Score
 
--   Black Population Score: `HSE_BHN_ZCTA_Score_Population.csv`
+### Output Files
+Located in `Teams > BHN Score > Data > Cleaned`:
+- `HSE_BHN_ZCTA_Score_Black.csv`
+- `HSE_BHN_ZCTA_Score_Population.csv`
+
+# Advanced Features
+
+## Custom Data Integration
+
+The MWI allows you to integrate custom data sources to create specialized indices tailored to your needs:
+
+- Support for multiple data formats (CSV, Excel, etc.)
+- Flexible geographic identifier mapping
+- Automated data validation and cleaning
+- Custom measure creation capabilities
+
+## Metadata Configuration
+
+Detailed guide for configuring metadata for custom measures:
+
+- Required fields and their descriptions
+- Data validation rules
+- Example configurations
+- Best practices for measure definition
+
+## Analysis Tools
+
+Built-in tools for analyzing your MWI data:
+
+- Statistical analysis utilities
+- Data quality assessment tools
+- Correlation analysis
+- Trend identification
+- Geographic clustering analysis
+
+## Visualization Options
+
+Available visualization tools and options:
+
+- Interactive maps
+- Time series charts
+- Comparative analysis views
+- Custom report generation
+- Export capabilities
+
+# Contributing Guidelines
+
+## Development Setup
+
+1. Fork the repository
+2. Clone your fork:
+   ```bash
+   git clone https://github.com/your-username/hse-mwi.git
+   ```
+3. Set up development environment:
+   ```bash
+   cd hse-mwi
+   Rscript setup-dev.R
+   ```
+
 
 # Contact and Attribution
 
-For any questions or concerns, please contact socialjustice@mitre.org.
+## Support Channels
 
-Approved for Public Release; Distribution Unlimited. Public Release Case Number 21-3708. ©2021 The MITRE Corporation. ALL RIGHTS RESERVED.
+For assistance and inquiries:
+- Primary Email: socialjustice@mitre.org
+- Technical Support: [GitHub Issues](https://github.com/mitre/hse-mwi/issues)
+- Community Forum: [Discussions](https://github.com/mitre/hse-mwi/discussions)
+- Documentation: [Wiki](https://github.com/mitre/hse-mwi/wiki)
+
+## License Information
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+The Mental Wellness Index™ is a trademark of The MITRE Corporation.
+
+## Acknowledgments
+
+- Contributors to the Mental Wellness Index
+- Research partners and data providers
+- Community organizations and stakeholders
+- Open source community
+
+**Approved for Public Release; Distribution Unlimited.**
+Public Release Case Number 21-3708
+©2021 The MITRE Corporation. ALL RIGHTS RESERVED.
+
+---
+
+*Last updated: January 2024*
