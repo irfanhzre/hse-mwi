@@ -1,8 +1,10 @@
 # メンタルウェルネスインデックス™ (MWI)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/mitre/hse-mwi/graphs/commit-activity)
+
 ## 翻訳
 
-# さまざまな言語の README
+### さまざまな言語の README
 
 -   [英語](README.md)
 -   [簡体字中国語](README.zh-CN.md)
@@ -11,35 +13,59 @@
 -   [日本語](README.ja.md)
 -   [マレー語](README.ms.md)
 
-# 概要
+# 目次
 
--   [メンタルウェルネス指数 (MWI)](#Mental-Wellness-Index-(MWI))
--   [MWI をセットアップし、独自の MWI を作成する](#Set-Up-MWI-and-Create-Your-Own-MWI)
--   [MWI データの使用](#Using-MWI-Data)
--   [技術的なセットアップ](#Technical-Set-Up)(貢献者のみに役立ちます)
--   [連絡先と帰属](#Contact-and-Attribution)
+-   [メンタルウェルネス指数 (MWI)](#mental-wellness-index-mwi)
+    -   [MWIの領域と対策](#mwi-domains--measures)
+    -   [アメリカ黒人に焦点を当てる](#focus-on-black-americans)
+    -   [2023年のデータ更新](#2023-data-update)
+-   [MWI をセットアップし、独自の MWI を作成する](#set-up-mwi-and-create-your-own-mwi)
+    -   [基本セットアップ (手順 1 ～ 8)](#basic-setup-instructions-1-8)
+    -   [代替コマンドラインセットアップ](#alternative-command-line-setup)
+    -   [カスタム MWI の作成 (手順 9 ～ 15)](#creating-custom-mwi-instructions-9-15)
+-   [MWI データの使用](#using-mwi-data)
+    -   [データディレクトリ構造](#data-directory-structure)
+    -   [リソース](#resources)
+    -   [前処理されたデータ](#preprocessed-data)
+    -   [クリーンアップされたデータ](#cleaned-data)
+-   [技術的なセットアップ](#technical-set-up)
+    -   [データ パイプライン アーキテクチャ](#data-pipeline-architecture)
+    -   [開発環境](#development-environment)
+    -   [データ管理](#data-management)
+    -   [測定値登録システム](#measure-registration-system)
+    -   [分析方法](#analysis-methodology)
+    -   [重み付けシステム](#weighting-systems)
+    -   [スコアの生成](#score-generation)
+-   [高度な機能](#advanced-features)
+    -   [カスタムデータの統合](#custom-data-integration)
+    -   [メタデータ構成](#metadata-configuration)
+    -   [分析ツール](#analysis-tools)
+    -   [視覚化オプション](#visualization-options)
+-   [貢献ガイドライン](#contributing-guidelines)
+    -   [開発セットアップ](#development-setup)
+-   [連絡先と帰属](#contact-and-attribution)
+    -   [サポートチャネル](#support-channels)
+    -   [ライセンス情報](#license-information)
+    -   [謝辞](#acknowledgments)
 
 # メンタルウェルネス指数 (MWI)
 
-メンタルウェルネスインデックスツールを表示するには、以下を参照してください。<https://sjp.mitre.org/mwi>。メンタルウェルネスインデックスの詳細については、以下を参照するか、洞察を参照してください。[ここ](https://sjp.mitre.org/insights/61f312259916dc001a9ba4db).
+メンタルウェルネスインデックスツールを表示するには、次のサイトにアクセスしてください。<https://sjp.mitre.org/mwi>。メンタルウェルネスインデックスの詳細については、以下を参照するか、洞察を参照してください。[ここ](https://sjp.mitre.org/insights/61f312259916dc001a9ba4db).
 
-メンタル ウェルネス インデックスは、郵便番号ごとに地域レベルのメンタル ウェルネスの状況を提供するフレームワークおよびダッシュボード ツールです。\*国内で。 MWI は、健康の社会的決定要因、医療アクセス、健康状態の 3 つの領域からの 28 の尺度で構成されています。構造的人種差別とコミュニティおよび文化資産は、MWI 自体の領域の周囲および領域全体に織り込まれており、対策の枠組み全体にわたってその影響を反映しています。
+メンタル ウェルネス インデックスは、全国の郵便番号\*ごとに地域レベルのメンタル ウェルネスの詳細な状況を提供する包括的なフレームワークおよびダッシュボード ツールです。 MWI は、健康の社会的決定要因、医療アクセス、健康状態という 3 つの異なる領域にわたる 28 の尺度で構成されています。構造的人種差別とコミュニティおよび文化資産は、MWI 自体の領域全体に織り込まれており、対策の枠組み全体に広がる影響を反映しています。
 
-<p align = "center">
+<p align="center">
 <img src="https://github.com/mitre/hse-mwi/blob/main/www/media/MWI%20Framework%20(Transparent%20Background).png" width="400" />
 </p>
-
-メンタル ウェルネス インデックスの目的は、コミュニティのメンタル ウェルネスのスナップショットを提供し、コミュニティのリーダー、公衆衛生当局、資金提供団体が、特定のコミュニティの資産に基づいてメンタルヘルス サポートを構築し、その成果を埋めるためにメンタルヘルス サポートを最適に導く方法を理解できるようにすることです。ギャップ。
 
 \*郵便番号集計エリア (ZCTA)
 
 ## MWIの領域と対策
 
-MWI は、0 ～ 100 の郵便番号ごとに次のようなスコアを作成します。
+MWI は、0 ～ 100 の郵便番号ごとに洗練されたスコアを生成します。
 
--   値が大きいほどより多くの値を示します**資産**それ**サポート**コミュニティの精神的健康
-
--   値が小さいほど大きいことを示します**障害物**それ**チャレンジ**コミュニティの精神的健康
+-   値が大きいほど (100 に近いほど)、より多くの値を示します。**資産**それ**サポート**コミュニティの精神的健康
+-   値が低いほど (0 に近いほど)、より多くの値を示します。**障害物**それ**チャレンジ**コミュニティの精神的健康
 
 ^ は人種階層化された対策を示します
 
@@ -47,179 +73,185 @@ MWI は、0 ～ 100 の郵便番号ごとに次のようなスコアを作成し
 
 ## アメリカ黒人に焦点を当てる
 
-MWI は、黒人アメリカ人の精神的健康状態を念頭に置いて開発されました。私たちは、周縁部に集中し、「平均的なコミュニティ」に焦点を当てた指数の作成を避けるために、黒人アメリカ人を優先人口として選択しました。私たちは、このようにアメリカ黒人に焦点を当てることで、格差を経験しているすべてのグループが恩恵を受けることができると信じています。なぜなら、私たち全員が元気になるまでは誰も元気にならないからです。また、追加の優先人口に対して MWI を特定、認識、適応させる必要性も認識しています。
+MWI は、黒人アメリカ人の精神的健康状態を中心的な考慮事項として特に開発されました。私たちは、周縁部を中心とする優先母集団として黒人アメリカ人を意図的に選択し、「平均的なコミュニティ」に焦点を当てた指数の作成を避けました。この意図的な選択は、このように黒人アメリカ人に焦点を当てることが、格差を経験しているすべてのグループに利益をもたらすという私たちの信念を反映しており、全員が健康になるまでは誰も健康ではないという原則を遵守しています。我々はまた、将来の反復において追加の優先人口に対して MWI を特定し、認識し、適応させる必要性を認識する。
 
 ## 2023年のデータ更新
 
-データは、2023 年 1 月 24 日時点で利用可能な最新のものに更新されました。以前にリリースされたバージョンの MWI を使用したい場合は、次を参照してください。[リリース](https://github.com/mitre/hse-mwi/releases).
+データは、2023 年 1 月 24 日時点で利用可能な最新のものに包括的に更新されました。以前にリリースされたバージョンの MWI へのアクセスについては、次のリンクを参照してください。[リリース](https://github.com/mitre/hse-mwi/releases)ページ。
 
 # MWI をセットアップし、独自の MWI を作成する
 
-Mental Wellness Index Tool をセットアップして簡単に実行するには、手順 1 ～ 8 に従ってください。
+## 基本セットアップ (手順 1 ～ 8)
 
-独自のメンタル ウェルネス インデックスを作成するには、残りの手順に従って、ローカル コンピューターでメンタル ウェルネス インデックス ツールを実行します。以下の 8 以降の手順に従って、重みを調整したり、独自のデータやメタデータを追加したりして、以下のコミュニティ用に独自の MWI を作成します。
+Mental Wellness Index ツールの基本的なインストールと実行には、次の手順に従います。
 
-1.  の無料バージョンをダウンロード[R](https://www.r-project.org/)そして[RSスタジオ](https://www.rstudio.com/products/rstudio/download/)。最新のブラウザ (Firefox、Chrome、Edge など) をダウンロードし、まだダウンロードしていない場合は、それをデフォルトのブラウザにします。
+1.  **環境設定**
+    -   ダウンロードしてインストールする[R](https://www.r-project.org/)
+    -   ダウンロードしてインストールする[RSスタジオ](https://www.rstudio.com/products/rstudio/download/)
+    -   最新のブラウザ (Firefox、Chrome、Edge など) がデフォルトとして設定されていることを確認します。
 
-2.  に行きます[メンタルウェルネスインデックス GitHub ページ](https://github.com/mitre/hse-mwi)右上隅にある \[コード] をクリックし、ドロップダウン メニューから \[ZIP をダウンロード] をクリックしてリポジトリをダウンロードします。これにより、「hse-mwi-main.zip」という名前の MWI リポジトリの ZIP ファイルがダウンロード フォルダーにダウンロードされます。
+2.  **リポジトリのダウンロード**
+    -   に移動します。[メンタルウェルネスインデックス GitHub ページ](https://github.com/mitre/hse-mwi)
+    -   右上隅の「コード」をクリックします
+    -   ドロップダウンメニューから「ZIPをダウンロード」を選択します
+    -   ダウンロード フォルダーでダウンロードした「hse-mwi-main.zip」を見つけます。
 
-3.  「hse-mwi-main.zip」を解凍します。
+3.  **初期設定**
+    -   「hse-mwi-main.zip」を解凍します。
+    -   RStudioで「app.R」を開きます
+    -   行 11 を見つけます:「app_local &lt;- FALSE」
+    -   FALSE を TRUE に変更します
 
-4.  解凍したフォルダー内の「app.R」をRStudioで開きます。これにより、RStudio が開き、アプリケーションの左上隅に「app.R」スクリプトが開きます。
+4.  **パッケージのインストール**RStudio コンソールで次のコマンドを実行します。
+    ```R
+    install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 
+                      'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 
+                      'ggbeeswarm', 'shinyWidgets', 'sass', 'shinycssloaders', 
+                      'shinyBS', 'DT', 'dplyr'))
+    ```
 
-#### ステップ 1 ～ 4 の代替案
+## 代替コマンドラインセットアップ
 
-コマンドラインの使用手順
+### Windowsのセットアップ
 
-##### 1. R と RStudio をインストールする
+```bash
+# Install Chocolatey first if not installed
+choco install r.project
+choco install r.studio
+git clone https://github.com/mitre/hse-mwi.git
+cd hse-mwi
+```
 
-まだインストールされていない場合は、以下のリンクから R および RStudio の最新バージョンをダウンロードしてインストールします。
-R:<https://www.r-project.org/>RSスタジオ:<https://www.rstudio.com/products/rstudio/download/>あるいは、パッケージ マネージャーを使用して R をインストールします。
+### macOS のセットアップ
 
-Windows の場合: Chocolatey を使用します。
+```bash
+brew install --cask r
+brew install --cask rstudio
+git clone https://github.com/mitre/hse-mwi.git
+cd hse-mwi
+```
 
-`choco install r.project ``choco install r.studio `
+### Linux セットアップ (Ubuntu/Debian)
 
-macOS の場合: Homebrew を使用します:
+```bash
+sudo apt update
+sudo apt install r-base
+sudo apt install git
+git clone https://github.com/mitre/hse-mwi.git
+cd hse-mwi
+```
 
-`brew install --cask r ``brew install --cask rstudio`
+## カスタム MWI の作成 (手順 9 ～ 15)
 
-Linux (Ubuntu/Debian) の場合:
+### データの準備
 
-`sudo apt update  ``sudo apt install r-base  `
+9.  **データ形式の要件**
+    -   ファイル形式：CSV（カンマ区切り値）
+    -   必須の列:
+        -   地理的ID (数値)
+        -   データ分子
+        -   データ分母 (該当する場合)
 
-##### ２． Git を使用してメンタル ウェルネス インデックス リポジトリのクローンを作成する
+10. **受け入れ可能な地理的 ID の種類**
+    -   ZCTA: 5 桁 (例: 35406)
+    -   郡: 5 桁の FIPS コード (例: 01001)
+    -   郵便番号: 5 桁 (例: 35051)
+    -   国勢調査区: 11 桁の FIPS コード (例: 01001020100)
 
-ターミナルまたはコマンド プロンプトを開き、次のコマンドを実行します。
+11. **データ処理ルール**
+    -   最終計算: (分子/分母) × スケーリング係数
+    -   データが欠落しています: セルを空白のままにしておきます
+    -   人種階層別データ:
+        -   列接尾辞「\_pop」: 全体の人口測定値
+        -   列接尾辞「\_black」: 黒人人口の測定値
+        -   Metadata.xlsx で「Preprocessed」を TRUE に設定します。
 
-`git clone https://github.com/mitre/hse-mwi.git`
+### メタデータ構成
 
-これにより、リポジトリが hse-mwi という名前の新しいフォルダーにダウンロードされます。
+12. **Metadata.xlsx の要件**
+    -   テンプレートをダウンロードして変更する
+    -   各メジャーの必須フィールド:
+        -   対策名
+        -   ファイル名
+        -   地理的レベル
+        -   方向性
+        -   重さ
+        -   説明
+        -   ソース
+        -   Year
+        -   注意事項
+    -   オプション: 分母フィールド
 
-git がインストールされていない場合は、インストールします。
+13. **カスタム MWI の作成**
+    -   データとメタデータ ファイルを ZIP 形式で結合する
+    -   インターフェースを介してZIPファイルをアップロードします
+    -   処理完了を待つ
 
--   Windows: Windows 用 Git
+14. **データのエクスポート**
+    -   生成された .RData ファイルをダウンロードします。
+    -   安全に保管 - アプリケーションにはデータが保持されません
 
--   macOS:`brew install git`
-
--   Linux:`sudo apt install git `
-
-プロジェクト ディレクトリに移動します
-
-リポジトリのクローンが作成されたディレクトリに移動します。`cd hse-mwi `
-
-コマンドラインを使用して RStudio で app.R を開く
-
-##### ４．次のコマンドを実行して RStudio を起動し、app.R スクリプトを開きます。
-
-macOS/Linux の場合:`open -a RStudio app.R  `
-
-Windowsの場合:
-
-`Replace <path-to-rstudio> with the full path to RStudio executable:``"<path-to-rstudio>\rstudio.exe" app.R`
-
-例えば：
-
-`"C:\Program Files\RStudio\bin\rstudio.exe" app.R `
-
-5.  これらのパッケージをインストールするときに、左下隅にあるコンソール ウィンドウに次の行を入力し、コンソールのすべてのプロンプトに「はい」と答えます。
-    -   install.packages(c('readxl', 'writexl', 'htmltools', 'shiny', 'shinyjs', 'tigris', 'leaflet', 'RColorBrewer', 'sf', 'plotly', 'ggbeeswarm', 'shinyWidgets'、'sass'、'shinycssloaders'、 'shinyBS'、'DT'、'dplyr'))
-
-6.  「app.R」で、11 行目に移動します。「app_local &lt;- FALSE」と表示されます。 FALSE を TRUE に変更します。
-
-7.  「app.R」ウィンドウの右上隅に「アプリの実行」が表示されます。その右側にある小さな下向き矢印をクリックし、「外部実行」をクリックします。次に、「アプリを実行」をクリックします。
-
-8.  遅れて (最初は遅くなりますが、その後は速くなります)、ブラウザーでメンタル ウェルネス インデックス ツールが開きます。 \[Create Your Own MWI] タブをクリックし、残りの手順に従って独自の MWI を作成します。
-
-9.  含まれるデータの重みを調整するか、特定の郵便番号にサブセット化するだけの場合は、次の手順をスキップしてください。これはウェブサイトでも行うことができます[ここ](https://sjp.mitre.org/mwi).
-
-10. 各データセットを CSV (カンマ区切り値) 形式で配置します。1 つの列はデータの地理 ID に対応し、1 つの列はデータの分子に対応し、もう 1 つの列は分母に対応します (必要な場合)。
-
--   受け入れられる地理的 ID タイプは常に数値であり、次のものが含まれます。
-    -   ZCTA：5桁ZCTA（例：35406）
-    -   郡: 5 桁の郡 FIPS コード (2 桁の州コードと 3 桁の郡コード、例: 01001)
-    -   郵便番号: 米国郵便局の郵便番号 (例: 35051)
-    -   国勢調査区: 11 桁の国勢調査区 FIPS コード (2 桁の州コード、3 桁の郡コード、6 桁の地区コード、例: 01001020100)
--   分母列が指定されている場合、MWI への最終入力は、分子を分母で割ってスケーリング数を乗算したものになります (メタデータ ファイルで指定されます。次のステップを参照)。
--   分子と分母は数値列である必要があります。
--   データが欠落している場合は、セルを空白のままにしておきます。
--   人種が階層化されている場合は、2 つの列が必要です。1 つは人口全体の測定値に対応する '\_pop' で終わる列、もう 1 つは黒人人口の測定値に対応する '\_black' で終わる列です。 Metadata.xlsx ファイル編集では、その行の「Preprocessed」列を TRUE に設定する必要があります。
-
-11. 下のボタンで Metadata.xlsx をダウンロードします。カスタム データを追加する場合は、行を追加し、メンタル ウェルネス インデックスに追加する各測定値の情報を入力します。各列の説明は、Metadata.xlsx の「列の説明」シートにあります。 「分母」を除くすべての列名を入力する必要があることに注意してください。
-
--   1 つのファイルに複数のメジャーがある場合は、メジャーとその品質ごとに行を追加しますが、同じファイル名を指定します。
--   MWI 内のメジャーを削除したい場合は、メジャー行を削除するか、その重みを 0 に設定します。
--   重みだけを調整したい場合は、重みの列のみを希望の値に変更します。人種階層化と地理的粒度に対するペナルティは引き続き適用され、合計の重みは合計が 100 になるように調整されることに注意してください。
-
-12. データ (使用している場合) と更新された Metadata.xlsx ファイルを ZIP ファイル (.zip) に入れます。
-
-13. ZIP ファイルをアップロードし、下の \[カスタム MWI の作成] をクリックします。含まれる対策の量に応じて、これには時間がかかります。
-
-14. カスタム MWI の作成が完了したら、\[カスタム MWI をダウンロード] をクリックして、このツールで MWI を表示するために必要な情報がすべて含まれた .RData ファイルをダウンロードします。注: このページから移動すると、すべての処理とデータが失われます。このアプリケーション内には何も保存されません。
-
-15. MWI を表示するには、「州の探索」または「郵便番号の探索」の下にある「カスタム MWI アップロード」ボックスをクリックし、ダウンロードした「.RData」ファイルをアップロードします。
+15. **視覚化**
+    -   「カスタム MWI アップロード」機能を使用する
+    -   「州の探索」セクションと「郵便番号の探索」セクションの両方で利用可能
 
 # MWI データの使用
 
-MWI またはその処理された測定値またはデータを使用したい場合は、「データ」フォルダーと「ドキュメント」フォルダーで詳細を参照してください。 「Data」内の各フォルダーには、含まれるファイルの詳細を記載した README が含まれています。メタデータ ファイルを除くすべてのデータは CSV 形式です。
+## データディレクトリ構造
 
-「データ」内のフォルダは以下の通りです。
+「Data」フォルダーには、いくつかの重要なサブディレクトリが含まれています。
 
--   リソース: データを処理し、地理横断歩道を参照するためのファイルが含まれています。
--   前処理済み: MWI パイプラインが必要とする形式ですべてのメジャーの前処理データが含まれます。1 つの列は地理的識別子を示し、もう 1 つは各メジャーの数値を示します。
--   Cleaned: メンタルウェルネスインデックスの結果と処理パイプラインの結果が含まれます。
+### リソース
+
+-   地理的横断歩道ファイル
+-   データ処理ユーティリティ
+-   参考資料
+
+### 前処理済み
+
+-   標準化された測定データ
+-   地理的識別子の列
+-   数値測定値
+
+### 掃除済み
+
+-   MWI の最終結果
+-   パイプライン出力の処理
+-   Quality assurance reports
 
 # 技術的なセットアップ
 
-注: このセクションは主に寄稿者を対象としています。
-
-## データパイプライン
+## データ パイプライン アーキテクチャ
 
 ![](www/media/Data%20Pipeline.png)
 
-## データ同期
+## 開発環境
 
-Microsoft Teams BHN Score Creation フォルダーをローカルの The MITRE Corporation (One-Drive) フォルダーに同期します
+### データの同期
 
-## 対策の最終決定
+-   Microsoft Teams BHN スコア作成フォルダーに接続する
+-   ローカルの MITRE Corporation (One-Drive) フォルダーと同期します
 
-測定追跡ドキュメントは次の場所にあります`Teams`>`BHN Score`>`Measure-Tracking.xslx`
+### 測定ドキュメント
 
-追加の措置が決定された場合は、この文書を参照して更新します。
+-   位置：`Teams > BHN Score > Measure-Tracking.xlsx`
+-   新しいメジャーを追加するときに更新します
+-   測定ステータスと変更を追跡する
 
-## データの取得
+## データ管理
 
-API から取得した追加データ、または Web サイトから直接ダウンロードした追加データは、次の 2 つのフォルダーのいずれかに分類されます。
+### 生データのストレージ
 
--   `Teams`>`BHN Score`>`Data`>`Raw`
-
-    -   メジャーの計算を完了する必要がある場合 (つまり、ポイント地理からコンテナ地理への変換、普及率計算など)
-
-    -   ファイル拡張子は、.xlsx、.csv、.dta などにすることもできます。
-
--   `Teams`>`BHN Score`>`Data`>`Preprocessed`
-
-    -   データが各行が地理的なコンテナーである形式に該当する場合 (つまり、国勢調査区、郡、郵便番号など)
-
-    -   ファイル拡張子は .csv のみです
-
-    -   **注記：**API (tidycensus など) から取得したデータについては、前処理タスクを実行し、データを直接書き込みます。`Preprocessed`フォルダ。
-
-データを取得するときは、必ず関連する列に入力してください。`Measure-Tracking.xlsx`および/または`Metadata.xlsx`ファイル。
-
-## 測定登録
-
-登録書類を測定します`Teams`>`BHN Score`>`Data`>`Metadata.xslx` . This document provides information required for batch processing / batch analysis from Pre-Processed data to Clean data.
+    Teams > BHN Score > Data > Raw
+    - For data requiring processing
+    - Supports multiple formats (.xlsx, .csv, .dta)
 
 ### 前処理されたデータ
 
-このファイルには、すべての情報が含まれています**前処理された**前処理データとクリーンなデータの間に発生する必要がある次のような追加の変換を測定し、通知します。
-
--   あらゆる地理レベル ->ZCTAレベルのみ
-
--   方向性が一致していることを測定します (値が高いほど、必要性が高いことを示します)
-
--   調整されたスケーリング (分数からパーセントへ 0.1 ->10(%)、有病率調整値(1000人当たり)など)
+    Teams > BHN Score > Data > Preprocessed
+    - Contains geographic container-level data
+    - CSV format only
+    - Direct API data processing
 
 ### クリーンアップされたデータ
 
@@ -231,40 +263,157 @@ API から取得した追加データ、または Web サイトから直接ダ�
 
 さらに、データに関する情報 (欠落量、欠落していない行の数など) が生成され、以下に表示されます。`Teams`>`BHN Score`>`Data`>`Cleaned`>`HSE_BHN_Data_Information.csv`.
 
-### 分析
+## 測定値登録システム
 
-結合測定ファイルを使用して、次の分析を実行します。
+### ドキュメントの場所
 
--   共分散分析 (多重共線性の高い変数セットのフラグ設定と管理)
+    Teams > BHN Score > Data > Metadata.xlsx
 
--   欠損分析 (複数の欠損値が高いメジャーの特定、複数の欠損メジャーを持つ ZCTA の特定)
+### 加工仕様
 
--   他の複合尺度（COI、UNS、CHR、SVIなど）との相互検証
+-   地理的な標準化
+-   方向性を測定する
+-   スケーリング調整
+-   人種階層化の処理
 
-### ドキュメント
+## 分析方法
 
-測定に関するドキュメントは次の場所にあります。`Teams`>`BHN Score`>`Documentation`フォルダ。
+### 共分散分析
 
-## 重み
+-   変数の共線性を特定する
+-   冗長な対策を管理する
+-   メジャー選択の最適化
 
-3 セットのウェイト ファイルを作成します。
+### 欠損データ分析
 
--   節約的な重み付け (すべて同じ重み付け)
+-   欠損値パターンを追跡する
+-   問題のある ZCTA を特定する
+-   文書データのギャップ
 
--   Child Opportunity Indexの重み付け決定方法
+### 相互検証
 
--   郡の健康ランキングの重み付け
+-   既存のインデックスと比較します。
+    -   COI (子ども機会指数)
+    -   UNS (統一ニーズスコア)
+    -   CHR (郡健康ランキング)
+    -   SVI (社会的脆弱性指数)
 
-## スコアの作成
+## 重み付けシステム
 
-各 ZCTA の最終スコアは、重みと結合測定ファイルを組み合わせて作成されます。メジャーとメジャーの重みが乗算され、ZCTA ごとに合計され、0 から 100 に再スケールされます。スコアは (パーセンタイルでランク付けされたメジャーとともに) に表示されます。`Teams`>`BHN Score`>`Data`>`Cleaned`:
+3 つの異なる重み付け方法:
 
--   総人口スコア:`HSE_BHN_ZCTA_Score_Black.csv`
+1.  **節約的な重み付け**
+    -   メジャー間の重みが等しい
+    -   ベースライン比較モデル
 
--   黒人人口スコア:`HSE_BHN_ZCTA_Score_Population.csv`
+2.  **子ども機会指数法**
+    -   COI 手法を採用
+    -   ドメイン固有の重み付け
+
+3.  **郡の健康ランキングの方法**
+    -   CHRフレームワークに基づく
+    -   健康上の成果に焦点を当てる
+
+## スコアの生成
+
+### 処理の流れ
+
+1.  重みと測定データを組み合わせる
+2.  ZCTAによる加重和の計算
+3.  結果を 0 ～ 100 の範囲にスケールする
+4.  個別のスコアを生成します。
+    -   総人口スコア
+    -   黒人人口スコア
+
+### 出力ファイル
+
+にあります`Teams > BHN Score > Data > Cleaned`:
+
+-   `HSE_BHN_ZCTA_Score_Black.csv`
+-   `HSE_BHN_ZCTA_Score_Population.csv`
+
+# 高度な機能
+
+## カスタムデータの統合
+
+MWI を使用すると、カスタム データ ソースを統合して、ニーズに合わせた特殊なインデックスを作成できます。
+
+-   複数のデータ形式のサポート (CSV、Excel など)
+-   柔軟な地理的識別子のマッピング
+-   自動化されたデータ検証とクリーニング
+-   カスタムメジャー作成機能
+
+## メタデータ構成
+
+カスタム メジャーのメタデータを構成するための詳細なガイド:
+
+-   必須フィールドとその説明
+-   データ検証ルール
+-   構成例
+-   メジャー定義のベスト プラクティス
+
+## 分析ツール
+
+MWI データを分析するための組み込みツール:
+
+-   統計分析ユーティリティ
+-   データ品質評価ツール
+-   相関分析
+-   トレンドの特定
+-   地理的クラスタリング分析
+
+## 視覚化オプション
+
+利用可能な視覚化ツールとオプション:
+
+-   インタラクティブマップ
+-   時系列チャート
+-   比較分析ビュー
+-   カスタムレポートの生成
+-   エクスポート機能
+
+# 貢献ガイドライン
+
+## 開発セットアップ
+
+1.  リポジトリをフォークする
+2.  フォークのクローンを作成します。
+    ```bash
+    git clone https://github.com/your-username/hse-mwi.git
+    ```
+3.  開発環境をセットアップします。
+    ```bash
+    cd hse-mwi
+    Rscript setup-dev.R
+    ```
 
 # 連絡先と帰属
 
-ご質問やご不明な点がございましたら、お問い合わせください[socialjustice@mitre.org](mailto:socialjustice@mitre.org).
+## サポートチャネル
 
-一般公開が承認されました。配信無制限。公開事件番号 21-3708。 ©2021 MITRE Corporation.無断転載を禁じます。
+サポートと問い合わせについて:
+
+-   メインのメールアドレス:[socialjustice@mitre.org](mailto:socialjustice@mitre.org)
+-   テクニカルサポート：[GitHubの問題](https://github.com/mitre/hse-mwi/issues)
+-   コミュニティフォーラム:[ディスカッション](https://github.com/mitre/hse-mwi/discussions)
+-   ドキュメント:[一週間](https://github.com/mitre/hse-mwi/wiki)
+
+## ライセンス情報
+
+このプロジェクトは MIT ライセンスに基づいてライセンスされています。を参照してください。[ライセンス](LICENSE)詳細については、ファイルを参照してください。
+
+Mental Wellness Index™ は、MITRE Corporation の商標です。
+
+## 謝辞
+
+-   メンタルウェルネスインデックスへの貢献者
+-   研究パートナーとデータプロバイダー
+-   コミュニティ組織と関係者
+-   オープンソース コミュニティ
+
+**一般公開が承認されました。配信無制限。**公開事件番号 21-3708
+©2021 MITRE Corporation.無断転載を禁じます。
+
+* * *
+
+_最終更新日: 2024 年 1 月_
