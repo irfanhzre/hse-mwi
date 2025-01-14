@@ -74,7 +74,7 @@ Anweisungen zur Verwendung der Befehlszeile
 ##### 1 . Installieren Sie R und RStudio
 
 Laden Sie die neuesten Versionen von R und RStudio über die folgenden Links herunter und installieren Sie sie, sofern sie noch nicht installiert sind:
-R:<https://www.r-project.org/>RStudio:<https://www.rstudio.com/products/rstudio/download/>Alternativ können Sie einen Paketmanager verwenden, um R zu installieren:
+R:<https://www.r-project.org/>RStudio:<https://www.rstudio.com/products/rstudio/download/>Alternativ können Sie R auch mit einem Paketmanager installieren:
 
 Für Windows: Verwenden Sie Chocolatey:
 
@@ -149,13 +149,13 @@ Zum Beispiel:
 
 -   Wenn Sie mehrere Kennzahlen in einer Datei haben, fügen Sie für jede Kennzahl und ihre Qualitäten eine Zeile hinzu, geben Sie jedoch denselben Dateinamen an.
 -   Wenn Sie eine Kennzahl in Ihrem MWI entfernen möchten, löschen Sie entweder die Kennzahlzeile oder setzen Sie deren Gewichtung auf 0.
--   Wenn Sie nur Gewichtungen anpassen möchten, ändern Sie nur die Gewichtsspalte auf die gewünschten Werte. Beachten Sie, dass Strafen für Rassenschichtungen und geografische Granularität weiterhin angewendet werden und die Gesamtgewichte so skaliert werden, dass sie sich auf 100 summieren.
+-   Wenn Sie nur die Gewichtungen anpassen möchten, ändern Sie nur die Gewichtsspalte auf die gewünschten Werte. Beachten Sie, dass Strafen für Rassenschichtungen und geografische Granularität weiterhin angewendet werden und die Gesamtgewichte so skaliert werden, dass sie sich auf 100 summieren.
 
 12. Legen Sie Ihre Daten (falls verwendet) und die aktualisierte Metadata.xlsx-Datei in einer ZIP-Datei (.zip) ab.
 
 13. Laden Sie Ihre ZIP-Datei hoch und klicken Sie unten auf „Benutzerdefiniertes MWI erstellen“. Dies kann je nach Umfang der Maßnahmen einige Zeit in Anspruch nehmen.
 
-14. Sobald die benutzerdefinierte MWI-Erstellung abgeschlossen ist, klicken Sie auf „Benutzerdefinierte MWI herunterladen“, um eine .RData-Datei mit allen erforderlichen Informationen herunterzuladen, um Ihre MWI in diesem Tool anzuzeigen. Hinweis: Wenn Sie diese Seite verlassen, gehen alle Verarbeitungen und Daten verloren! In dieser Anwendung wird nichts gespeichert.
+14. Sobald die benutzerdefinierte MWI-Erstellung abgeschlossen ist, klicken Sie auf „Benutzerdefinierte MWI herunterladen“, um eine .RData-Datei mit allen erforderlichen Informationen herunterzuladen, um Ihre MWI in diesem Tool anzuzeigen. Hinweis: Wenn Sie diese Seite verlassen, gehen sämtliche Verarbeitungen und Daten verloren! In dieser Anwendung wird nichts gespeichert.
 
 15. Um Ihren MWI anzuzeigen, klicken Sie unter „Staaten erkunden“ oder „Postleitzahlen erkunden“ auf das Feld „Benutzerdefinierter MWI-Upload“ und laden Sie die heruntergeladene „.RData“-Datei hoch.
 
@@ -199,7 +199,7 @@ Hinzufügen von Daten, die von einer API abgerufen oder direkt von einer Website
 
 -   `Teams`>`BHN Score`>`Data`>`Preprocessed`
 
-    -   wenn die Daten in ein Format fallen, in dem jede Zeile ein geografischer Container ist (z. B. Volkszählungsbezirk, Landkreis, Postleitzahl usw.)
+    -   wenn die Daten in ein Format fallen, bei dem jede Zeile ein geografischer Container ist (z. B. Volkszählungsgebiet, Landkreis, Postleitzahl usw.)
 
     -   Die Dateierweiterung ist nur .csv
 
