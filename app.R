@@ -2152,14 +2152,21 @@ server <- function(input, output, session) {
     orig_zcta <- com_sub$ZCTA
     
     # check that the entered zip is accurate
-    if (input$zip_choose_com != "" & 
-        nchar(input$zip_choose_com) == 5 &
-        !grepl("\\D", input$zip_choose_com) & # only numbers
+    if (input$zip_choose_com != "" &&
+        grepl("^[0-9]{5}$", input$zip_choose_com) && # Ensure only 5 numbers
         input$zip_choose_com %in% names(zip_to_zcta) # a valid zcta
     ){
       # don't change it otherwsie
       com_sub$ZCTA <- unname(zip_to_zcta[input$zip_choose_com])
-    } 
+    } else {# Provide error notifications based on the specific issue
+        if (input$zip_choose_com != "") { # Only check if input is not empty
+            if (!grepl("^[0-9]{5}$", input$zip_choose_com)) {
+                showNotification("ZIP CODE must be 5 numbers", type = "error", duration = 1) # Non-numeric 5 characters
+            } else if (!(input$zip_choose_com %in% names(zip_to_zcta)) ) {
+                showNotification("Invalid ZIP CODE", type = "error", duration = 1) # Not a valid ZCTA
+            }
+        }
+    }
     
     if (com_sub$idx != idx | com_sub$ZCTA != orig_zcta){
       com_sub$idx <- idx
