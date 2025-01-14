@@ -80,7 +80,7 @@ Untuk Windows: Gunakan Chocolatey:
 
 `choco install r.project ``choco install r.studio `
 
-For macOS: Use Homebrew:
+Untuk macOS: Gunakan Homebrew:
 
 `brew install --cask r ``brew install --cask rstudio`
 
@@ -139,7 +139,7 @@ Contohnya:
     -   ZCTA: 5 digit ZCTA (contoh: 35406)
     -   Daerah: 5 digit Kod FIPS Daerah (2 digit kod negeri dan 3 digit kod daerah, contoh: 01001)
     -   Poskod: Kod Pos Perkhidmatan Pos AS (contoh: 35051)
-    -   Bancian Trak: 11 digit Kod Banci Trak FIPS (2 digit kod negeri, 3 digit kod daerah dan 6 digit kod saluran, contoh: 01001020100)
+    -   Banci Trak: 11 digit Kod Banci Trak FIPS (2 digit kod negeri, 3 digit kod daerah dan 6 digit kod saluran, contoh: 01001020100)
 -   Jika lajur penyebut disediakan, input akhir kepada MWI akan menjadi pengangka dibahagikan dengan penyebut, didarab dengan nombor penskalaan (dinyatakan dalam fail metadata, lihat langkah seterusnya).
 -   Numerator dan penyebut mestilah lajur angka.
 -   Data yang hilang harus dibiarkan kosong.
@@ -149,7 +149,7 @@ Contohnya:
 
 -   Jika anda mempunyai berbilang ukuran dalam satu fail, tambahkan baris untuk setiap ukuran dan kualitinya, tetapi nyatakan nama fail yang sama.
 -   Jika anda ingin mengalih keluar ukuran dalam MWI anda, sama ada padamkan baris ukuran atau tetapkan beratnya kepada 0.
--   Jika anda hanya ingin melaraskan pemberat, tukar hanya lajur berat kepada nilai yang dikehendaki. Ambil perhatian bahawa penalti untuk stratifikasi kaum dan butiran geografi masih digunakan dan jumlah wajaran diskalakan kepada jumlah 100.
+-   Jika anda hanya ingin melaraskan pemberat, tukar hanya lajur berat kepada nilai yang dikehendaki. Ambil perhatian bahawa penalti untuk stratifikasi kaum dan butiran geografi masih digunakan dan jumlah wajaran diskalakan kepada jumlah kepada 100.
 
 12. Letakkan data anda (jika menggunakan) dan fail Metadata.xlsx yang dikemas kini dalam fail ZIP (.zip).
 
@@ -161,11 +161,11 @@ Contohnya:
 
 # Menggunakan Data MWI
 
-Jika anda ingin menggunakan MWI atau ukuran atau datanya yang diproses, lihat folder "Data" dan "Dokumentasi" untuk mendapatkan maklumat lanjut. Setiap folder dalam "Data" mempunyai README yang memperincikan fail yang disertakan. Semua data, kecuali fail Metadata, adalah dalam format CSV.
+Jika anda ingin menggunakan MWI atau langkah atau datanya yang diproses, lihat folder "Data" dan "Dokumentasi" untuk mendapatkan maklumat lanjut. Setiap folder dalam "Data" mempunyai README yang memperincikan fail yang disertakan. Semua data, kecuali fail Metadata, adalah dalam format CSV.
 
 Folder dalam "Data" adalah seperti berikut:
 
--   Sumber: mengandungi fail untuk memproses data dan merujuk persimpangan geografi.
+-   Sumber: mengandungi fail untuk memproses data dan merujuk lintasan geografi.
 -   Praproses: mengandungi data praproses untuk semua ukuran dalam format yang diperlukan oleh saluran paip MWI: satu lajur untuk menunjukkan pengecam geografi, kemudian satu untuk nilai berangka setiap ukuran.
 -   Dibersihkan: mengandungi keputusan Indeks Kesejahteraan Mental dan memproses keputusan saluran paip.
 
@@ -237,9 +237,9 @@ Dengan fail Pengukuran Gabungan, kami akan melaksanakan analisis berikut:
 
 -   Analisis kovarians (membenderakan dan mengurus set pembolehubah dengan multi-kolineariti yang tinggi)
 
--   Analisis ketiadaan (mengenal pasti langkah dengan nilai yang hilang berbilang tinggi, mengenal pasti ZCTA dengan beberapa langkah yang hilang)
+-   Analisis ketiadaan (mengenal pasti langkah dengan nilai yang hilang berbilang tinggi, mengenal pasti ZCTA dengan berbilang langkah yang hilang)
 
--   Pengesahan silang dengan langkah komposit lain (COI, UNS, CHR, SVI, dll.)
+-   Pengesahan Silang dengan langkah komposit lain (COI, UNS, CHR, SVI, dll.)
 
 ### Dokumentasi
 
@@ -249,7 +249,7 @@ Dokumentasi ukuran boleh didapati di`Teams`>`BHN Score`>`Documentation`folder.
 
 Kami akan membuat 3 set fail pemberat:
 
--   Pemberat parsimonious (Semua pemberat sama)
+-   Pemberat parsimoni (Semua pemberat sama)
 
 -   Kaedah penentuan pemberat Indeks Peluang Kanak-kanak
 
@@ -257,7 +257,7 @@ Kami akan membuat 3 set fail pemberat:
 
 ## Penciptaan Skor
 
-Markah akhir untuk setiap ZCTA akan dibuat dengan menggabungkan pemberat dan fail ukuran gabungan. Ukuran dan sukatan didarab bersama, dijumlahkan untuk setiap ZCTA, dan kemudian diskalakan semula daripada 0 hingga 100. Markah muncul (dengan ukuran kedudukan persentil) dalam`Teams`>`BHN Score`>`Data`>`Cleaned`:
+Markah akhir untuk setiap ZCTA akan dibuat dengan menggabungkan pemberat dan fail ukuran gabungan. Sukatan dan sukatan didarab bersama, dijumlahkan untuk setiap ZCTA, dan kemudian diskalakan semula daripada 0 hingga 100. Markah muncul (dengan ukuran kedudukan persentil) dalam`Teams`>`BHN Score`>`Data`>`Cleaned`:
 
 -   Jumlah Skor Penduduk:`HSE_BHN_ZCTA_Score_Black.csv`
 
@@ -265,6 +265,6 @@ Markah akhir untuk setiap ZCTA akan dibuat dengan menggabungkan pemberat dan fai
 
 # Kenalan dan Atribusi
 
-Untuk sebarang pertanyaan atau kebimbangan, sila hubungi[socialjustice@mitre.org](mailto:socialjustice@mitre.org).
+Untuk sebarang pertanyaan atau kemusykilan, sila hubungi[socialjustice@mitre.org](mailto:socialjustice@mitre.org).
 
 Diluluskan untuk Siaran Umum; Pengedaran Tanpa Had. Nombor Kes Siaran Awam 21-3708. ©2021 The MITER Corporation. SEMUA HAK TERPELIHARA.
