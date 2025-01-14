@@ -23,7 +23,7 @@
 
 Pour consulter l'outil d'indice du bien-être mental, veuillez consulter<https://sjp.mitre.org/mwi>. Pour plus d'informations sur l'indice de bien-être mental, voir ci-dessous ou consulter l'aperçu[ici](https://sjp.mitre.org/insights/61f312259916dc001a9ba4db).
 
-L'Indice de bien-être mental est un cadre et un tableau de bord qui fournit une image du bien-être mental au niveau communautaire pour chaque code postal.\*dans la nation. Le MWI comprend 28 mesures provenant de 3 domaines : les déterminants sociaux de la santé, l'accès aux soins de santé et l'état de santé. Le racisme structurel et les atouts communautaires et culturels sont tissés autour et à travers les domaines du MWI lui-même, reflétant leur influence dans tout le cadre de mesure.
+L'Indice de bien-être mental est un cadre et un tableau de bord qui fournit une image du bien-être mental au niveau communautaire pour chaque code postal.\* in the nation. The MWI is comprised of 28 measures from 3 domains: Social Determinants of Health, Healthcare Access, and Health Status. Structural Racism and Community & Cultural Assets are woven around and throughout the domains of the MWI itself, reflecting their influence throughout the measure framework.
 
 <p align = "center">
 <img src="https://github.com/mitre/hse-mwi/blob/main/www/media/MWI%20Framework%20(Transparent%20Background).png" width="400" />
@@ -137,7 +137,7 @@ Par exemple:
 
 -   Les types d’identifiants géographiques acceptés sont toujours numériques et incluent les éléments suivants :
     -   ZCTA : ZCTA à 5 chiffres (exemple : 35406)
-    -   Comté : code FIPS du comté à 5 chiffres (code d'État à 2 chiffres et code du comté à 3 chiffres, exemple : 01001)
+    -   Comté : code FIPS du comté à 5 chiffres (code d'État à 2 chiffres et code du comté à 3 chiffres, exemple : 01001)
     -   Code postal : Code postal du service postal américain (exemple : 35051)
     -   Secteur de recensement : code FIPS du secteur de recensement à 11 chiffres (code d'État à 2 chiffres, code de comté à 3 chiffres et code de secteur à 6 chiffres, exemple : 01001020100)
 -   Si une colonne de dénominateur est fournie, l'entrée finale du MWI sera le numérateur divisé par le dénominateur, multiplié par le nombre de mise à l'échelle (spécifié dans le fichier de métadonnées, voir l'étape suivante).
@@ -161,7 +161,7 @@ Par exemple:
 
 # Utilisation des données MWI
 
-Si vous souhaitez utiliser le MWI ou ses mesures ou données traitées, consultez les dossiers « Données » et « Documentation » pour plus d'informations. Chaque dossier dans « Données » contient un README détaillant les fichiers inclus. Toutes les données, à l'exception du fichier de métadonnées, sont au format CSV.
+Si vous souhaitez utiliser le MWI ou ses mesures ou données traitées, consultez les dossiers « Données » et « Documentation » pour plus d'informations. Chaque dossier dans "Data" contient un README détaillant les fichiers inclus. Toutes les données, à l'exception du fichier de métadonnées, sont au format CSV.
 
 Les dossiers dans « Données » sont les suivants :
 
@@ -257,7 +257,7 @@ Nous allons créer 3 ensembles de fichiers de poids :
 
 ## Création de partition
 
-Les scores finaux pour chaque ZCTA seront créés en combinant le fichier de poids et de mesures combinées. Les mesures et les poids des mesures sont multipliés ensemble, additionnés pour chaque ZCTA, puis rééchelonnés de 0 à 100. Les scores apparaissent (avec les mesures classées en centiles) dans`Teams`>`BHN Score`>`Data`>`Cleaned`:
+Les scores finaux pour chaque ZCTA seront créés en combinant le fichier de poids et de mesures combinées. Les mesures et les poids des mesures sont multipliés ensemble, additionnés pour chaque ZCTA, puis rééchelonnés de 0 à 100. Les scores apparaissent (avec les mesures classées en centiles) dans`Teams`> `BHN Score`>`Data`>`Cleaned`:
 
 -   Score de la population totale :`HSE_BHN_ZCTA_Score_Black.csv`
 
