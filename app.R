@@ -1076,11 +1076,14 @@ ui <- fluidPage(
                 choices = overall$avail_meas_list[["pop"]]
               ),
               textInput(
-                "zip_choose",
+                "zip_choose", # The unique ID used to refer to this text input in the Shiny server logic
                 label = "Which ZIP Code would you like to focus on in the selected state?",
                 placeholder = "e.g. 35004, 00501, 20041, etc."
               ),
-              actionButton("reset_zcta_click", "Reset ZIP Code Focus")
+              actionButton(
+                "reset_zcta_click", # The unique ID used to refer to this button in the Shiny server logic
+                "Reset ZIP Code Focus"
+                )
             ),
             bsCollapsePanel(
               "Custom MWI Upload",
@@ -2007,6 +2010,11 @@ server <- function(input, output, session) {
   
   # update the ZCTA
   observeEvent(input$reset_zcta_click, {
+  # This block of code is executed whenever the "Reset ZIP Code Focus" button is clicked.
+    # Clear the value of the ZIP Code input box.
+    updateTextInput(session, "zip_choose", value = "")
+
+    # Update the focus information: reset highlighting to false and clear the ZCTA (ZIP Code Tabulation Area).
     focus_info$hl <- F
     focus_info$ZCTA <- ""
     
