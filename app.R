@@ -1076,11 +1076,14 @@ ui <- fluidPage(
                 choices = overall$avail_meas_list[["pop"]]
               ),
               textInput(
-                "zip_choose",
+                "zip_choose", # The unique ID used to refer to this text input in the Shiny server logic
                 label = "Which ZIP Code would you like to focus on in the selected state?",
                 placeholder = "e.g. 35004, 00501, 20041, etc."
               ),
-              actionButton("reset_zcta_click", "Reset ZIP Code Focus")
+              actionButton(
+                "reset_zcta_click", # The unique ID used to refer to this button in the Shiny server logic
+                "Reset ZIP Code Focus"
+                )
             ),
             bsCollapsePanel(
               "Custom MWI Upload",
@@ -1287,7 +1290,7 @@ ui <- fluidPage(
                 open = c("ZCTA Measure Results"),
                 bsCollapsePanel(
                   "ZCTA Measure Results",
-                  HTML("<p><i>Measures have ranks from 0 to 100. Measures with a higher rank (closer to 100) indicate more community-level <b>assets</b> or <b>obstacles</b> to mental wellness, based on their respective directionality. Measure value corrsponds to the exact value in the data, corresponding to the measure description. For more information, please see `MWI Measures and Data` in the MWI Toolkit.</i></p>"),
+                  HTML("<p><i>Measures have ranks from 0 to 100. Measures with a higher rank (closer to 100) indicate more community-level <b>assets</b> or <b>obstacles</b> to mental wellness, based on their respective directionality. Measure value corrsponds to the exact value in the data, corresponding to the measure description. For more information, please see <a href='mwi-toolkit/MWI_Measures_and_Data.html' target='_blank'>MWI Measures and Data </a> in the MWI Toolkit.</i></p>"),
                   uiOutput("com_report_card_table_mwi"),
                   HTML("<p></p>"),
                   DTOutput("com_report_card_table")
@@ -2007,6 +2010,11 @@ server <- function(input, output, session) {
   
   # update the ZCTA
   observeEvent(input$reset_zcta_click, {
+  # This block of code is executed whenever the "Reset ZIP Code Focus" button is clicked.
+    # Clear the value of the ZIP Code input box.
+    updateTextInput(session, "zip_choose", value = "")
+
+    # Update the focus information: reset highlighting to false and clear the ZCTA (ZIP Code Tabulation Area).
     focus_info$hl <- F
     focus_info$ZCTA <- ""
     
@@ -2065,11 +2073,12 @@ server <- function(input, output, session) {
   })
   
   observeEvent(input$zip_choose, {
-    if (input$zip_choose != "" & 
-        nchar(input$zip_choose) == 5 &
-        !grepl("\\D", input$zip_choose) & # only numbers
-        input$zip_choose %in% names(zip_to_zcta) & # a valid zcta
-        zip_to_zcta[input$zip_choose] %in% st_sub$geodat$GEOID # in the state
+     # Check if the input ZIP CODE is not empty
+        if (nchar(input$zip_choose) > 0) {
+            # Proceed with further validation only if the input is not empty
+            if (grepl("^[0-9]{5}$", input$zip_choose) && # Ensure only 5 numbers
+                input$zip_choose %in% names(zip_to_zcta) && # Check if it's a valid ZCTA it's a valid ZCTA
+                zip_to_zcta[input$zip_choose] %in% st_sub$geodat$GEOID # Check if it's in the state
     ){
       focus_info$hl <- T
       focus_info$ZCTA <- unname(zip_to_zcta[input$zip_choose])
@@ -2091,7 +2100,16 @@ server <- function(input, output, session) {
     } else {
       focus_info$hl <- F
       focus_info$ZCTA <- ""
-      
+
+      # Provide error notifications based on the specific issue
+      if (!grepl("^[0-9]{5}$", input$zip_choose)) {
+        showNotification("ZIP CODE must be 5 numbers", type = "error", duration = 1) # Non-numeric 5 characters
+      } else if (!(input$zip_choose %in% names(zip_to_zcta)) ) {
+        showNotification("Invalid ZIP CODE", type = "error", duration = 1) # Not a valid ZCTA
+      } else if (!(zip_to_zcta[input$zip_choose] %in% st_sub$geodat$GEOID)){
+        showNotification("This ZIP CODE is not in the current state", type = "error", duration = 1) # Not in the specified state
+      }
+
       # remove any previously highlighted polygon
       if (!st_sub$is_all){
         us_proxy %>% removeShape("remove_me")
@@ -2099,6 +2117,7 @@ server <- function(input, output, session) {
         us_proxy %>% removeMarker("remove_me")
       }
     }
+  }
   })
   
   # observe button inputs and clicks: community view ----
@@ -2133,14 +2152,21 @@ server <- function(input, output, session) {
     orig_zcta <- com_sub$ZCTA
     
     # check that the entered zip is accurate
-    if (input$zip_choose_com != "" & 
-        nchar(input$zip_choose_com) == 5 &
-        !grepl("\\D", input$zip_choose_com) & # only numbers
+    if (input$zip_choose_com != "" &&
+        grepl("^[0-9]{5}$", input$zip_choose_com) && # Ensure only 5 numbers
         input$zip_choose_com %in% names(zip_to_zcta) # a valid zcta
     ){
       # don't change it otherwsie
       com_sub$ZCTA <- unname(zip_to_zcta[input$zip_choose_com])
-    } 
+    } else {# Provide error notifications based on the specific issue
+        if (input$zip_choose_com != "") { # Only check if input is not empty
+            if (!grepl("^[0-9]{5}$", input$zip_choose_com)) {
+                showNotification("ZIP CODE must be 5 numbers", type = "error", duration = 1) # Non-numeric 5 characters
+            } else if (!(input$zip_choose_com %in% names(zip_to_zcta)) ) {
+                showNotification("Invalid ZIP CODE", type = "error", duration = 1) # Not a valid ZCTA
+            }
+        }
+    }
     
     if (com_sub$idx != idx | com_sub$ZCTA != orig_zcta){
       com_sub$idx <- idx
