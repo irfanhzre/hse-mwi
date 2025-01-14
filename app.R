@@ -2073,11 +2073,12 @@ server <- function(input, output, session) {
   })
   
   observeEvent(input$zip_choose, {
-    if (input$zip_choose != "" & 
-        nchar(input$zip_choose) == 5 &
-        !grepl("\\D", input$zip_choose) & # only numbers
-        input$zip_choose %in% names(zip_to_zcta) & # a valid zcta
-        zip_to_zcta[input$zip_choose] %in% st_sub$geodat$GEOID # in the state
+     # Check if the input ZIP CODE is not empty
+        if (nchar(input$zip_choose) > 0) {
+            # Proceed with further validation only if the input is not empty
+            if (grepl("^[0-9]{5}$", input$zip_choose) && # Ensure only 5 numbers
+                input$zip_choose %in% names(zip_to_zcta) && # Check if it's a valid ZCTA it's a valid ZCTA
+                zip_to_zcta[input$zip_choose] %in% st_sub$geodat$GEOID # Check if it's in the state
     ){
       focus_info$hl <- T
       focus_info$ZCTA <- unname(zip_to_zcta[input$zip_choose])
@@ -2099,7 +2100,16 @@ server <- function(input, output, session) {
     } else {
       focus_info$hl <- F
       focus_info$ZCTA <- ""
-      
+
+      # Provide error notifications based on the specific issue
+      if (!grepl("^[0-9]{5}$", input$zip_choose)) {
+        showNotification("ZIP CODE must be 5 numbers", type = "error", duration = 1) # Non-numeric 5 characters
+      } else if (!(input$zip_choose %in% names(zip_to_zcta)) ) {
+        showNotification("Invalid ZIP CODE", type = "error", duration = 1) # Not a valid ZCTA
+      } else if (!(zip_to_zcta[input$zip_choose] %in% st_sub$geodat$GEOID)){
+        showNotification("This ZIP CODE is not in the current state", type = "error", duration = 1) # Not in the specified state
+      }
+
       # remove any previously highlighted polygon
       if (!st_sub$is_all){
         us_proxy %>% removeShape("remove_me")
@@ -2107,6 +2117,7 @@ server <- function(input, output, session) {
         us_proxy %>% removeMarker("remove_me")
       }
     }
+  }
   })
   
   # observe button inputs and clicks: community view ----
